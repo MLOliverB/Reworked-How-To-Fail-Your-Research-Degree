@@ -1,7 +1,12 @@
 {
   "dependencies": {
     "express": "^4.17.3",
+    "mocha": "^9.2.2",
     "phaser": "^3.55.2",
     "sql-js": "^0.1.0"
+  },
+
+  "scripts": {
+    "test": "mocha"
   }
 }
