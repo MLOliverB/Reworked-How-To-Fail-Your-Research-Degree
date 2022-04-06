@@ -1,5 +1,6 @@
 // @ts-check
 import { colours } from "../theme/colours.js";
+import { fonts } from "../theme/fonts.js";
 
 class Button {
     /**
@@ -15,6 +16,7 @@ class Button {
     constructor(scene, x, y, width, height, colour, setInteractive, text, textStyle, onClick, onHover, onHoverExit) {
         this.button = scene.add.rectangle(x, y, width, height, colour);
         if (setInteractive) this.button.setInteractive();
+        this.isInteractive = setInteractive;
 
         this.button.on("pointerup", () => { onClick(); });
         if (onHover == undefined) {
@@ -28,7 +30,44 @@ class Button {
             this.button.on("pointerout", () => { onHoverExit(); });
         }
         
-        this.buttonText = scene.add.text(x, y, text, textStyle);
+        this.buttonText = scene.add.text(x, y, text, textStyle).setOrigin(0.5);
+    }
+
+    /**
+     * 
+     * @param {boolean} bool 
+     */
+    setInteractive(bool) {
+        if (bool) {
+            this.button.setInteractive();
+        } else {
+            this.button.disableInteractive();
+        }
+    }
+
+    toggleInteractive() {
+        if (this.isInteractive) {
+            this.button.disableInteractive();
+        } else {
+            this.button.setInteractive();
+        }
     }
 
 }
+
+/**
+ * 
+ * @param {string[]} buttonNames 
+ * @param {any[]} onClick 
+ */
+function createMainMenuButtons(scene, buttonNames, onClick) {
+    let count = buttonNames.length;
+    let yIntervals = 2 / (count + 1);
+
+    for (let i = 0; i < count; i++) {
+        new Button(scene, scene.x*1.75, scene.y*(yIntervals*(i+1)), scene.width*0.2, scene.height*0.09, colours.get("button"), true, buttonNames[i], fonts.get("h3"), onClick[i], undefined, undefined);
+    }
+
+}
+
+export { createMainMenuButtons };
