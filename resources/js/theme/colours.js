@@ -14,4 +14,4 @@ const colours = new Map([
     ["cardStackHover","0xD28F9D"]
 ]);
 
-export{ colours };
+export { colours };

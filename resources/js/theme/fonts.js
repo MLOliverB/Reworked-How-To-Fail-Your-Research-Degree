@@ -9,4 +9,4 @@ const fonts = new Map([
     ["h3Light",{color: "#FFFFFF", fontFamily: "Bahiana", fontSize: "60px"}],
 ]);
 
-export{ fonts };
+export { fonts };
