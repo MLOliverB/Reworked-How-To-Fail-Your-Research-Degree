@@ -1,3 +1,5 @@
+// @ts-check
+
 const colours = new Map([
     ["background","0x95A3B3"],
     ["button","0x84DCC6"],

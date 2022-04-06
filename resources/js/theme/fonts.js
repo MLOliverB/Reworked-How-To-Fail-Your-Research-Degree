@@ -1,3 +1,5 @@
+// @ts-check
+
 const fonts = new Map([
     ["button",{color: "#000000", fontFamily: "Bahiana", fontSize: "50px"}],
     ["buttonEvent",{color: "#FFFFFF", fontFamily: "Bahiana", fontSize: "40px"}],

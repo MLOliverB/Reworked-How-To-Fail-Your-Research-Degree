@@ -1,4 +1,4 @@
-// import Phaser scenes
+// @ts-check
 
 const config= {
     type: Phaser.AUTO,
