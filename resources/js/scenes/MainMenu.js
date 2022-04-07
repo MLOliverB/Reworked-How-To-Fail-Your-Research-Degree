@@ -25,9 +25,9 @@ export default class MainMenu extends Phaser.Scene {
             "Credits"
         ];
         let buttonOnClick = [
-            () => { console.log("Start Game") },
-            () => { console.log("Options") },
-            () => { console.log("Credits") },
+            () => { console.log("Start Game"); },
+            () => { console.log("Options"); },
+            () => { this.scene.start("Credits"); },
         ];
         createMainMenuButtons(this, buttonLabels, buttonOnClick);
     }
