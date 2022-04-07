@@ -67,7 +67,7 @@ export default class Credits extends Phaser.Scene {
 
         this.add.rectangle(this.x, this.y*1.3, this.width*0.9, this.height*0.002, 0x000000);
 
-        text = "Version XXXX"
+        text = "Release XXXX"
         this.add.text(this.x, this.y*1.35, text, columnTextCenter).setOrigin(0.5, 0);
 
         text = "This work is licensed under CC BY-NC-SA 4.0";
