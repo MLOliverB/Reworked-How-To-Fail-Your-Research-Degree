@@ -12,6 +12,11 @@ class Button {
      * @param {number} height 
      * @param {*} colour
      * @param {boolean} setInteractive
+     * @param {string} text
+     * @param {*} textStyle
+     * @param {*} onClick
+     * @param {*} onHover
+     * @param {*} onHoverExit
      */
     constructor(scene, x, y, width, height, colour, setInteractive, text, textStyle, onClick, onHover, onHoverExit) {
         this.button = scene.add.rectangle(x, y, width, height, colour);
@@ -55,6 +60,22 @@ class Button {
 
 }
 
+
+class CenterMenuButton extends Button {
+    /**
+     * 
+     * @param {*} scene 
+     * @param {number} y 
+     * @param {string} text 
+     * @param {*} textStyle 
+     * @param {*} onClick 
+     */
+    constructor(scene, y, text, textStyle, onClick) {
+        super(scene, scene.x, scene.y*y, scene.width*0.2, scene.height*0.09, colours.get("buttonEvent"), true, text, textStyle, onClick, () => { this.button.setFillStyle(colours.get("buttonEventHover")); }, () => { this.button.setFillStyle(colours.get("buttonEvent")); });
+    }
+}
+
+
 /**
  * 
  * @param {string[]} buttonNames 
@@ -70,4 +91,4 @@ function createMainMenuButtons(scene, buttonNames, onClick) {
 
 }
 
-export { createMainMenuButtons };
+export { CenterMenuButton, createMainMenuButtons };
