@@ -1,6 +1,7 @@
 // @ts-check
 import MainMenu from "./scenes/MainMenu.js";
 import Credits from "./scenes/Credits.js";
+import Options from "./scenes/Options.js";
 
 const config= {
     type: Phaser.AUTO,
@@ -12,7 +13,7 @@ const config= {
         autoCenter: Phaser.Scale.CENTER_BOTH,
         zoom: 1,
     },
-    scene: [MainMenu, Credits],
+    scene: [MainMenu, Credits, Options],
 }
 
 const game = new Phaser.Game(config);
