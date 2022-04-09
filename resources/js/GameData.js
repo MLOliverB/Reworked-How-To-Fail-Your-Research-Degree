@@ -30,6 +30,7 @@ export default class GameData {
     async _getCards(callback) {
         // TODO: query the database for all the cards objects and add them to the cardMap based on id
         // Once this is done, call callback()
+        callback();
     }
 
     /**
