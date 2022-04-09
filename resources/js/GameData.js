@@ -22,22 +22,57 @@ export default class GameData {
         this.cardMap.set(0, null);
 
         this.isCardsLoaded = false;
+        this.isGameLoaded = false;
         this.isGameInit = false;
 
-        this._getCards(callback);
+        this._getCards();
     }
 
-    async _getCards(callback) {
+    async _getCards() {
         // TODO: query the database for all the cards objects and add them to the cardMap based on id
-        // Once this is done, call callback()
-        callback();
+        this._cardsLoaded() // This is called once all cards are loaded
+    }
+
+    /**
+     * Function is called once all cards are loaded
+     * If the actual game was already attempted to be initialized and the Phaser game object is loaded,
+     * Then we were just waiting on the cards to fully load
+     * Hence the game can now be initialized
+     * Otherwise just flag that the cards are now fully loaded
+     */
+    _cardsLoaded() {
+        this.isCardsLoaded = true;
+        if (this.isGameLoaded && this.isGameInit) {
+            this.gameInit();
+        }
+    }
+
+    /**
+     * Function is called once the Phaser game is fully loaded
+     * If the actual game was already attempted to be initialized and the cards are already fully loaded,
+     * Then we were just waiting on the Phaser game to fully load (I don't think this can actually happen, but you never know)
+     * Hence the game now be initialized
+     * Otherwise just flag that the Phaser game is now fully loaded
+     */
+    _gameLoaded() {
+        this.isGameLoaded = true;
+        if (this.isCardsLoaded && this.isGameInit) {
+            this.gameInit();
+        }
     }
 
     /**
      * This function is called once the facilitator chooses to start the game
      * From this, the game boards are generated according to the number of teams specified
      */
-    _gameInit() {
+    gameInit() {
+        // If the cards or the game are not yet fully loaded then don't initialize yet
+        // _cardsLoaded() and _gameLoaded ensure that this function will be called again once everything else is loaded
+        if (!(this.isCardsLoaded && this.isGameLoaded)) {
+            this.isGameInit = true;
+            return;
+        }
+
         this.stage = 0;
         this.currentTeam = 0;
         this.teams = [];

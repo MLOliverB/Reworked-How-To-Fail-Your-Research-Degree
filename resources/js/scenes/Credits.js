@@ -3,10 +3,12 @@ import { CenterMenuButton } from "../elements/buttons.js";
 import { fonts } from "../theme/fonts.js";
 import { colours } from "../theme/colours.js";
 import { openExternalLink } from "../util.js"
+import { version } from "../mainGame.js";
 
 export default class Credits extends Phaser.Scene {
-    constructor() {
+    constructor(gameData) {
         super({key: "Credits"});
+        this.gameData = gameData;
     }
 
     create() {
@@ -67,7 +69,7 @@ export default class Credits extends Phaser.Scene {
 
         this.add.rectangle(this.x, this.y*1.3, this.width*0.9, this.height*0.002, 0x000000);
 
-        text = "Release XXXX"
+        text = `Release ${version}`
         this.add.text(this.x, this.y*1.35, text, columnTextCenter).setOrigin(0.5, 0);
 
         text = "This work is licensed under CC BY-NC-SA 4.0";

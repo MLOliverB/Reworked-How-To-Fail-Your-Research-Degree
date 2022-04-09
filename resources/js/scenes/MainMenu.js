@@ -4,8 +4,9 @@ import { fonts } from "../theme/fonts.js";
 import { createMainMenuButtons } from "../elements/buttons.js";
 
 export default class MainMenu extends Phaser.Scene {
-    constructor() {
+    constructor(gameData) {
         super({key: "MainMenu"});
+        this.gameData = gameData;
     }
 
     create() {
