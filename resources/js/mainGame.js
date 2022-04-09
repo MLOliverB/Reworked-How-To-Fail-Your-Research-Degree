@@ -1,6 +1,7 @@
 // @ts-check
 import MainMenu from "./scenes/MainMenu.js";
 import Credits from "./scenes/Credits.js";
+import GameData from "./GameData.js";
 import Options from "./scenes/Options.js";
 
 const config= {
@@ -16,4 +17,6 @@ const config= {
     scene: [MainMenu, Credits, Options],
 }
 
-const game = new Phaser.Game(config);
+const gameData = new GameData(() => { let game = new Phaser.Game(config);
+                                      gameData.game = game;
+                                    });
