@@ -4,7 +4,7 @@ import Credits from "./scenes/Credits.js";
 import GameData from "./GameData.js";
 import Options from "./scenes/Options.js";
 
-const version = "0.0.0-alpha";
+const version = "0.1.0-alpha";
 
 const gameData = new GameData();
 
