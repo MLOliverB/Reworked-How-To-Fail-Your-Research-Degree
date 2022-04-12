@@ -1,12 +1,24 @@
-// @ts-check
 import { CenterMenuButton } from "../elements/buttons.js";
 import { fonts } from "../theme/fonts.js";
 import { colours } from "../theme/colours.js";
 import { openExternalLink } from "../util.js"
 import { version } from "../mainGame.js";
+import GameData from "../GameData.js";
 
 export default class Credits extends Phaser.Scene {
-    constructor(gameData) {
+    gameData: GameData;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    link1: Phaser.GameObjects.Text;
+    link2: Phaser.GameObjects.Text;
+    link3: Phaser.GameObjects.Text;
+    link4: Phaser.GameObjects.Text;
+    link5: Phaser.GameObjects.Text;
+    box: Phaser.GameObjects.Rectangle;
+
+    constructor(gameData: GameData) {
         super({key: "Credits"});
         this.gameData = gameData;
     }

@@ -1,24 +1,17 @@
-// @ts-check
 import { colours } from "../theme/colours.js";
 import { fonts } from "../theme/fonts.js";
 
+type OnClick = () => void;
+type OnClickArr = (() => void)[];
+type OnHover = () => void;
+type OnHoverExit = () => void;
+
 class Button {
-    /**
-     * 
-     * @param {*} scene 
-     * @param {number} x 
-     * @param {number} y 
-     * @param {number} width 
-     * @param {number} height 
-     * @param {*} colour
-     * @param {boolean} setInteractive
-     * @param {string} text
-     * @param {*} textStyle
-     * @param {*} onClick
-     * @param {*} onHover
-     * @param {*} onHoverExit
-     */
-    constructor(scene, x, y, width, height, colour, setInteractive, text, textStyle, onClick, onHover, onHoverExit) {
+    button: Phaser.GameObjects.Rectangle;
+    isInteractive: boolean;
+    buttonText: Phaser.GameObjects.Text;
+
+    constructor(scene, x: number, y: number, width: number, height: number, colour: number, setInteractive: boolean, text: string, textStyle, onClick: OnClick, onHover: OnHover, onHoverExit: OnHoverExit) {
         this.button = scene.add.rectangle(x, y, width, height, colour);
         if (setInteractive) this.button.setInteractive();
         this.isInteractive = setInteractive;
@@ -38,11 +31,7 @@ class Button {
         this.buttonText = scene.add.text(x, y, text, textStyle).setOrigin(0.5);
     }
 
-    /**
-     * 
-     * @param {boolean} bool 
-     */
-    setInteractive(bool) {
+    setInteractive(bool: boolean) {
         if (bool) {
             this.button.setInteractive();
         } else {
@@ -62,30 +51,17 @@ class Button {
 
 
 class CenterMenuButton extends Button {
-    /**
-     * 
-     * @param {*} scene 
-     * @param {number} y 
-     * @param {string} text 
-     * @param {*} textStyle 
-     * @param {*} onClick 
-     */
-    constructor(scene, y, text, textStyle, onClick) {
+
+    constructor(scene, y: number, text: string, textStyle, onClick: OnClick) {
         super(scene, scene.x, scene.y*y, scene.width*0.2, scene.height*0.09, colours.get("buttonEvent"), true, text, textStyle, onClick, () => { this.button.setFillStyle(colours.get("buttonEventHover")); }, () => { this.button.setFillStyle(colours.get("buttonEvent")); });
     }
 }
 
+function createMainMenuButtons(scene, buttonNames: string[], onClick: OnClickArr) {
+    let count: number = buttonNames.length;
+    let yIntervals: number = 2 / (count + 1);
 
-/**
- * 
- * @param {string[]} buttonNames 
- * @param {any[]} onClick 
- */
-function createMainMenuButtons(scene, buttonNames, onClick) {
-    let count = buttonNames.length;
-    let yIntervals = 2 / (count + 1);
-
-    for (let i = 0; i < count; i++) {
+    for (let i: number = 0; i < count; i++) {
         new Button(scene, scene.x*1.75, scene.y*(yIntervals*(i+1)), scene.width*0.2, scene.height*0.09, colours.get("button"), true, buttonNames[i], fonts.get("h3"), onClick[i], undefined, undefined);
     }
 

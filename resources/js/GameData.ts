@@ -1,7 +1,33 @@
 // @ts-check
 
 export default class GameData {
-    constructor(callback) {
+    game: Phaser.Game;
+
+    _roundLengthValues: number[];
+    _eventCardsPerRoundValues: number[];
+    _workLateTilesPerTeamValues: number[];
+
+    _defaultRoundLengthIndex: number;
+    _defaultEventCardsPerRoundIndex: number;
+    _defaultWorkLateTilesPerTeamIndex: number;
+
+    roundLength: number;
+    totalEventCards: number;
+    totalWorkLateTiles: number;
+
+    numberOfTeams: number;
+    cardMap;
+
+    isCardsLoaded: boolean;
+    isGameLoaded: boolean;
+    isGameInit: boolean;
+
+    stage: number;
+    currentTeam: number;
+    teams; // TODO
+    teamToolbar: any; // TODO
+
+    constructor() {
         this.game = undefined;
 
         this._roundLengthValues = [15, 30, 60, 120, Infinity];
@@ -13,7 +39,7 @@ export default class GameData {
         this._defaultWorkLateTilesPerTeamIndex = 4;
 
         this.roundLength = undefined;
-        this.totalEventcards = undefined;
+        this.totalEventCards = undefined;
         this.totalWorkLateTiles = undefined;
 
         this.numberOfTeams = undefined;
@@ -73,12 +99,12 @@ export default class GameData {
             return;
         }
 
-        this.stage = 0;
+        this.stage = 1;
         this.currentTeam = 0;
         this.teams = [];
 
         if (this.roundLength == undefined) this.roundLength = this._roundLengthValues[this._defaultRoundLengthIndex];
-        if (this.totalEventcards == undefined) this.totalEventcards = this._eventCardsPerRoundValues[this._defaultEventCardsPerRoundIndex];
+        if (this.totalEventCards == undefined) this.totalEventCards = this._eventCardsPerRoundValues[this._defaultEventCardsPerRoundIndex];
         if (this.totalWorkLateTiles == undefined) this.totalWorkLateTiles = this._workLateTilesPerTeamValues[this._defaultWorkLateTilesPerTeamIndex];
 
         if (this.numberOfTeams == undefined) this.numberOfTeams = 1;
