@@ -2,6 +2,7 @@ import MainMenu from "./scenes/MainMenu.js";
 import Credits from "./scenes/Credits.js";
 import GameData from "./GameData.js";
 import Options from "./scenes/Options.js";
+const Phaser = require('phaser');
 
 const version = "0.1.0";
 

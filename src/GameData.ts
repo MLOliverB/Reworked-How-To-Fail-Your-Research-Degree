@@ -1,7 +1,18 @@
-// @ts-check
+import TeamGameBoard from "./scenes/TeamGameBoard";
+import TeamToolbar from "./scenes/TeamToolbar";
+
+interface TeamData {
+    cards: any[], //TODO
+    addCardBoxes: any[], // TODO
+    workLateTiles: number,
+    eventCardsStored: any[], // TODO
+    activityCardsQueue: any[], //TODO
+    scene: Phaser.Scene,
+    keyName: string
+}
 
 export default class GameData {
-    game: Phaser.Game;
+    game!: Phaser.Game;
 
     _roundLengthValues: number[];
     _eventCardsPerRoundValues: number[];
@@ -24,12 +35,10 @@ export default class GameData {
 
     stage: number;
     currentTeam: number;
-    teams; // TODO
-    teamToolbar: any; // TODO
+    teams: TeamData[];
+    teamToolbar!: Phaser.Scene;
 
     constructor() {
-        this.game = undefined;
-
         this._roundLengthValues = [15, 30, 60, 120, Infinity];
         this._eventCardsPerRoundValues = [0, 1, 2, 3, 4, 5];
         this._workLateTilesPerTeamValues = [0, 1, 2, 3, 4];
@@ -38,11 +47,11 @@ export default class GameData {
         this._defaultEventCardsPerRoundIndex = 0;
         this._defaultWorkLateTilesPerTeamIndex = 4;
 
-        this.roundLength = undefined;
-        this.totalEventCards = undefined;
-        this.totalWorkLateTiles = undefined;
+        this.roundLength = -1;
+        this.totalEventCards = -1;
+        this.totalWorkLateTiles = -1;
 
-        this.numberOfTeams = undefined;
+        this.numberOfTeams = -1;
 
         this.cardMap = new Map();
         this.cardMap.set(0, null);
@@ -50,6 +59,10 @@ export default class GameData {
         this.isCardsLoaded = false;
         this.isGameLoaded = false;
         this.isGameInit = false;
+
+        this.stage = 1;
+        this.currentTeam = 0;
+        this.teams = [];
 
         this._getCards();
     }
@@ -99,10 +112,6 @@ export default class GameData {
             return;
         }
 
-        this.stage = 1;
-        this.currentTeam = 0;
-        this.teams = [];
-
         if (this.roundLength == undefined) this.roundLength = this._roundLengthValues[this._defaultRoundLengthIndex];
         if (this.totalEventCards == undefined) this.totalEventCards = this._eventCardsPerRoundValues[this._defaultEventCardsPerRoundIndex];
         if (this.totalWorkLateTiles == undefined) this.totalWorkLateTiles = this._workLateTilesPerTeamValues[this._defaultWorkLateTilesPerTeamIndex];
@@ -116,15 +125,14 @@ export default class GameData {
                 workLateTiles: this.totalWorkLateTiles,
                 eventCardsStored: [],
                 activityCardsQueue: [],
+                scene: this.game.scene.add(`Board${i}`, new TeamGameBoard(this, `Board${i}`), false),
+                keyName: `Board${i}`
             });
-            let keyName = `board${i}`
-            this.teams[i].scene = this.game.scene.add(keyName, undefined, false);   // TODO Replace undefined with the teamGameBoard class
-            this.teams[i].keyName = keyName;
         }
 
-        this.teamToolbar = this.game.scene.add("teamToolbar", undefined, false);    // TODO Replace undefined with the teamToolbar class
+        this.teamToolbar = this.game.scene.add("TeamToolbar", new TeamToolbar(this), false);
 
-        this.game.scene.start("teamToolbar");
+        this.game.scene.start("TeamToolbar");
         
         for (let i = 0; i < this.numberOfTeams; i++) {
             this.game.scene.start(this.teams[i].keyName);
@@ -132,7 +140,7 @@ export default class GameData {
 
         // Re-arrange the order of the scenes
         this.game.scene.bringToTop(this.teams[0].keyName);
-        this.game.scene.bringToTop("teamToolbar");
+        this.game.scene.bringToTop("TeamToolbar");
         for (let i = 1; i < this.numberOfTeams; i++) {
             this.game.scene.sendToBack(this.teams[i].keyName);
         }
@@ -142,8 +150,8 @@ export default class GameData {
             this.teams[i].scene.sys.setVisible(false);
         }
 
-        this.game.scene.remove("mainMenu");
-        this.game.scene.remove("numberOfTeams");
-        this.game.scene.remove("options");
+        this.game.scene.remove("MainMenu");
+        this.game.scene.remove("NumberOfTeams");
+        this.game.scene.remove("Options");
     }
 }

@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.static(__dirname + '/'));
 
-app.get('/', function (req, res) {
+app.get('/', function (req: any, res: any) { // TODO: Fix these types, they're giving me a headache
   res.sendFile(__dirname + '/index.html');
 });
 

@@ -2,6 +2,7 @@
 *.env
 ~$*
 temp.js
+bin
 
 # Logs
 logs

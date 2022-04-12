@@ -1,3 +1,5 @@
+import Phaser from "phaser";
+import BaseScene from "../scenes/BaseScene.js";
 import { colours } from "../theme/colours.js";
 import { fonts } from "../theme/fonts.js";
 
@@ -11,19 +13,21 @@ class Button {
     isInteractive: boolean;
     buttonText: Phaser.GameObjects.Text;
 
-    constructor(scene, x: number, y: number, width: number, height: number, colour: number, setInteractive: boolean, text: string, textStyle, onClick: OnClick, onHover: OnHover, onHoverExit: OnHoverExit) {
+    constructor(scene: BaseScene, x: number, y: number, width: number, height: number, colour: number, setInteractive: boolean,
+        text: string, textStyle: Phaser.Types.GameObjects.Text.TextStyle,
+        onClick: OnClick, onHover: OnHover | undefined, onHoverExit: OnHoverExit | undefined) {
         this.button = scene.add.rectangle(x, y, width, height, colour);
         if (setInteractive) this.button.setInteractive();
         this.isInteractive = setInteractive;
 
         this.button.on("pointerup", () => { onClick(); });
         if (onHover == undefined) {
-            this.button.on("pointerover", () => { this.button.setFillStyle(colours.get("buttonHover")); });
+            this.button.on("pointerover", () => { this.button.setFillStyle(colours.buttonHover); });
         } else {
             this.button.on("pointerover", () => { onHover(); });
         }
         if (onHoverExit == undefined) {
-            this.button.on("pointerout", () => { this.button.setFillStyle(colours.get("button")); });
+            this.button.on("pointerout", () => { this.button.setFillStyle(colours.button); });
         } else {
             this.button.on("pointerout", () => { onHoverExit(); });
         }
@@ -52,17 +56,17 @@ class Button {
 
 class CenterMenuButton extends Button {
 
-    constructor(scene, y: number, text: string, textStyle, onClick: OnClick) {
-        super(scene, scene.x, scene.y*y, scene.width*0.2, scene.height*0.09, colours.get("buttonEvent"), true, text, textStyle, onClick, () => { this.button.setFillStyle(colours.get("buttonEventHover")); }, () => { this.button.setFillStyle(colours.get("buttonEvent")); });
+    constructor(scene: BaseScene, y: number, text: string, textStyle: Phaser.Types.GameObjects.Text.TextStyle, onClick: OnClick) {
+        super(scene, scene.x, scene.y*y, scene.width*0.2, scene.height*0.09, colours.buttonEvent, true, text, textStyle, onClick, () => { this.button.setFillStyle(colours.buttonEventHover); }, () => { this.button.setFillStyle(colours.buttonEvent); });
     }
 }
 
-function createMainMenuButtons(scene, buttonNames: string[], onClick: OnClickArr) {
+function createMainMenuButtons(scene: BaseScene, buttonNames: string[], onClick: OnClickArr) {
     let count: number = buttonNames.length;
     let yIntervals: number = 2 / (count + 1);
 
     for (let i: number = 0; i < count; i++) {
-        new Button(scene, scene.x*1.75, scene.y*(yIntervals*(i+1)), scene.width*0.2, scene.height*0.09, colours.get("button"), true, buttonNames[i], fonts.get("h3"), onClick[i], undefined, undefined);
+        new Button(scene, scene.x*1.75, scene.y*(yIntervals*(i+1)), scene.width*0.2, scene.height*0.09, colours.button, true, buttonNames[i], fonts.h3, onClick[i], undefined, undefined);
     }
 
 }
