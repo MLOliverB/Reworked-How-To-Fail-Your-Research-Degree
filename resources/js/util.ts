@@ -1,4 +1,4 @@
-function openExternalLink(url) {
+function openExternalLink(url: string) {
     var s = window.open(url, '_blank');
 
     if (s && s.focus) {
