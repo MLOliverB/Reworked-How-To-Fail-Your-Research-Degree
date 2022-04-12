@@ -1,0 +1,814 @@
+[
+    {
+        "title": "Contingency time",
+        "slug": "act-PLAN-contingency",
+        "stage": 1,
+        "frequency": 9,
+        "image": "act-PLAN-contingency-9.png",
+        "description": "Contingency time is time allocated during planning for unforeseen events or problems that may arise.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": false
+        }
+    },
+    {
+        "title": "Ethical clearance",
+        "slug": "act-PLAN-ethics",
+        "stage": 1,
+        "frequency": 6,
+        "image": "act-PLAN-ethics-6.png",
+        "description": "Do you know what the ethical clearance procedure is for your project? If not you need to find out - quickly!",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": false
+        }
+    },
+    {
+        "title": "Expertise training",
+        "slug": "act-PLAN-expertise",
+        "stage": 1,
+        "frequency": 4,
+        "image": "act-PLAN-expertise-4.png",
+        "description": "This refers to recognizing where you will need additional training and taking steps to learn what you need to before your project starts.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": false
+        }
+    },
+    {
+        "title": "Holiday time",
+        "slug": "act-PLAN-holiday",
+        "stage": 1,
+        "frequency": 4,
+        "image": "act-PLAN-holiday-4.png",
+        "description": "Holidays and breaks are really important. But don't take too many!",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": false
+        }
+    },
+    {
+        "title": "Milestones",
+        "slug": "act-PLAN-milestones",
+        "stage": 1,
+        "frequency": 9,
+        "image": "act-PLAN-milestones-9.png",
+        "description": "Milestones are internal deadlines that you plan to keep yourself on track throughout the project, for example, completing a chapter, releasing a survey, or finishing a product prototype.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": false
+        }
+    },
+    {
+        "title": "Research data management strategy",
+        "slug": "act-PLAN-RDM",
+        "stage": 1,
+        "frequency": 5,
+        "image": "act-PLAN-RDM-5.png",
+        "description": "This means looking after your data and metadata. As a minimum this could simply be ensuring that you backup your work regularly, or it could be much more complex digital curation techniques.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": false
+        }
+    },
+    {
+        "title": "Meetings with supervisor",
+        "slug": "act-PLAN-supervisor",
+        "stage": 1,
+        "frequency": 9,
+        "image": "act-PLAN-supervisor-9.png",
+        "description": "Your supervisor is a precious resource, plan your time with them well!",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": false
+        }
+    },
+    {
+        "title": "Think",
+        "slug": "act-PLAN-think",
+        "stage": 1,
+        "frequency": 8,
+        "image": "act-PLAN-think-8.png",
+        "description": "Thinking is great! But it doesn't directly produce anything. (Watch out for no upwards arrow!) Too much thinking and not enough planning will hamper your progress.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": false
+        }
+    },
+    {
+        "title": "Discussion with experts",
+        "slug": "act-CONTEXT-discusexperts",
+        "stage": 2,
+        "frequency": 5,
+        "image": "act-CONTEXT-discusexperts-5.png",
+        "description": "Other people are a great contextual resource!",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Article with great references",
+        "slug": "act-CONTEXT-greatrefs",
+        "stage": 2,
+        "frequency": 5,
+        "image": "act-CONTEXT-greatrefs-5.png",
+        "description": "Sometimes an article that's not relevant to you can still lead you to other good sources of information. (Watch out for no upwards arrow!)",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Methodology",
+        "slug": "act-CONTEXT-method1",
+        "stage": 2,
+        "frequency": 5,
+        "image": "act-CONTEXT-method1-5.png",
+        "description": "A methodology is a system of methods of doing or studying something. It is part of your design process for carrying out research and investigating others' methods and methodologies is part of contextual review.",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Methodology",
+        "slug": "act-CONTEXT-method2",
+        "stage": 2,
+        "frequency": 3,
+        "image": "act-CONTEXT-method2-3.png",
+        "description": "A methodology is a system of methods of doing or studying something. It is part of your design process for carrying out research and investigating others' methods and methodologies is part of contextual review.",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Refine research questions",
+        "slug": "act-CONTEXT-refine",
+        "stage": 2,
+        "frequency": 9,
+        "image": "act-CONTEXT-refine-9.png",
+        "description": "You may want to tweak your research questions as you do your contextual research, this will help you focus your study.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Reference management system",
+        "slug": "act-CONTEXT-refmanage",
+        "stage": 2,
+        "frequency": 5,
+        "image": "act-CONTEXT-refmanage-5.png",
+        "description": "A reference management system will quickly pay back the time you take to learn how to use it. If you don't already know of one, ask your tutor.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Relevant article",
+        "slug": "act-CONTEXT-relarticle1",
+        "stage": 2,
+        "frequency": 7,
+        "image": "act-CONTEXT-relarticle1-7.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Relevant article",
+        "slug": "act-CONTEXT-relarticle2",
+        "stage": 2,
+        "frequency": 7,
+        "image": "act-CONTEXT-relarticle2-7.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (archive)",
+        "slug": "act-CONTEXT-resarchive1",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resarchive1-2.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (archive)",
+        "slug": "act-CONTEXT-resarchive2",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resarchive2-2.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (raw data)",
+        "slug": "act-CONTEXT-resdata1",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resdata1-2.png",
+        "description": "This could be an existing database you have accessed and will use directly in your research.",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (raw data)",
+        "slug": "act-CONTEXT-resdata2",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resdata2-2.png",
+        "description": "This could be an existing database you have accessed and will use directly in your research.",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (interviews)",
+        "slug": "act-CONTEXT-resinterview1",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resinterview1-2.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (interviews)",
+        "slug": "act-CONTEXT-resinterview2",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resinterview2-2.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (lab)",
+        "slug": "act-CONTEXT-reslab1",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-reslab1-2.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (lab)",
+        "slug": "act-CONTEXT-reslab2",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-reslab2-2.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (objects)",
+        "slug": "act-CONTEXT-resobjects1",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resobjects1-2.png",
+        "description": "These could be physical or digital objects that you are studying or using in your research, for example artworks or existing apps.",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (objects)",
+        "slug": "act-CONTEXT-resobjects2",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-resobjects2-2.png",
+        "description": "These could be physical or digital objects that you are studying or using in your research, for example artworks or existing apps.",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (policy)",
+        "slug": "act-CONTEXT-respolicy1",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-respolicy1-2.png",
+        "description": "This could be a government or industrial policy that is relevant to your research.",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Resource (policy)",
+        "slug": "act-CONTEXT-respolicy2",
+        "stage": 2,
+        "frequency": 2,
+        "image": "act-CONTEXT-respolicy2-2.png",
+        "description": "This could be a government or industrial policy that is relevant to your research.",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Slightly relevant article",
+        "slug": "act-CONTEXT-slightrelarticle",
+        "stage": 2,
+        "frequency": 4,
+        "image": "act-CONTEXT-slightrelarticle-4.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Useless article",
+        "slug": "act-CONTEXT-uselessarticle",
+        "stage": 2,
+        "frequency": 9,
+        "image": "act-CONTEXT-uselessarticle-9.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": false,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Very relevant article",
+        "slug": "act-CONTEXT-veryrelarticle",
+        "stage": 2,
+        "frequency": 9,
+        "image": "act-CONTEXT-veryrelarticle-9.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Very relevant methodology",
+        "slug": "act-CONTEXT-veryrelmethod",
+        "stage": 2,
+        "frequency": 9,
+        "image": "act-CONTEXT-veryrelmethod-9.png",
+        "description": "A methodology is a system of methods of doing or studying something. It is part of your design process for carrying out research and investigating others' methods and methodologies is part of contextual review.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Analysis",
+        "slug": "act-IMP-analysis1",
+        "stage": 3,
+        "frequency": 4,
+        "image": "act-IMP-analysis1-4.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Analysis",
+        "slug": "act-IMP-analysis2",
+        "stage": 3,
+        "frequency": 2,
+        "image": "act-IMP-analysis2-2.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Analysis",
+        "slug": "act-IMP-analysis3",
+        "stage": 3,
+        "frequency": 4,
+        "image": "act-IMP-analysis3-4.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Analysis",
+        "slug": "act-IMP-analysis4",
+        "stage": 3,
+        "frequency": 4,
+        "image": "act-IMP-analysis4-4.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Data",
+        "slug": "act-IMP-data1",
+        "stage": 3,
+        "frequency": 4,
+        "image": "act-IMP-data1-4.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Data",
+        "slug": "act-IMP-data2",
+        "stage": 3,
+        "frequency": 4,
+        "image": "act-IMP-data2-4.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Data",
+        "slug": "act-IMP-data3",
+        "stage": 3,
+        "frequency": 4,
+        "image": "act-IMP-data3-4.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Data",
+        "slug": "act-IMP-data4",
+        "stage": 3,
+        "frequency": 4,
+        "image": "act-IMP-data4-4.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Great resources",
+        "slug": "act-IMP-greatresources",
+        "stage": 3,
+        "frequency": 8,
+        "image": "act-IMP-greatresources-8.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Great results",
+        "slug": "act-IMP-greatresults",
+        "stage": 3,
+        "frequency": 10,
+        "image": "act-IMP-greatresults-10.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Interpretation",
+        "slug": "act-IMP-interpret1",
+        "stage": 3,
+        "frequency": 8,
+        "image": "act-IMP-interpret1-8.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Interpretation",
+        "slug": "act-IMP-interpret2",
+        "stage": 3,
+        "frequency": 8,
+        "image": "act-IMP-interpret2-8.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Results",
+        "slug": "act-IMP-results1",
+        "stage": 3,
+        "frequency": 8,
+        "image": "act-IMP-results1-8.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Results",
+        "slug": "act-IMP-results2",
+        "stage": 3,
+        "frequency": 8,
+        "image": "act-IMP-results2-8.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": true,
+            "down": true
+        }
+    },
+    {
+        "title": "Conclusions",
+        "slug": "act-WRITEUP-conclusions1",
+        "stage": 4,
+        "frequency": 9,
+        "image": "act-WRITEUP-conclusions1-9.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Conclusions",
+        "slug": "act-WRITEUP-conclusions2",
+        "stage": 4,
+        "frequency": 9,
+        "image": "act-WRITEUP-conclusions2-9.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Critical writing",
+        "slug": "act-WRITEUP-critical",
+        "stage": 4,
+        "frequency": 9,
+        "image": "act-WRITEUP-critical-9.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Descriptive writing",
+        "slug": "act-WRITEUP-describe1",
+        "stage": 4,
+        "frequency": 3,
+        "image": "act-WRITEUP-describe1-3.png",
+        "description": "Descriptive writing is necessary but it needs to be followed up by some explanation and critical analysis so that readers understand your research in context.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Descriptive writing",
+        "slug": "act-WRITEUP-describe2",
+        "stage": 4,
+        "frequency": 3,
+        "image": "act-WRITEUP-describe2-3.png",
+        "description": "Descriptive writing is necessary but it needs to be followed up by some explanation and critical analysis so that readers understand your research in context.",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Descriptive writing",
+        "slug": "act-WRITEUP-describe3",
+        "stage": 4,
+        "frequency": 3,
+        "image": "act-WRITEUP-describe3-3.png",
+        "description": "Descriptive writing is necessary but it needs to be followed up by some explanation and critical analysis so that readers understand your research in context.",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Evaluation",
+        "slug": "act-WRITEUP-evaluation",
+        "stage": 4,
+        "frequency": 9,
+        "image": "act-WRITEUP-evaluation-9.png",
+        "description": "Evaluating your work helps you to evidence your conclusions. Make sure you critically analyse your findings rather than just describing them.",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Explanation",
+        "slug": "act-WRITEUP-explain1",
+        "stage": 4,
+        "frequency": 4,
+        "image": "act-WRITEUP-explain1-4.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": false,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Explanation",
+        "slug": "act-WRITEUP-explain2",
+        "stage": 4,
+        "frequency": 4,
+        "image": "act-WRITEUP-explain2-4.png",
+        "description": "",
+        "connectivity": {
+            "left": false,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Revisit research questions",
+        "slug": "act-WRITEUP-revisit",
+        "stage": 4,
+        "frequency": 5,
+        "image": "act-WRITEUP-revisit-5.png",
+        "description": "When writing up your conclusions, revisit your research questions and check that you are actually answering them!",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Sound conclusions",
+        "slug": "act-WRITEUP-soundconcl",
+        "stage": 4,
+        "frequency": 9,
+        "image": "act-WRITEUP-soundconcl-9.png",
+        "description": "",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    },
+    {
+        "title": "Support from family and friends",
+        "slug": "act-WRITEUP-support",
+        "stage": 4,
+        "frequency": 5,
+        "image": "act-WRITEUP-support-5.png",
+        "description": "Although not part of what you submit, having support from family and/or friends can be really important for your wellbeing as you progress your research!",
+        "connectivity": {
+            "left": true,
+            "right": true,
+            "up": false,
+            "down": true
+        }
+    }
+]

@@ -1,0 +1,73 @@
+{
+    "CONTEXT": [
+        "{stage==2}"
+    ],
+    "IMPLEMENTATION": [
+        "{stage==3}"
+    ],
+    "WRITE-UP": [
+        "{stage==4}"
+    ],
+    "METHODOLOGY": [
+        "act-CONTEXT-method1",
+        "act-CONTEXT-method2"
+    ],
+    "RELARTICLE": [
+        "act-CONTEXT-relarticle1",
+        "act-CONTEXT-relarticle2"
+    ],
+    "RESOURCE": [
+        "act-CONTEXT-resarchive1",
+        "act-CONTEXT-resarchive2",
+        "act-CONTEXT-resdata1",
+        "act-CONTEXT-resdata2",
+        "act-CONTEXT-resinterview1",
+        "act-CONTEXT-resinterview2",
+        "act-CONTEXT-reslab1",
+        "act-CONTEXT-reslab2",
+        "act-CONTEXT-resobjects1",
+        "act-CONTEXT-resobjects2",
+        "act-CONTEXT-respolicy1",
+        "act-CONTEXT-respolicy2"
+    ],
+    "RESOURCEPOLICY": [
+        "act-CONTEXT-respolicy1",
+        "act-CONTEXT-respolicy2"
+    ],
+    "ANALYSIS": [
+        "act-IMP-analysis1",
+        "act-IMP-analysis2",
+        "act-IMP-analysis3",
+        "act-IMP-analysis4"
+    ],
+    "DATA": [
+        "act-IMP-data1",
+        "act-IMP-data2",
+        "act-IMP-data3",
+        "act-IMP-data4"
+    ],
+    "INTERPRETATION": [
+        "act-IMP-interpret1",
+        "act-IMP-interpret2"
+    ],
+    "RESULTS": [
+        "act-IMP-results1",
+        "act-IMP-results2"
+    ],
+    "THESIS": [
+        "act-WRITEUP-conclusions1",
+        "act-WRITEUP-conclusions2",
+        "act-WRITEUP-critical",
+        "act-WRITEUP-explain1",
+        "act-WRITEUP-explain2",
+        "act-WRITEUP-soundconcl"
+    ],
+    "CONCLUSIONS": [
+        "act-WRITEUP-conclusions1",
+        "act-WRITEUP-conclusions2"
+    ],
+    "EXPLANATION": [
+        "act-WRITEUP-explain1",
+        "act-WRITEUP-explain2"
+    ]
+}

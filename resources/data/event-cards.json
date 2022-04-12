@@ -1,0 +1,652 @@
+[
+    {
+        "title": "Advice from academic",
+        "slug": "event-CONTEXT-adviceacademic",
+        "stage": 2,
+        "image": "event-CONTEXT-adviceacademic.png",
+        "isOptional": true,
+        "effect": "add {1}[act-PLAN-ethics]",
+        "elseCondition": false,
+        "elseEffect": "-"
+    },
+    {
+        "title": "Advice from specialist",
+        "slug": "event-CONTEXT-advicespecialist",
+        "stage": 2,
+        "image": "event-CONTEXT-advicespecialist.png",
+        "isOptional": true,
+        "effect": "remove {1}[act-CONTEXT-uselessarticle]",
+        "elseCondition": false,
+        "elseEffect": "-"
+    },
+    {
+        "title": "Bluescreen!",
+        "slug": "event-CONTEXT-bluescreen",
+        "stage": 2,
+        "image": "event-CONTEXT-bluescreen.png",
+        "isOptional": false,
+        "effect": "remove {3}[$CONTEXT]",
+        "elseCondition": "{1}[act-PLAN-RDM]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Distraction!",
+        "slug": "event-CONTEXT-distraction",
+        "stage": 2,
+        "image": "event-CONTEXT-distraction.png",
+        "isOptional": false,
+        "effect": "remove {2}[$CONTEXT]",
+        "elseCondition": "{1}[act-PLAN-milestones]",
+        "elseEffect": "remove {1}[$CONTEXT]"
+    },
+    {
+        "title": "Distraction!",
+        "slug": "event-CONTEXT-distraction2",
+        "stage": 2,
+        "image": "event-CONTEXT-distraction2.png",
+        "isOptional": false,
+        "effect": "remove {2}[$CONTEXT]",
+        "elseCondition": "{1}[act-PLAN-milestones]",
+        "elseEffect": "remove {1}[$CONTEXT]"
+    },
+    {
+        "title": "Tried to do too much?",
+        "slug": "event-CONTEXT-dotoomuch",
+        "stage": 2,
+        "image": "event-CONTEXT-dotoomuch.png",
+        "isOptional": false,
+        "effect": "remove {2}[$CONTEXT]",
+        "elseCondition": "{1}[act-CONTEXT-refine]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Expertise!",
+        "slug": "event-CONTEXT-expertise",
+        "stage": 2,
+        "image": "event-CONTEXT-expertise.png",
+        "isOptional": true,
+        "effect": "-",
+        "elseCondition": "{1}([$METHODOLOGY])",
+        "elseEffect": "save {1}[act-PLAN-expertise]"
+    },
+    {
+        "title": "Great resource!",
+        "slug": "event-CONTEXT-greatresource",
+        "stage": 2,
+        "image": "event-CONTEXT-greatresource.png",
+        "isOptional": true,
+        "effect": "-",
+        "elseCondition": true,
+        "elseEffect": "queue {1}[act-IMP-greatresources]"
+    },
+    {
+        "title": "Someone has my library book!",
+        "slug": "event-CONTEXT-hasmybook",
+        "stage": 2,
+        "image": "event-CONTEXT-hasmybook.png",
+        "isOptional": false,
+        "effect": "remove {1}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Lit review paradox",
+        "slug": "event-CONTEXT-litreviewparadox",
+        "stage": 2,
+        "image": "event-CONTEXT-litreviewparadox.png",
+        "isOptional": false,
+        "effect": "block {2}[$IMPLEMENTATION]&&{2}[$WRITE-UP]",
+        "elseCondition": "{1}[act-CONTEXT-refine]||{2}[act-CONTEXT-veryrelarticle]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Interlibrary loan delay",
+        "slug": "event-CONTEXT-loandelay",
+        "stage": 2,
+        "image": "event-CONTEXT-loandelay.png",
+        "isOptional": false,
+        "effect": "remove {1}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Lost enthusiasm",
+        "slug": "event-CONTEXT-lostenthus",
+        "stage": 2,
+        "image": "event-CONTEXT-lostenthus.png",
+        "isOptional": false,
+        "effect": "remove {1}[$CONTEXT]",
+        "elseCondition": "{1}[act-PLAN-holiday]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Mentor leaves",
+        "slug": "event-CONTEXT-mentorleaves",
+        "stage": 2,
+        "image": "event-CONTEXT-mentorleaves.png",
+        "isOptional": false,
+        "effect": "remove {*}[act-PLAN-supervisor]",
+        "elseCondition": false,
+        "elseEffect": "-"
+    },
+    {
+        "title": "Multiple perspectives",
+        "slug": "event-CONTEXT-multiperspective",
+        "stage": 2,
+        "image": "event-CONTEXT-multiperspective.png",
+        "isOptional": true,
+        "effect": "-",
+        "elseCondition": "{2}^[$RESOURCE]",
+        "elseEffect": "save {1}[event-CONTEXT-multiperspective]"
+    },
+    {
+        "title": "Procrastinate!",
+        "slug": "event-CONTEXT-procrastinate",
+        "stage": 2,
+        "image": "event-CONTEXT-procrastinate.png",
+        "isOptional": false,
+        "effect": "remove {3}[$CONTEXT]",
+        "elseCondition": "{1}[act-PLAN-milestones]",
+        "elseEffect": "flip {1}[act-PLAN-milestones]"
+    },
+    {
+        "title": "Shoddy notes",
+        "slug": "event-CONTEXT-shoddynotes",
+        "stage": 2,
+        "image": "event-CONTEXT-shoddynotes.png",
+        "isOptional": false,
+        "effect": "block {2}[$IMPLEMENTATION]&&{2}[$WRITE-UP]",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Sick!",
+        "slug": "event-CONTEXT-sick",
+        "stage": 2,
+        "image": "event-CONTEXT-sick.png",
+        "isOptional": false,
+        "effect": "remove {2}[$CONTEXT]",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Sister's wedding",
+        "slug": "event-CONTEXT-sisterwedding",
+        "stage": 2,
+        "image": "event-CONTEXT-sisterwedding.png",
+        "isOptional": false,
+        "effect": "remove {1}[$CONTEXT]",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Evaluation of sources: fail!",
+        "slug": "event-CONTEXT-sourcesfail",
+        "stage": 2,
+        "image": "event-CONTEXT-sourcesfail.png",
+        "isOptional": false,
+        "effect": "remove {2}[$CONTEXT]",
+        "elseCondition": false,
+        "elseEffect": "-"
+    },
+    {
+        "title": "Evaluation of sources: win!",
+        "slug": "event-CONTEXT-sourceswin",
+        "stage": 2,
+        "image": "event-CONTEXT-sourceswin.png",
+        "isOptional": true,
+        "effect": "-",
+        "elseCondition": true,
+        "elseEffect": "add {1}[act-CONTEXT-veryrelarticle]"
+    },
+    {
+        "title": "Tunnel vision",
+        "slug": "event-CONTEXT-tunnelvision",
+        "stage": 2,
+        "image": "event-CONTEXT-tunnelvision.png",
+        "isOptional": false,
+        "effect": "remove {1}[$CONTEXT]",
+        "elseCondition": "{1}([act-PLAN-supervisor]||[act-CONTEXT-discusexperts]||[act-CONTEXT-refine]||[event-CONTEXT-multiperspective])",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Writer's block",
+        "slug": "event-CONTEXT-writersblock",
+        "stage": 2,
+        "image": "event-CONTEXT-writersblock.png",
+        "isOptional": false,
+        "effect": "block {2}[$IMPLEMENTATION]&&{2}[$WRITE-UP]",
+        "elseCondition": "{1}[act-PLAN-milestones]&&{1}[act-PLAN-supervisor]",
+        "elseEffect": ""
+    },
+    {
+        "title": "Bluescreen!",
+        "slug": "event-IMP-bluescreen",
+        "stage": 3,
+        "image": "event-IMP-bluescreen.png",
+        "isOptional": false,
+        "effect": "remove {3}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-RDM]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Broken fridge!",
+        "slug": "event-IMP-brokenfridge",
+        "stage": 3,
+        "image": "event-IMP-brokenfridge.png",
+        "isOptional": false,
+        "effect": "remove {3}([$DATA]||[$RESULTS]||[act-IMP-greatresults])",
+        "elseCondition": false,
+        "elseEffect": "-"
+    },
+    {
+        "title": "Can't use it?",
+        "slug": "event-IMP-cantuseit",
+        "stage": 3,
+        "image": "event-IMP-cantuseit.png",
+        "isOptional": false,
+        "effect": "remove {1}[act-IMP-greatresources]&&{1}[$RESOURCE]",
+        "elseCondition": "{1}[act-PLAN-expertise]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Competition for resources",
+        "slug": "event-IMP-competition",
+        "stage": 3,
+        "image": "event-IMP-competition.png",
+        "isOptional": false,
+        "effect": "remove {1}([$RESULTS]||[act-IMP-greatresults])",
+        "elseCondition": "{1}[act-IMP-greatresources]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Distraction!",
+        "slug": "event-IMP-distraction",
+        "stage": 3,
+        "image": "event-IMP-distraction.png",
+        "isOptional": false,
+        "effect": "remove {2}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-milestones]",
+        "elseEffect": "remove {1}[$IMPLEMENTATION]"
+    },
+    {
+        "title": "Tried to do too much?",
+        "slug": "event-IMP-dotoomuch",
+        "stage": 3,
+        "image": "event-IMP-dotoomuch.png",
+        "isOptional": false,
+        "effect": "remove {2}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-CONTEXT-refine]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Ethics!",
+        "slug": "event-IMP-ethics",
+        "stage": 3,
+        "image": "event-IMP-ethics.png",
+        "isOptional": false,
+        "effect": "removeall {4}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-ethics]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Fire!",
+        "slug": "event-IMP-fire",
+        "stage": 3,
+        "image": "event-IMP-fire.png",
+        "isOptional": false,
+        "effect": "remove {3}([$DATA$]||[$RESULTS]||[$ANALYSIS]||[$INTERPRETATION])",
+        "elseCondition": false,
+        "elseEffect": "-"
+    },
+    {
+        "title": "Flood!",
+        "slug": "event-IMP-flood",
+        "stage": 3,
+        "image": "event-IMP-flood.png",
+        "isOptional": false,
+        "effect": "remove {1}[act-IMP-greatresources]&&{2}([$RESULTS]||[act-IMP-greatresults])",
+        "elseCondition": false,
+        "elseEffect": "-"
+    },
+    {
+        "title": "Lost enthusiasm",
+        "slug": "event-IMP-lostenthus",
+        "stage": 3,
+        "image": "event-IMP-lostenthus.png",
+        "isOptional": false,
+        "effect": "remove {1}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-holiday]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Metadata fail!",
+        "slug": "event-IMP-metadatafail",
+        "stage": 3,
+        "image": "event-IMP-metadatafail.png",
+        "isOptional": false,
+        "effect": "remove {2}[$INTERPRETATION]",
+        "elseCondition": "{1}[strategy, act-PLAN-RDM]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Philosophy",
+        "slug": "event-IMP-philosophy",
+        "stage": 3,
+        "image": "event-IMP-philosophy.png",
+        "isOptional": false,
+        "effect": "remove {1}[$RESULTS]&&{1}[$INTERPRETATION]",
+        "elseCondition": "{1}[act-PLAN-expertise]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Procrastinate!",
+        "slug": "event-IMP-procrastinate",
+        "stage": 3,
+        "image": "event-IMP-procrastinate.png",
+        "isOptional": false,
+        "effect": "remove {3}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-milestones]",
+        "elseEffect": "flip {1}[act-PLAN-milestones]"
+    },
+    {
+        "title": "Real world relevance?",
+        "slug": "event-IMP-relevance",
+        "stage": 3,
+        "image": "event-IMP-relevance.png",
+        "isOptional": true,
+        "effect": "-",
+        "elseCondition": "{1}[$RESOURCEPOLICY]",
+        "elseEffect": "add {1}[$INTERPRETATION]"
+    },
+    {
+        "title": "Resources...",
+        "slug": "event-IMP-resources",
+        "stage": 3,
+        "image": "event-IMP-resources.png",
+        "isOptional": false,
+        "effect": "remove {1}[$RESOURCE]",
+        "elseCondition": "{1}[act-CONTEXT-discusexperts]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Sick!",
+        "slug": "event-IMP-sick",
+        "stage": 3,
+        "image": "event-IMP-sick.png",
+        "isOptional": false,
+        "effect": "remove {2}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Sister's wedding",
+        "slug": "event-IMP-sisterwedding",
+        "stage": 3,
+        "image": "event-IMP-sisterwedding.png",
+        "isOptional": false,
+        "effect": "remove {1}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Statistics!",
+        "slug": "event-IMP-statistics",
+        "stage": 3,
+        "image": "event-IMP-statistics.png",
+        "isOptional": false,
+        "effect": "remove {1}[$RESULTS]&&{1}[$ANALYSIS]",
+        "elseCondition": "{1}[act-PLAN-expertise]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Supervisor got sick",
+        "slug": "event-IMP-supervisorsick",
+        "stage": 3,
+        "image": "event-IMP-supervisorsick.png",
+        "isOptional": false,
+        "effect": "block {2}[$WRITE-UP]",
+        "elseCondition": "{1}[act-PLAN-milestones]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Who needs theory?",
+        "slug": "event-IMP-theory",
+        "stage": 3,
+        "image": "event-IMP-theory.png",
+        "isOptional": false,
+        "effect": "remove {2}([$INTERPRETATION]||[$ANALYSIS])",
+        "elseCondition": "{3}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Tunnel vision",
+        "slug": "event-IMP-tunnelvision",
+        "stage": 3,
+        "image": "event-IMP-tunnelvision.png",
+        "isOptional": false,
+        "effect": "remove {1}[$IMPLEMENTATION]",
+        "elseCondition": "{1}[act-PLAN-supervisor]||{2}[$INTERPRETATION]||{1}[event-CONTEXT-multiperspective]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Bibliography?",
+        "slug": "event-WRITE-UP-bibliography",
+        "stage": 4,
+        "image": "event-WRITE-UP-bibliography.png",
+        "isOptional": false,
+        "effect": "remove {1}[$THESIS]",
+        "elseCondition": "{1}[act-CONTEXT-refmanage]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Bluescreen!",
+        "slug": "event-WRITE-UP-bluescreen",
+        "stage": 4,
+        "image": "event-WRITE-UP-bluescreen.png",
+        "isOptional": false,
+        "effect": "remove {3}![$WRITE-UP]",
+        "elseCondition": "{1}[act-PLAN-RDM]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Brother's wedding!",
+        "slug": "event-WRITE-UP-brotherswedding",
+        "stage": 4,
+        "image": "event-WRITE-UP-brotherswedding.png",
+        "isOptional": false,
+        "effect": "remove {1}[$THESIS]",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "Disagreement!",
+        "slug": "event-WRITE-UP-disagreement",
+        "stage": 4,
+        "image": "event-WRITE-UP-disagreement.png",
+        "isOptional": false,
+        "effect": "remove {2}([act-WRITEUP-soundconcl]||[$CONLUSIONS])",
+        "elseCondition": "{1}[act-CONTEXT-veryrelarticle]&&{1}[act-CONTEXT-veryrelarticle]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Distraction!",
+        "slug": "event-WRITE-UP-distraction",
+        "stage": 4,
+        "image": "event-WRITE-UP-distraction.png",
+        "isOptional": false,
+        "effect": "remove {2}![$THESIS]",
+        "elseCondition": "act-PLAN-milestones",
+        "elseEffect": "remove {1}[$THESIS]"
+    },
+    {
+        "title": "Distraction!",
+        "slug": "event-WRITE-UP-distraction2",
+        "stage": 4,
+        "image": "event-WRITE-UP-distraction2.png",
+        "isOptional": false,
+        "effect": "remove {2}![$THESIS]",
+        "elseCondition": "act-PLAN-milestones",
+        "elseEffect": "remove {1}[$THESIS]"
+    },
+    {
+        "title": "Does it work?",
+        "slug": "event-WRITE-UP-doesitwork",
+        "stage": 4,
+        "image": "event-WRITE-UP-doesitwork.png",
+        "isOptional": false,
+        "effect": "remove {3}[$WRITE-UP]",
+        "elseCondition": "{1}[act-WRITEUP-evaluation]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Tried to do too much?",
+        "slug": "event-WRITE-UP-dotoomuch",
+        "stage": 4,
+        "image": "event-WRITE-UP-dotoomuch.png",
+        "isOptional": false,
+        "effect": "remove {2}![$THESIS]",
+        "elseCondition": "{1}([act-CONTEXT-refine]||[act-WRITEUP-revisit])",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Ethics!",
+        "slug": "event-WRITE-UP-ethics",
+        "stage": 4,
+        "image": "event-WRITE-UP-ethics.png",
+        "isOptional": false,
+        "effect": "removeall {4}[$WRITE-UP]",
+        "elseCondition": "{1}[act-PLAN-ethics]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Fit for purpose?",
+        "slug": "event-WRITE-UP-fitforpurpose",
+        "stage": 4,
+        "image": "event-WRITE-UP-fitforpurpose.png",
+        "isOptional": false,
+        "effect": "remove {2}![$THESIS]",
+        "elseCondition": "{2}([$METHODOLOGY]||[act-CONTEXT-veryrelarticle])",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Jargon!",
+        "slug": "event-WRITE-UP-jargon",
+        "stage": 4,
+        "image": "event-WRITE-UP-jargon.png",
+        "isOptional": false,
+        "effect": "remove {2}![$EXPLANATION]",
+        "elseCondition": "{1}([act-WRITEUP-support]||[event-WRITE-UP-proofreader])",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Lost enthusiasm",
+        "slug": "event-WRITE-UP-lostenthus",
+        "stage": 4,
+        "image": "event-WRITE-UP-lostenthus.png",
+        "isOptional": false,
+        "effect": "remove {2}[$WRITE-UP]",
+        "elseCondition": "{1}[act-WRITEUP-support]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Lost voice",
+        "slug": "event-WRITE-UP-lostvoice",
+        "stage": 4,
+        "image": "event-WRITE-UP-lostvoice.png",
+        "isOptional": false,
+        "effect": "remove {2}!([act-WRITEUP-critical]||[$EXPLANATION])",
+        "elseCondition": "{2}[$INTERPRETATION]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Procrastinate!",
+        "slug": "event-WRITE-UP-procrastinate",
+        "stage": 4,
+        "image": "event-WRITE-UP-procrastinate.png",
+        "isOptional": null,
+        "effect": "remove {2}![$THESIS]",
+        "elseCondition": "{1}[act-PLAN-milestones]",
+        "elseEffect": "flip {1}[act-PLAN-milestones]"
+    },
+    {
+        "title": "Proofreader",
+        "slug": "event-WRITE-UP-proofreader",
+        "stage": 4,
+        "image": "event-WRITE-UP-proofreader.png",
+        "isOptional": true,
+        "effect": "-",
+        "elseCondition": true,
+        "elseEffect": "add {1}[$EXPLANATION] save {1}[event-WRITE-UP-proofreader]"
+    },
+    {
+        "title": "References?",
+        "slug": "event-WRITE-UP-references",
+        "stage": 4,
+        "image": "event-WRITE-UP-references.png",
+        "isOptional": false,
+        "effect": "remove {1}[$THESIS]",
+        "elseCondition": "{1}[act-CONTEXT-refmanage]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Regurgitation",
+        "slug": "event-WRITE-UP-regurgitation",
+        "stage": 4,
+        "image": "event-WRITE-UP-regurgitation.png",
+        "isOptional": false,
+        "effect": "remove {3}![$THESIS]",
+        "elseCondition": "{3}([$ANALYSIS]||[$INTERPRETATION])",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Sick!",
+        "slug": "event-WRITE-UP-sick",
+        "stage": 4,
+        "image": "event-WRITE-UP-sick.png",
+        "isOptional": false,
+        "effect": "remove {2}[$WRITE-UP]",
+        "elseCondition": "{1}[act-PLAN-contingency]",
+        "elseEffect": "flip {1}[act-PLAN-contingency]"
+    },
+    {
+        "title": "So what?",
+        "slug": "event-WRITE-UP-sowhat",
+        "stage": 4,
+        "image": "event-WRITE-UP-sowhat.png",
+        "isOptional": false,
+        "effect": "remove {2}![$THESIS]",
+        "elseCondition": "{2}[act-CONTEXT-veryrelarticle]",
+        "elseEffect": "2"
+    },
+    {
+        "title": "Tunnel vision",
+        "slug": "event-WRITE-UP-tunnelvision",
+        "stage": 4,
+        "image": "event-WRITE-UP-tunnelvision.png",
+        "isOptional": false,
+        "effect": "remove {1}[$THESIS]",
+        "elseCondition": "{1}[act-WRITEUP-revisit]||{1}[event-CONTEXT-multiperspective]",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Uncritical writing!",
+        "slug": "event-WRITE-UP-uncriticalwriting",
+        "stage": 4,
+        "image": "event-WRITE-UP-uncriticalwriting.png",
+        "isOptional": false,
+        "effect": "remove {2}![$THESIS]",
+        "elseCondition": "{3}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
+        "elseEffect": "-"
+    },
+    {
+        "title": "Waffle!",
+        "slug": "event-WRITE-UP-waffle",
+        "stage": 4,
+        "image": "event-WRITE-UP-waffle.png",
+        "isOptional": false,
+        "effect": "{1}[act-WRITEUP-critical]",
+        "elseCondition": false,
+        "elseEffect": "-"
+    }
+]
