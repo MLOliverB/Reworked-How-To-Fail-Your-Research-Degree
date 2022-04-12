@@ -1,11 +1,22 @@
-// @ts-check
-
 import { CenterMenuButton } from "../elements/buttons.js";
 import { colours } from "../theme/colours.js";
 import { fonts } from "../theme/fonts.js";
+import GameData from "../GameData.js";
 
 export default class Options extends Phaser.Scene {
-    constructor(gameData) {
+    gameData: GameData;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    roundLengthIndex: number;
+    totalEventCardsIndex: number;
+    totalWorkLateTilesIndex: number;
+    buttonRoundLength: CenterMenuButton;
+    buttonEventCards: CenterMenuButton;
+    buttonWorkLate: CenterMenuButton;
+
+    constructor(gameData: GameData) {
         super({key: "Options"});
         this.gameData = gameData;
     }
@@ -36,16 +47,20 @@ export default class Options extends Phaser.Scene {
         });
 
         this.add.text(this.x, this.y*0.85, "Event Cards Per Round:", fonts.get("h3")).setOrigin(0.5);
+        // @ts-ignore
         this.buttonEventCards = new  CenterMenuButton(this, 1.0, gameData._eventCardsPerRoundValues[this.totalEventCardsIndex], fonts.get("h3Light"), () => {
             this.totalEventCardsIndex++;
             if (this.totalEventCardsIndex >= gameData._eventCardsPerRoundValues.length) this.totalEventCardsIndex = 0;
+            // @ts-ignore
             this.buttonEventCards.buttonText.setText(gameData._eventCardsPerRoundValues[this.totalEventCardsIndex]);
         });
 
         this.add.text(this.x, this.y*1.2, "Work Late Tiles Per Team:", fonts.get("h3")).setOrigin(0.5);
+        // @ts-ignore
         this.buttonWorkLate = new  CenterMenuButton(this, 1.35, gameData._workLateTilesPerTeamValues[this.totalWorkLateTilesIndex], fonts.get("h3Light"), () => {
             this.totalWorkLateTilesIndex++;
             if (this.totalWorkLateTilesIndex >= gameData._workLateTilesPerTeamValues.length) this.totalWorkLateTilesIndex = 0;
+            // @ts-ignore
             this.buttonWorkLate.buttonText.setText(gameData._workLateTilesPerTeamValues[this.totalWorkLateTilesIndex]);
         });
     }

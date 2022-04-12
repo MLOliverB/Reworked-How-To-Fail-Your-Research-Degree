@@ -2,9 +2,16 @@
 import { colours } from "../theme/colours.js";
 import { fonts } from "../theme/fonts.js";
 import { createMainMenuButtons } from "../elements/buttons.js";
+import GameData from "../GameData.js";
 
 export default class MainMenu extends Phaser.Scene {
-    constructor(gameData) {
+    gameData: GameData;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+
+    constructor(gameData: GameData) {
         super({key: "MainMenu"});
         this.gameData = gameData;
     }

@@ -1,4 +1,3 @@
-// @ts-check
 import MainMenu from "./scenes/MainMenu.js";
 import Credits from "./scenes/Credits.js";
 import GameData from "./GameData.js";
