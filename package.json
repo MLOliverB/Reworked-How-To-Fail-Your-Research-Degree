@@ -5,7 +5,7 @@
     "sql-js": "^0.1.0"
   },
   "scripts": {
-    "test": "mocha --recursive './bin/test/*.js'",
+    "test": "mocha -c --ignore './bin/test/util.js' --recursive './bin/test/*.js'",
     "build": "tsc --build",
     "clean": "tsc --build --clean"
   },
