@@ -5,7 +5,7 @@
     "IMPLEMENTATION": [
         "{stage==3}"
     ],
-    "WRITE-UP": [
+    "WRITEUP": [
         "{stage==4}"
     ],
     "METHODOLOGY": [
