@@ -4,13 +4,16 @@
 
 import fs from 'fs';
 import assert from 'assert';
-import { countNonAscii, showNonAscii, countOccurences } from './util';
+import { countNonAscii, showNonAscii, countOccurences, verifyCharacters, verifyBracketClosure } from './util';
 
 var activityCards: any[] = require('../../resources/data/activity-cards');
 var eventCards: any[] = require('../../resources/data/event-cards');
 var cardGroups: any[] = require('../../resources/data/card-groups');
 
 var cards: any[] = activityCards.concat(eventCards);
+var cardSlugs: any[] = Array.from(cards, function(val, ix) {
+    return val.slug;
+})
 
 
 describe('Cards JSON Data', function() {
@@ -68,6 +71,9 @@ describe('Cards JSON Data', function() {
                         it('should only contain ascii characters', function() {
                             assert(countNonAscii(val.slug) == 0, showNonAscii(val.slug));
                         });
+                        it('should only contain alphanumeric characters and "-"', function() {
+                            assert(verifyCharacters(val.slug, /[a-zA-Z0-9\-]/));
+                        });
                         it('should be unique', function() {
                             assert(countOccurences(val.slug, Array.from(cards, x => x.slug)) == 1, 'Each slug must only occur once');
                         });
@@ -92,6 +98,9 @@ describe('Cards JSON Data', function() {
                         });
                         it('should only contain ascii characters', function() {
                             assert(countNonAscii(val.image) == 0, showNonAscii(val.image));
+                        });
+                        it('should only contain alphanumeric characters, "." and "-"', function() {
+                            assert(verifyCharacters(val.image, /[a-zA-Z0-9\.\-]/));
                         });
                         it('should be unique', function() {
                             assert(countOccurences(val.image, Array.from(cards, x => x.image)) == 1, 'Each image name must only occur once');
@@ -297,12 +306,7 @@ describe('Cards JSON Data', function() {
                         });
                     });
                     describe('Effect Property', function() {
-                        it('should be type string', function() {
-                            assert.equal(typeof val.effect, 'string');
-                        });
-                        it('should only contain ascii characters', function() {
-                            assert(countNonAscii(val.effect) == 0, showNonAscii(val.effect));
-                        });
+                        testEffect(val.effect);
                     });
                     describe('ElseCondition Property', function() {
                         it('should be type string', function() {
@@ -311,9 +315,19 @@ describe('Cards JSON Data', function() {
                         it('should only contain ascii characters', function() {
                             assert(countNonAscii(val.elseCondition) == 0, showNonAscii(val.elseCondition));
                         });
+                        it('should only contain alphanumeric characters and - { } [ ] ( ) * $ ! ^ & |', function() {
+                            assert(verifyCharacters(val.elseCondition, /[a-zA-Z0-9\-\{\}\[\]\(\)\*\$\!\^\&\|]/));
+                        });
+                        if (val.elseCondition.length < 6) {
+                            it('should either be true or false', function() {
+                                assert(["true", "false"].includes(val.elseCondition));
+                            });
+                        } else {
+                            testLogicFunction(val.elseCondition);
+                        }
                     });
                     describe('ElseEffect Property', function() {
-
+                        testEffect(val.elseEffect);
                     });
 
                     afterEach('if current test passed', function() {
@@ -336,6 +350,99 @@ describe('Cards JSON Data', function() {
         });
     });
     describe('Card Groups', function() {
-        
+        Object.entries(cardGroups).forEach(function(val, ix, arr) {
+            describe(`Group ${val[0]}`, function() {
+                let list: any[] = val[1];
+                list.forEach(function(elem, i, array) {
+                    if (typeof elem == 'string') {
+                        describe(`Card Slug ${elem}`, function() {
+                            it('should be an actual slug', function() {
+                                assert(cardSlugs.includes(elem));
+                            });
+                        });
+                    } else {
+                        describe('Generator function', function() {
+                            let f: Function;
+                            let result: any[];
+                            it('should have function property', function() {
+                                assert.notEqual(typeof elem.activityCardFilter, 'undefined');
+                                assert.notEqual(typeof elem.eventCardFilter, 'undefined');
+                            });
+                            it('should have function body of type string', function() {
+                                assert.equal(typeof elem.activityCardFilter, 'string');
+                                assert.equal(typeof elem.eventCardFilter, 'string');
+                            });
+                            it('should run as a function', function() {
+                                f = new Function("activityCards,eventCards", `return activityCards.filter(function(card){return ${elem.activityCardFilter}}).concat(eventCards.filter(function(card){return ${elem.eventCardFilter}}))`);
+                                result = f(activityCards, eventCards);
+                            });
+                            it('should return an array', function() {
+                                assert(result instanceof Array);
+                            });
+                            it('should return at least one slug', function() {
+                                assert(result.length > 0);
+                            });
+                        });
+                    }
+                });
+            });
+        });
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+function testEffect(value: string) {
+    describe('General Tests', function() {
+        it('should be type string', function() {
+            assert.equal(typeof value, 'string');
+        });
+        it('should only contain ascii characters', function() {
+            assert(countNonAscii(value) == 0, showNonAscii(value));
+        });
+        it('should only contain alphanumeric characters and - { } [ ] ( ) * $ ! ^ & | SPACE', function() {
+            assert(verifyCharacters(value, /[a-zA-Z0-9\-\{\}\[\]\(\)\*\$\!\^\&\| ]/));
+        });
+    });
+    if (value.length < 2) {
+        describe('Empty Effect', function() {
+            it('should be just a hyphen "-"', function() {
+                assert.equal(value, "-");
+            });
+        });
+    } else {
+        let instructionPairs = value.split(" ");
+        for (let i = 0; i < instructionPairs.length; i = i + 2) {
+            let instruction = instructionPairs[i];
+            let logicFunction = instructionPairs[i+1];
+            describe(`Effect pair ${instruction} ${logicFunction}`, function() {
+                describe('Instruction', function() {
+                    it('should be one of add remove removall queue block save', function() {
+                        assert(["add", "remove", "removeall", "queue", "block", "save", "flip"].includes(instruction));
+                    });
+                });
+                describe('LogicFunction', function() {
+                    testLogicFunction(logicFunction);
+                });
+            });
+        }
+    }
+}
+
+function testLogicFunction(logicFunction: string) {
+    it('should have bracket closure (matching bracket pairs and correct nesting)', function() {
+        assert(verifyBracketClosure(logicFunction));
+    });
+    // TODO: Verify that all terms in the logic function are correct
+    // TODO: Verify that all slugs exist
+    // TODO: Verify that all groups exist
+}

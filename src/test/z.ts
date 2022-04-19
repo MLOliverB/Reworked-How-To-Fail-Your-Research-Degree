@@ -1,31 +1,7 @@
-import { BRACKET_MAP, REVERSE_BRACKET_MAP } from "../dev/constants";
+import { BRACKET_MAP } from "../dev/constants";
+import { verifyBracketClosure } from "./util";
 
-/**
- * Verifies that all brackets within an expression come in matching pairs with correct nesting.
- * If brackets don't match, an error is thrown.
- * @param expression The expression to be tested for bracket closure
- */
-function verifyBracketClosure(expression: string) {
-    let bracketStack: string[] = [];
-    for (let i = 0; i < expression.length; i++) {
-        let c: string = expression.charAt(i);
-        if (BRACKET_MAP.has(c)) {
-            let reverse = BRACKET_MAP.get(c);
-            if (typeof reverse == 'string') {
-                bracketStack.push(reverse);
-            }
-        } else if (REVERSE_BRACKET_MAP.has(c)) {
-            if (c == bracketStack[bracketStack.length-1]) {
-                bracketStack.pop();
-            } else {
-                throw `${expression} bracket mismatch at ${i}: is ${c}, expected ${bracketStack[bracketStack.length-1]}`;
-            }
-        }
-    }
-    if (bracketStack.length > 0) {
-        throw `${expression} bracket mismatch: could not find closing brackets for ${bracketStack}`;
-    }
-}
+
 
 function recursiveParseLogicFunction(expression: string): any {
     let output = [];

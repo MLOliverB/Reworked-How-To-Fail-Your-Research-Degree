@@ -217,7 +217,7 @@
         "isOptional": false,
         "effect": "block {2}[$IMPLEMENTATION]&&{2}[$WRITEUP]",
         "elseCondition": "{1}[act-PLAN-milestones]&&{1}[act-PLAN-supervisor]",
-        "elseEffect": ""
+        "elseEffect": "-"
     },
     {
         "title": "Bluescreen!",
@@ -326,7 +326,7 @@
         "image": "event-IMP-metadatafail.png",
         "isOptional": false,
         "effect": "remove {2}[$INTERPRETATION]",
-        "elseCondition": "{1}[strategy, act-PLAN-RDM]",
+        "elseCondition": "{1}[act-PLAN-RDM]",
         "elseEffect": "-"
     },
     {
@@ -617,7 +617,7 @@
         "isOptional": false,
         "effect": "remove {2}![$THESIS]",
         "elseCondition": "{2}[act-CONTEXT-veryrelarticle]",
-        "elseEffect": "2"
+        "elseEffect": "-"
     },
     {
         "title": "Tunnel vision",
@@ -645,7 +645,7 @@
         "stage": 4,
         "image": "event-WRITEUP-waffle.png",
         "isOptional": false,
-        "effect": "{1}[act-WRITEUP-critical]",
+        "effect": "remove {1}[act-WRITEUP-critical]",
         "elseCondition": "false",
         "elseEffect": "-"
     }

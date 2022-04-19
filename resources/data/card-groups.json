@@ -1,12 +1,21 @@
 {
     "CONTEXT": [
-        "{stage==2}"
+        {
+            "activityCardFilter": "card.stage == 2",
+            "eventCardFilter": "false"
+        }
     ],
     "IMPLEMENTATION": [
-        "{stage==3}"
+        {
+            "activityCardFilter": "card.stage == 3",
+            "eventCardFilter": "false"
+        }
     ],
     "WRITEUP": [
-        "{stage==4}"
+        {
+            "activityCardFilter": "card.stage == 4",
+            "eventCardFilter": "false"
+        }
     ],
     "METHODOLOGY": [
         "act-CONTEXT-method1",
