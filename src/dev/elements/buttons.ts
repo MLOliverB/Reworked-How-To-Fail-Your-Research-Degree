@@ -1,7 +1,5 @@
-import Phaser from "phaser";
-import BaseScene from "../scenes/BaseScene.js";
-import { colours } from "../theme/colours.js";
-import { fonts } from "../theme/fonts.js";
+import { COLOURS, FONTS } from "../constants";
+import { BaseScene } from "../scenes/BaseScene";
 
 type OnClick = () => void;
 type OnClickArr = (() => void)[];
@@ -22,12 +20,12 @@ class Button {
 
         this.button.on("pointerup", () => { onClick(); });
         if (onHover == undefined) {
-            this.button.on("pointerover", () => { this.button.setFillStyle(colours.buttonHover); });
+            this.button.on("pointerover", () => { this.button.setFillStyle(COLOURS.buttonHover); });
         } else {
             this.button.on("pointerover", () => { onHover(); });
         }
         if (onHoverExit == undefined) {
-            this.button.on("pointerout", () => { this.button.setFillStyle(colours.button); });
+            this.button.on("pointerout", () => { this.button.setFillStyle(COLOURS.button); });
         } else {
             this.button.on("pointerout", () => { onHoverExit(); });
         }
@@ -54,21 +52,18 @@ class Button {
 }
 
 
-class CenterMenuButton extends Button {
-
+export class CenterMenuButton extends Button {
     constructor(scene: BaseScene, y: number, text: string, textStyle: Phaser.Types.GameObjects.Text.TextStyle, onClick: OnClick) {
-        super(scene, scene.x, scene.y*y, scene.width*0.2, scene.height*0.09, colours.buttonEvent, true, text, textStyle, onClick, () => { this.button.setFillStyle(colours.buttonEventHover); }, () => { this.button.setFillStyle(colours.buttonEvent); });
+        super(scene, scene.x, scene.y*y, scene.width*0.2, scene.height*0.09, COLOURS.buttonEvent, true, text, textStyle, onClick, () => { this.button.setFillStyle(COLOURS.buttonEventHover); }, () => { this.button.setFillStyle(COLOURS.buttonEvent); });
     }
 }
 
-function createMainMenuButtons(scene: BaseScene, buttonNames: string[], onClick: OnClickArr) {
+export function createMainMenuButtons(scene: BaseScene, buttonNames: string[], onClick: OnClickArr) {
     let count: number = buttonNames.length;
     let yIntervals: number = 2 / (count + 1);
 
     for (let i: number = 0; i < count; i++) {
-        new Button(scene, scene.x*1.75, scene.y*(yIntervals*(i+1)), scene.width*0.2, scene.height*0.09, colours.button, true, buttonNames[i], fonts.h3, onClick[i], undefined, undefined);
+        new Button(scene, scene.x*1.75, scene.y*(yIntervals*(i+1)), scene.width*0.2, scene.height*0.09, COLOURS.button, true, buttonNames[i], FONTS.h3, onClick[i], undefined, undefined);
     }
 
 }
-
-export { CenterMenuButton, createMainMenuButtons };

@@ -1,4 +1,4 @@
-function openExternalLink(url: string) {
+export function openExternalLink(url: string) {
     var s = window.open(url, '_blank');
 
     if (s && s.focus) {
@@ -8,5 +8,3 @@ function openExternalLink(url: string) {
         window.location.href = url;
     }
 }
-
-export { openExternalLink };

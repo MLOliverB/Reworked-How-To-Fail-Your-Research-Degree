@@ -1,10 +1,9 @@
-import MainMenu from "./scenes/MainMenu.js";
-import Credits from "./scenes/Credits.js";
-import GameData from "./GameData.js";
-import Options from "./scenes/Options.js";
-const Phaser = require('phaser');
-
-const version = "0.1.0";
+import Phaser from "phaser";
+import { version } from "./constants";
+import { GameData } from "./GameData";
+import { Credits } from "./scenes/Credits";
+import { MainMenu } from "./scenes/MainMenu";
+import { Options } from "./scenes/Options";
 
 const gameData = new GameData();
 
@@ -25,5 +24,3 @@ const config= {
 
 const game = new Phaser.Game(config);
 gameData._gameLoaded();
-
-export { version };

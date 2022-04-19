@@ -1,12 +1,10 @@
-import { CenterMenuButton } from "../elements/buttons.js";
-import { fonts } from "../theme/fonts.js";
-import { colours } from "../theme/colours.js";
-import { openExternalLink } from "../util.js"
-import { version } from "../mainGame.js";
-import GameData from "../GameData.js";
-import BaseScene from "./BaseScene.js";
+import { COLOURS, FONTS, version } from "../constants";
+import { CenterMenuButton } from "../elements/buttons";
+import { GameData } from "../GameData";
+import { openExternalLink } from "../util";
+import { BaseScene } from "./BaseScene";
 
-export default class Credits extends BaseScene {
+export class Credits extends BaseScene {
 
     constructor(gameData: GameData) {
         super(gameData, {key: "Credits"});
@@ -15,9 +13,9 @@ export default class Credits extends BaseScene {
     create() {
         super.create();
 
-        this.add.rectangle(this.x, this.y, this.width, this.height, colours.background);
-        this.add.rectangle(this.x, this.y*0.2, this.width*0.2, this.height*0.15, colours.toolbar);
-        this.add.text(this.x, this.y*0.2, "Credits", fonts.h2).setOrigin(0.5);
+        this.add.rectangle(this.x, this.y, this.width, this.height, COLOURS.background);
+        this.add.rectangle(this.x, this.y*0.2, this.width*0.2, this.height*0.15, COLOURS.toolbar);
+        this.add.text(this.x, this.y*0.2, "Credits", FONTS.h2).setOrigin(0.5);
 
         let columnHeading =     {color: "#000000", fontFamily: "Bahiana", fontSize: "60px", align: "center", wordWrap: {width: 500}};
         let columnTextCenter =  {color: "#000000", fontFamily: "Bahiana", fontSize: "40px", align: "center", wordWrap: {width: 500}};
@@ -90,6 +88,6 @@ export default class Credits extends BaseScene {
         box.setFillStyle(0x000000, 0);
         box.setStrokeStyle(this.width*0.002, 0x000000);
 
-        new CenterMenuButton(this, 1.75, "Back to Main Menu", fonts.h3, () => { this.scene.start("MainMenu") });
+        new CenterMenuButton(this, 1.75, "Back to Main Menu", FONTS.h3, () => { this.scene.start("MainMenu") });
     }
 }
