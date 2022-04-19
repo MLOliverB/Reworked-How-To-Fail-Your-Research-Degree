@@ -1,11 +1,17 @@
-import { countNonAscii, countOccurences, showNonAscii } from "./util";
+// import * as activityCards from '../../resources/data/activity-cards.json';
+// import * as eventCards from '../../resources/data/event-cards.json';
+// import * as cardGroups from '../../resources/data/card-groups.json';
 
-var fs = require('fs');
-var assert = require('assert');
+import fs from 'fs';
+import assert from 'assert';
+import { countNonAscii, showNonAscii, countOccurences } from './util';
+
 var activityCards: any[] = require('../../resources/data/activity-cards');
 var eventCards: any[] = require('../../resources/data/event-cards');
+var cardGroups: any[] = require('../../resources/data/card-groups');
+
 var cards: any[] = activityCards.concat(eventCards);
-var cardGroups: any[] = require('../../resources/data/activity-cards');
+
 
 describe('Cards JSON Data', function() {
     describe('Common Properties', function() {

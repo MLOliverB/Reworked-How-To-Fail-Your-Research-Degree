@@ -6,7 +6,7 @@
         "image": "event-CONTEXT-adviceacademic.png",
         "isOptional": true,
         "effect": "add {1}[act-PLAN-ethics]",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     },
     {
@@ -16,7 +16,7 @@
         "image": "event-CONTEXT-advicespecialist.png",
         "isOptional": true,
         "effect": "remove {1}[act-CONTEXT-uselessarticle]",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     },
     {
@@ -76,7 +76,7 @@
         "image": "event-CONTEXT-greatresource.png",
         "isOptional": true,
         "effect": "-",
-        "elseCondition": true,
+        "elseCondition": "true",
         "elseEffect": "queue {1}[act-IMP-greatresources]"
     },
     {
@@ -126,7 +126,7 @@
         "image": "event-CONTEXT-mentorleaves.png",
         "isOptional": false,
         "effect": "remove {*}[act-PLAN-supervisor]",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     },
     {
@@ -186,7 +186,7 @@
         "image": "event-CONTEXT-sourcesfail.png",
         "isOptional": false,
         "effect": "remove {2}[$CONTEXT]",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     },
     {
@@ -196,7 +196,7 @@
         "image": "event-CONTEXT-sourceswin.png",
         "isOptional": true,
         "effect": "-",
-        "elseCondition": true,
+        "elseCondition": "true",
         "elseEffect": "add {1}[act-CONTEXT-veryrelarticle]"
     },
     {
@@ -236,7 +236,7 @@
         "image": "event-IMP-brokenfridge.png",
         "isOptional": false,
         "effect": "remove {3}([$DATA]||[$RESULTS]||[act-IMP-greatresults])",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     },
     {
@@ -296,7 +296,7 @@
         "image": "event-IMP-fire.png",
         "isOptional": false,
         "effect": "remove {3}([$DATA$]||[$RESULTS]||[$ANALYSIS]||[$INTERPRETATION])",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     },
     {
@@ -306,7 +306,7 @@
         "image": "event-IMP-flood.png",
         "isOptional": false,
         "effect": "remove {1}[act-IMP-greatresources]&&{2}([$RESULTS]||[act-IMP-greatresults])",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     },
     {
@@ -466,7 +466,7 @@
         "image": "event-WRITEUP-disagreement.png",
         "isOptional": false,
         "effect": "remove {2}([act-WRITEUP-soundconcl]||[$CONLUSIONS])",
-        "elseCondition": "{1}[act-CONTEXT-veryrelarticle]&&{1}[act-CONTEXT-veryrelarticle]",
+        "elseCondition": "{1}[act-CONTEXT-veryrelarticle]&&{1}[act-CONTEXT-veryrelmethod]",
         "elseEffect": "-"
     },
     {
@@ -564,7 +564,7 @@
         "slug": "event-WRITEUP-procrastinate",
         "stage": 4,
         "image": "event-WRITEUP-procrastinate.png",
-        "isOptional": null,
+        "isOptional": false,
         "effect": "remove {2}![$THESIS]",
         "elseCondition": "{1}[act-PLAN-milestones]",
         "elseEffect": "flip {1}[act-PLAN-milestones]"
@@ -576,7 +576,7 @@
         "image": "event-WRITEUP-proofreader.png",
         "isOptional": true,
         "effect": "-",
-        "elseCondition": true,
+        "elseCondition": "true",
         "elseEffect": "add {1}[$EXPLANATION] save {1}[event-WRITEUP-proofreader]"
     },
     {
@@ -646,7 +646,7 @@
         "image": "event-WRITEUP-waffle.png",
         "isOptional": false,
         "effect": "{1}[act-WRITEUP-critical]",
-        "elseCondition": false,
+        "elseCondition": "false",
         "elseEffect": "-"
     }
 ]

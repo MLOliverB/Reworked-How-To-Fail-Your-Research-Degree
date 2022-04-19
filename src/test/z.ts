@@ -1,5 +1,4 @@
-import { BRACKET_MAP, REVERSE_BRACKET_MAP } from "../src/const";
-
+import { BRACKET_MAP, REVERSE_BRACKET_MAP } from "../dev/constants";
 
 /**
  * Verifies that all brackets within an expression come in matching pairs with correct nesting.
