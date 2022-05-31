@@ -1,7 +1,7 @@
-import GameData from "../GameData";
-import BaseScene from "./BaseScene";
+import { GameData } from "../GameData";
+import { BaseScene } from "./BaseScene";
 
-export default class TeamGameBoard extends BaseScene {
+export class TeamGameBoard extends BaseScene {
     constructor(gameData: GameData, key: string) {
         super(gameData, {key: key});
     }

@@ -1,5 +1,5 @@
-import TeamGameBoard from "./scenes/TeamGameBoard";
-import TeamToolbar from "./scenes/TeamToolbar";
+import { TeamGameBoard } from "./scenes/TeamGameBoard";
+import { TeamToolbar } from "./scenes/TeamToolbar";
 
 interface TeamData {
     cards: any[], //TODO
@@ -11,7 +11,7 @@ interface TeamData {
     keyName: string
 }
 
-export default class GameData {
+export class GameData {
     game!: Phaser.Game;
 
     _roundLengthValues: number[];

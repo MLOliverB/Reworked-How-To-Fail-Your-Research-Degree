@@ -1,6 +1,6 @@
-import GameData from "../GameData";
+import { GameData } from "../GameData";
 
-export default class BaseScene extends Phaser.Scene {
+export class BaseScene extends Phaser.Scene {
     gameData: GameData;
     x: number;
     y: number;

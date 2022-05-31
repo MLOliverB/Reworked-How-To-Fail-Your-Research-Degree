@@ -3,6 +3,8 @@
 ~$*
 temp.js
 bin
+public
+server.js
 
 # Logs
 logs
