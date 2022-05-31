@@ -23,14 +23,28 @@ export const FONTS = {
     h3Light: {color: "#FFFFFF", fontFamily: "Bahiana", fontSize: "60px"},
 };
 
-export const BRACKET_MAP: Map<string, string> = new Map([
-    ["{", "}"],
-    ["[", "]"],
-    ["(", ")"]
+export const LOGIC_QUANTIFIER_ALL = "*";
+
+export const LOGIC_MODIFIER_NON_ADJACENT = "!";
+export const LOGIC_MODIFIER_UNIQUE = "^";
+
+export const LOGIC_SELECTOR_CARD_GROUP = "$";
+
+export const LOGIC_BRACKET_LOGICEXPRESSION_OPEN = "{";
+export const LOGIC_BRACKET_LOGICEXPRESSION_CLOSE = "}";
+export const LOGIC_BRACKET_CARD_OPEN = "[";
+export const LOGIC_BRACKET_CARD_CLOSE = "]";
+export const LOGIC_BRACKET_PRECEDENCE_OPEN = "(";
+export const LOGIC_BRACKET_PRECEDENCE_CLOSE = ")";
+
+export const LOGIC_BRACKET_MAP: Map<string, string> = new Map([
+    [LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE],
+    [LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_CARD_CLOSE],
+    [LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_PRECEDENCE_CLOSE]
 ]);
 
-export const REVERSE_BRACKET_MAP: Map<string, string> = new Map([
-    ["}", "{"],
-    ["]", "["],
-    [")", "("]
+export const LOGIC_REVERSE_BRACKET_MAP: Map<string, string> = new Map([
+    [LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN],
+    [LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN],
+    [LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_BRACKET_PRECEDENCE_OPEN]
 ]);

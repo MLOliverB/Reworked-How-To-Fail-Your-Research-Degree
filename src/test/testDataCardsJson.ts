@@ -4,16 +4,15 @@
 
 import fs from 'fs';
 import assert from 'assert';
-import { countNonAscii, showNonAscii, countOccurences, verifyCharacters, verifyBracketClosure } from './util';
+import { countNonAscii, showNonAscii, countOccurences, verifyCharacters } from './util';
+import { parseEffect, parseLogicFunction, verifyBracketClosure } from '../dev/cards/eventCards';
 
 var activityCards: any[] = require('../../resources/data/activity-cards');
 var eventCards: any[] = require('../../resources/data/event-cards');
 var cardGroups: any[] = require('../../resources/data/card-groups');
 
 var cards: any[] = activityCards.concat(eventCards);
-var cardSlugs: any[] = Array.from(cards, function(val, ix) {
-    return val.slug;
-})
+var cardSlugs: any[] = Array.from(cards, (val,ix)=>val.slug);
 
 
 describe('Cards JSON Data', function() {
@@ -315,8 +314,8 @@ describe('Cards JSON Data', function() {
                         it('should only contain ascii characters', function() {
                             assert(countNonAscii(val.elseCondition) == 0, showNonAscii(val.elseCondition));
                         });
-                        it('should only contain alphanumeric characters and - { } [ ] ( ) * $ ! ^ & |', function() {
-                            assert(verifyCharacters(val.elseCondition, /[a-zA-Z0-9\-\{\}\[\]\(\)\*\$\!\^\&\|]/));
+                        it('should only contain alphanumeric characters and - ~ { } [ ] ( ) * $ ! ^ & |', function() {
+                            assert(verifyCharacters(val.elseCondition, /[a-zA-Z0-9\-\~\{\}\[\]\(\)\*\$\!\^\&\|]/));
                         });
                         if (val.elseCondition.length < 6) {
                             it('should either be true or false', function() {
@@ -409,40 +408,51 @@ function testEffect(value: string) {
         it('should only contain ascii characters', function() {
             assert(countNonAscii(value) == 0, showNonAscii(value));
         });
-        it('should only contain alphanumeric characters and - { } [ ] ( ) * $ ! ^ & | SPACE', function() {
-            assert(verifyCharacters(value, /[a-zA-Z0-9\-\{\}\[\]\(\)\*\$\!\^\&\| ]/));
+        it('should only contain alphanumeric characters and - ~ { } [ ] ( ) * $ ! ^ & | SPACE', function() {
+            assert(verifyCharacters(value, /[a-zA-Z0-9\-\~\{\}\[\]\(\)\*\$\!\^\&\| ]/));
+        });
+        it('should have bracket closure (matching bracket pairs and correct nesting)', function() {
+            assert(verifyBracketClosure(value));
+        });
+        it('should parse without errors', function() {
+            parseEffect(value);
         });
     });
-    if (value.length < 2) {
-        describe('Empty Effect', function() {
-            it('should be just a hyphen "-"', function() {
-                assert.equal(value, "-");
-            });
-        });
-    } else {
-        let instructionPairs = value.split(" ");
-        for (let i = 0; i < instructionPairs.length; i = i + 2) {
-            let instruction = instructionPairs[i];
-            let logicFunction = instructionPairs[i+1];
-            describe(`Effect pair ${instruction} ${logicFunction}`, function() {
-                describe('Instruction', function() {
-                    it('should be one of add remove removall queue block save', function() {
-                        assert(["add", "remove", "removeall", "queue", "block", "save", "flip"].includes(instruction));
-                    });
-                });
-                describe('LogicFunction', function() {
-                    testLogicFunction(logicFunction);
-                });
-            });
-        }
-    }
+
+    // if (value.length < 2) {
+    //     describe('Empty Effect', function() {
+    //         it('should be just a hyphen "-"', function() {
+    //             assert.equal(value, "-");
+    //         });
+    //     });
+    // } else {
+    //     let instructionPairs = value.split(" ");
+    //     for (let i = 0; i < instructionPairs.length; i = i + 2) {
+    //         let instruction = instructionPairs[i];
+    //         let logicFunction = instructionPairs[i+1];
+    //         describe(`Effect pair ${instruction} ${logicFunction}`, function() {
+    //             describe('Instruction', function() {
+    //                 it('should be one of add remove removall queue block save', function() {
+    //                     assert(["add", "remove", "removeall", "queue", "block", "save", "flip"].includes(instruction));
+    //                 });
+    //             });
+    //             describe('LogicFunction', function() {
+    //                 testLogicFunction(logicFunction);
+    //             });
+    //         });
+    //     }
+    // }
 }
 
 function testLogicFunction(logicFunction: string) {
     it('should have bracket closure (matching bracket pairs and correct nesting)', function() {
         assert(verifyBracketClosure(logicFunction));
     });
+    it('should parse without errors', function() {
+        parseLogicFunction(logicFunction);
+    });
     // TODO: Verify that all terms in the logic function are correct
     // TODO: Verify that all slugs exist
     // TODO: Verify that all groups exist
+    // TODO: Verify that all conjunctions & disjunctions are binary -> Use brackets otherwise
 }

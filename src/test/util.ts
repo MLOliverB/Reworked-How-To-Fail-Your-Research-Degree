@@ -1,5 +1,3 @@
-import { BRACKET_MAP, REVERSE_BRACKET_MAP } from "../dev/constants";
-
 /**
  * 
  * @param str The string to be checked for non-ascii characters.
@@ -42,11 +40,13 @@ export function showNonAscii(str: string): string {
  * @param charSet Array of single character strings specifiying the allowed characters or a regular expression to which single allowe characters will match
  * @returns True if and only if all characters in the string are allowed
  */
-export function verifyCharacters(str: string, charSet: string[] | RegExp): boolean {
+export function verifyCharacters(str: string, charSet: string[] | RegExp, failSilent?: boolean): boolean {
+    if (typeof failSilent == 'undefined') failSilent = false;
     if (charSet instanceof RegExp) {
         for (let i = 0; i < str.length; i++) {
             let c = str.charAt(i);
             if (c.search(charSet) == -1) {
+                if (failSilent) return false;
                 throw `Detected illegal character ${c} at position ${i} in string ${str}`;
             }
         }
@@ -54,6 +54,7 @@ export function verifyCharacters(str: string, charSet: string[] | RegExp): boole
         for (let i = 0; i < str.length; i++) {
             let c = str.charAt(i);
             if (!charSet.includes(c)) {
+                if (failSilent) return false;
                 throw `Detected illegal character ${c} at position ${i} in string ${str}`;
             }
         }
@@ -90,31 +91,18 @@ export function countOccurences<Type>(item: Type, arr: Type[]): number {
 }
 
 
-/**
- * Verifies that all brackets within an expression come in matching pairs with correct nesting.
- * If brackets don't match, an error is thrown.
- * @param expression The expression to be tested for bracket closure
- * @returns True if and only if bracket closure has been verified
- */
- export function verifyBracketClosure(expression: string): boolean {
-    let bracketStack: string[] = [];
-    for (let i = 0; i < expression.length; i++) {
-        let c: string = expression.charAt(i);
-        if (BRACKET_MAP.has(c)) {
-            let reverse = BRACKET_MAP.get(c);
-            if (typeof reverse == 'string') {
-                bracketStack.push(reverse);
+export function recrusiveExpandNestedArray(arr: any) {
+    if (Array.isArray(arr)) {
+        let arrLength = arr.length;
+        let str = "[ ";
+        arr.forEach(function(currentValue: any, index: number, arr: any[]) {
+            str += `${recrusiveExpandNestedArray(currentValue)}`
+            if (index < arrLength-1) {
+                str += ", ";
             }
-        } else if (REVERSE_BRACKET_MAP.has(c)) {
-            if (c == bracketStack[bracketStack.length-1]) {
-                bracketStack.pop();
-            } else {
-                throw `${expression} bracket mismatch at ${i}: is ${c}, expected ${bracketStack[bracketStack.length-1]}`;
-            }
-        }
+        });
+        return str + " ]";
+    } else {
+        return arr;
     }
-    if (bracketStack.length > 0) {
-        throw `${expression} bracket mismatch: could not find closing brackets for ${bracketStack}`;
-    }
-    return true;
 }
