@@ -1,5 +1,5 @@
 import { cardSelector, cardStatement, effect, isInstruction, isLogicOperator, isModifierArray, logicExpression, logicFunction } from "./types";
-import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_QUANTIFIER_ALL, LOGIC_BRACKET_PRECEDENCE_CLOSE } from "../constants";
+import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_QUANTIFIER_ALL, LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_LOGICEXPRESSION_SEPARATOR } from "../constants";
 
 
 export function parseEffect(effectString: string): effect[] {
@@ -85,7 +85,7 @@ function parseLogicExpression(expression: string): logicExpression {
     if (expression.charAt(0) == LOGIC_BRACKET_LOGICEXPRESSION_OPEN) {
         expression = expression.slice(1, expression.length-1);
     }
-    let splitQuant = expression.split('~');
+    let splitQuant = expression.split(LOGIC_LOGICEXPRESSION_SEPARATOR);
     let quantifier = splitQuant[0];
     expression = splitQuant[1];
     let modifierSplit = 0;
