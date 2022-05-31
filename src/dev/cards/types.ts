@@ -162,7 +162,7 @@ function isPositiveInteger(num: any): num is PositiveIntegerTag {
 }
 
 
-function isCardSlug(str: any): str is CardSlugTag {
+export function isCardSlug(str: any): str is CardSlugTag {
     if (typeof str == 'string' && str.split("-").length == 3) {
         let strSplit = str.split("-");
         let flag = true;
@@ -177,7 +177,7 @@ function isCardSlug(str: any): str is CardSlugTag {
 }
 
 
-function isCardGroup(str: any): str is CardGroupTag {
+export function isCardGroup(str: any): str is CardGroupTag {
     if (typeof str == 'string') {
         let flag = true;
         flag = flag && verifyCharacters(str.charAt(0), /[$A-Z]/, true);
@@ -209,18 +209,14 @@ export function isInstruction(str: any): str is InstructionTag {
 // ================================================================================================
 
 type cardImage = `${cardSlug}.${imageExtension}`;
-type quantifier = `${quantifierOperator}` | `${posInt}`;
-export type cardStatement = `${cardSlug}` | `$${cardGroup}`;
+type quantifier = quantifierOperator | `${posInt}`;
+export type cardStatement = cardSlug | cardGroup;
 export type cardSelector = cardStatement | [cardSelector, logicOperator, cardSelector]; //type cardSelector = cardStatment | (cardStatment | logicOperator | cardSelector)[];
 export type logicExpression = [quantifier, modifier[], cardSelector] | boolean;
 export type logicFunction = logicExpression | [logicFunction, logicOperator, logicFunction]; //type logicFunction = logicExpression | (logicFunction | logicOperator | logicFunction)[]
 export type effect = [instruction, logicFunction];
 
 // ================================================================================================
-
-
-
-
 
 function isCardImage(str: string): str is cardImage {
     if (typeof str == 'string' && str.split(".").length == 2) {
@@ -235,9 +231,6 @@ function isCardImage(str: string): str is cardImage {
 }
 
 
-
-
-
 function isQuantifier(str: string): str is quantifier {
     if (str.length >= 3) {
         let flag = isPositiveInteger(parseInt(str));
@@ -249,7 +242,11 @@ function isQuantifier(str: string): str is quantifier {
 }
 
 
+export function isCardStatement(str: string): str is cardStatement {
+    return isCardSlug(str) || isCardGroup(str);
+}
 
+// ================================================================================================
 
 export function isModifierArray(arr: string[]): arr is modifier[] {
     let flag = true;

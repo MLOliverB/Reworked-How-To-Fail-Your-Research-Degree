@@ -6,13 +6,16 @@ import fs from 'fs';
 import assert from 'assert';
 import { countNonAscii, showNonAscii, countOccurences, verifyCharacters } from './util';
 import { parseEffect, parseLogicFunction, verifyBracketClosure } from '../dev/cards/eventCards';
+import { LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN } from '../dev/constants';
+import { isCardGroup, isCardSlug, isCardStatement } from '../dev/cards/types';
 
 var activityCards: any[] = require('../../resources/data/activity-cards');
 var eventCards: any[] = require('../../resources/data/event-cards');
 var cardGroups: any[] = require('../../resources/data/card-groups');
 
 var cards: any[] = activityCards.concat(eventCards);
-var cardSlugs: any[] = Array.from(cards, (val,ix)=>val.slug);
+var cardSlugs = new Set<string>(Array.from(cards, (val,ix)=>val.slug));
+// var cardSlugs: string[] = Array.from(cards, (val,ix)=>val.slug);
 
 
 describe('Cards JSON Data', function() {
@@ -356,7 +359,7 @@ describe('Cards JSON Data', function() {
                     if (typeof elem == 'string') {
                         describe(`Card Slug ${elem}`, function() {
                             it('should be an actual slug', function() {
-                                assert(cardSlugs.includes(elem));
+                                assert(cardSlugs.has(elem));
                             });
                         });
                     } else {
@@ -390,58 +393,28 @@ describe('Cards JSON Data', function() {
 });
 
 
-
-
-
-
-
-
-
-
+// ================================================================================================
 
 
 function testEffect(value: string) {
-    describe('General Tests', function() {
-        it('should be type string', function() {
-            assert.equal(typeof value, 'string');
-        });
-        it('should only contain ascii characters', function() {
-            assert(countNonAscii(value) == 0, showNonAscii(value));
-        });
-        it('should only contain alphanumeric characters and - ~ { } [ ] ( ) * $ ! ^ & | SPACE', function() {
-            assert(verifyCharacters(value, /[a-zA-Z0-9\-\~\{\}\[\]\(\)\*\$\!\^\&\| ]/));
-        });
-        it('should have bracket closure (matching bracket pairs and correct nesting)', function() {
-            assert(verifyBracketClosure(value));
-        });
-        it('should parse without errors', function() {
-            parseEffect(value);
-        });
+    it('should be type string', function() {
+        assert.equal(typeof value, 'string');
     });
-
-    // if (value.length < 2) {
-    //     describe('Empty Effect', function() {
-    //         it('should be just a hyphen "-"', function() {
-    //             assert.equal(value, "-");
-    //         });
-    //     });
-    // } else {
-    //     let instructionPairs = value.split(" ");
-    //     for (let i = 0; i < instructionPairs.length; i = i + 2) {
-    //         let instruction = instructionPairs[i];
-    //         let logicFunction = instructionPairs[i+1];
-    //         describe(`Effect pair ${instruction} ${logicFunction}`, function() {
-    //             describe('Instruction', function() {
-    //                 it('should be one of add remove removall queue block save', function() {
-    //                     assert(["add", "remove", "removeall", "queue", "block", "save", "flip"].includes(instruction));
-    //                 });
-    //             });
-    //             describe('LogicFunction', function() {
-    //                 testLogicFunction(logicFunction);
-    //             });
-    //         });
-    //     }
-    // }
+    it('should only contain ascii characters', function() {
+        assert(countNonAscii(value) == 0, showNonAscii(value));
+    });
+    it('should only contain alphanumeric characters and - ~ { } [ ] ( ) * $ ! ^ & | SPACE', function() {
+        assert(verifyCharacters(value, /[a-zA-Z0-9\-\~\{\}\[\]\(\)\*\$\!\^\&\| ]/));
+    });
+    it('should have bracket closure (matching bracket pairs and correct nesting)', function() {
+        assert(verifyBracketClosure(value));
+    });
+    it('should parse without errors', function() {
+        parseEffect(value);
+    });
+    it('should only use actual card slugs and groups', function() {
+        testCardExistence(value);
+    });
 }
 
 function testLogicFunction(logicFunction: string) {
@@ -451,8 +424,27 @@ function testLogicFunction(logicFunction: string) {
     it('should parse without errors', function() {
         parseLogicFunction(logicFunction);
     });
-    // TODO: Verify that all terms in the logic function are correct
-    // TODO: Verify that all slugs exist
-    // TODO: Verify that all groups exist
-    // TODO: Verify that all conjunctions & disjunctions are binary -> Use brackets otherwise
+    it('should only use actual card slugs and groups', function() {
+        testCardExistence(logicFunction);
+    });
+}
+
+function testCardExistence(expression: string) {
+    let offset = 0;
+    while (expression.indexOf(LOGIC_BRACKET_CARD_OPEN, offset) >= 0) {
+        let openIndex = expression.indexOf(LOGIC_BRACKET_CARD_OPEN, offset);
+        let closeIndex = expression.indexOf(LOGIC_BRACKET_CARD_CLOSE, openIndex);
+        let slice = expression.slice(openIndex+1, closeIndex)
+        assert(isCardStatement(slice), `Invalid card statement '${slice}'`);
+        if (isCardGroup(slice)) {
+            let groupSlice = slice.slice(1, slice.length);
+            console.log(groupSlice);
+            assert(Object.keys(cardGroups).includes(groupSlice), `Could not find card group '${slice}'`);
+        } else if (isCardSlug(slice)) {
+            assert(cardSlugs.has(slice), `Could not find card slug '${slice}'`);
+        } else {
+            throw `Fatal error: '${slice}' is card statement but neither a card group nor card slug`;
+        }
+        offset = closeIndex;
+    }
 }

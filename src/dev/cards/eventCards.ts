@@ -1,4 +1,4 @@
-import { cardSelector, cardStatement, effect, isInstruction, isLogicOperator, isModifierArray, logicExpression, logicFunction } from "./types";
+import { cardSelector, cardStatement, effect, isCardStatement, isInstruction, isLogicOperator, isModifierArray, logicExpression, logicFunction } from "./types";
 import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_QUANTIFIER_ALL, LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_LOGICEXPRESSION_SEPARATOR } from "../constants";
 
 
@@ -106,7 +106,12 @@ function recursiveParseCardSelector(expression: string): cardSelector {
     if (expression.charAt(0) == LOGIC_BRACKET_CARD_OPEN) {
         let closeIndex = expression.indexOf(LOGIC_BRACKET_CARD_CLOSE);
         if (closeIndex == expression.length-1) {
-            return expression.slice(1, expression.length-1);
+            let cardStatement = expression.slice(1, expression.length-1);
+            if (isCardStatement(cardStatement)) {
+                return cardStatement;
+            } else {
+                throw `'${cardStatement}' is not a valid card statement`;
+            }
         } else {
             let logOperator = expression.slice(closeIndex+1, closeIndex+3);
             if (closeIndex+3 == expression.length-1) {
