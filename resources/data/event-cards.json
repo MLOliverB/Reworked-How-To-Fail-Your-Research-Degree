@@ -295,7 +295,7 @@
         "stage": 3,
         "image": "event-IMP-fire.png",
         "isOptional": false,
-        "effect": "remove {3~([$DATA$]||[$RESULTS]||[$ANALYSIS]||[$INTERPRETATION])}",
+        "effect": "remove {3~([$DATA]||[$RESULTS]||[$ANALYSIS]||[$INTERPRETATION])}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -465,7 +465,7 @@
         "stage": 4,
         "image": "event-WRITEUP-disagreement.png",
         "isOptional": false,
-        "effect": "remove {2~([act-WRITEUP-soundconcl]||[$CONLUSIONS])}",
+        "effect": "remove {2~([act-WRITEUP-soundconcl]||[$CONCLUSIONS])}",
         "elseCondition": "{1~[act-CONTEXT-veryrelarticle]}&&{1~[act-CONTEXT-veryrelmethod]}",
         "elseEffect": "-"
     },
