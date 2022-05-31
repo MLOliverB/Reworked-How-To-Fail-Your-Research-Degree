@@ -5,7 +5,7 @@
         "stage": 2,
         "image": "event-CONTEXT-adviceacademic.png",
         "isOptional": true,
-        "effect": "add {1}[act-PLAN-ethics]",
+        "effect": "add {1~[act-PLAN-ethics]}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -15,7 +15,7 @@
         "stage": 2,
         "image": "event-CONTEXT-advicespecialist.png",
         "isOptional": true,
-        "effect": "remove {1}[act-CONTEXT-uselessarticle]",
+        "effect": "remove {1~[act-CONTEXT-uselessarticle]}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -25,8 +25,8 @@
         "stage": 2,
         "image": "event-CONTEXT-bluescreen.png",
         "isOptional": false,
-        "effect": "remove {3}[$CONTEXT]",
-        "elseCondition": "{1}[act-PLAN-RDM]",
+        "effect": "remove {3~[$CONTEXT]}",
+        "elseCondition": "{1~[act-PLAN-RDM]}",
         "elseEffect": "-"
     },
     {
@@ -35,9 +35,9 @@
         "stage": 2,
         "image": "event-CONTEXT-distraction.png",
         "isOptional": false,
-        "effect": "remove {2}[$CONTEXT]",
-        "elseCondition": "{1}[act-PLAN-milestones]",
-        "elseEffect": "remove {1}[$CONTEXT]"
+        "effect": "remove {2~[$CONTEXT]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "remove {1~[$CONTEXT]}"
     },
     {
         "title": "Distraction!",
@@ -45,9 +45,9 @@
         "stage": 2,
         "image": "event-CONTEXT-distraction2.png",
         "isOptional": false,
-        "effect": "remove {2}[$CONTEXT]",
-        "elseCondition": "{1}[act-PLAN-milestones]",
-        "elseEffect": "remove {1}[$CONTEXT]"
+        "effect": "remove {2~[$CONTEXT]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "remove {1~[$CONTEXT]}"
     },
     {
         "title": "Tried to do too much?",
@@ -55,8 +55,8 @@
         "stage": 2,
         "image": "event-CONTEXT-dotoomuch.png",
         "isOptional": false,
-        "effect": "remove {2}[$CONTEXT]",
-        "elseCondition": "{1}[act-CONTEXT-refine]",
+        "effect": "remove {2~[$CONTEXT]}",
+        "elseCondition": "{1~[act-CONTEXT-refine]}",
         "elseEffect": "-"
     },
     {
@@ -66,8 +66,8 @@
         "image": "event-CONTEXT-expertise.png",
         "isOptional": true,
         "effect": "-",
-        "elseCondition": "{1}([$METHODOLOGY])",
-        "elseEffect": "save {1}[act-PLAN-expertise]"
+        "elseCondition": "{1~[$METHODOLOGY]}",
+        "elseEffect": "save {1~[act-PLAN-expertise]}"
     },
     {
         "title": "Great resource!",
@@ -77,7 +77,7 @@
         "isOptional": true,
         "effect": "-",
         "elseCondition": "true",
-        "elseEffect": "queue {1}[act-IMP-greatresources]"
+        "elseEffect": "queue {1~[act-IMP-greatresources]}"
     },
     {
         "title": "Someone has my library book!",
@@ -85,9 +85,9 @@
         "stage": 2,
         "image": "event-CONTEXT-hasmybook.png",
         "isOptional": false,
-        "effect": "remove {1}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {1~([$RELARTICLE]||[act-CONTEXT-veryrelarticle])}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Lit review paradox",
@@ -95,8 +95,8 @@
         "stage": 2,
         "image": "event-CONTEXT-litreviewparadox.png",
         "isOptional": false,
-        "effect": "block {2}[$IMPLEMENTATION]&&{2}[$WRITEUP]",
-        "elseCondition": "{1}[act-CONTEXT-refine]||{2}[act-CONTEXT-veryrelarticle]",
+        "effect": "block {2~[$IMPLEMENTATION]}&&{2~[$WRITEUP]}",
+        "elseCondition": "{1~[act-CONTEXT-refine]}||{2~[act-CONTEXT-veryrelarticle]}",
         "elseEffect": "-"
     },
     {
@@ -105,9 +105,9 @@
         "stage": 2,
         "image": "event-CONTEXT-loandelay.png",
         "isOptional": false,
-        "effect": "remove {1}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {1~([$RELARTICLE]||[act-CONTEXT-veryrelarticle])}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Lost enthusiasm",
@@ -115,8 +115,8 @@
         "stage": 2,
         "image": "event-CONTEXT-lostenthus.png",
         "isOptional": false,
-        "effect": "remove {1}[$CONTEXT]",
-        "elseCondition": "{1}[act-PLAN-holiday]",
+        "effect": "remove {1~[$CONTEXT]}",
+        "elseCondition": "{1~[act-PLAN-holiday]}",
         "elseEffect": "-"
     },
     {
@@ -125,7 +125,7 @@
         "stage": 2,
         "image": "event-CONTEXT-mentorleaves.png",
         "isOptional": false,
-        "effect": "remove {*}[act-PLAN-supervisor]",
+        "effect": "remove {*~[act-PLAN-supervisor]}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -136,8 +136,8 @@
         "image": "event-CONTEXT-multiperspective.png",
         "isOptional": true,
         "effect": "-",
-        "elseCondition": "{2}^[$RESOURCE]",
-        "elseEffect": "save {1}[event-CONTEXT-multiperspective]"
+        "elseCondition": "{2~^[$RESOURCE]}",
+        "elseEffect": "save {1~[event-CONTEXT-multiperspective]}"
     },
     {
         "title": "Procrastinate!",
@@ -145,9 +145,9 @@
         "stage": 2,
         "image": "event-CONTEXT-procrastinate.png",
         "isOptional": false,
-        "effect": "remove {3}[$CONTEXT]",
-        "elseCondition": "{1}[act-PLAN-milestones]",
-        "elseEffect": "flip {1}[act-PLAN-milestones]"
+        "effect": "remove {3~[$CONTEXT]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "flip {1~[act-PLAN-milestones]}"
     },
     {
         "title": "Shoddy notes",
@@ -155,9 +155,9 @@
         "stage": 2,
         "image": "event-CONTEXT-shoddynotes.png",
         "isOptional": false,
-        "effect": "block {2}[$IMPLEMENTATION]&&{2}[$WRITEUP]",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "block {2~[$IMPLEMENTATION]}&&{2~[$WRITEUP]}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Sick!",
@@ -165,9 +165,9 @@
         "stage": 2,
         "image": "event-CONTEXT-sick.png",
         "isOptional": false,
-        "effect": "remove {2}[$CONTEXT]",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {2~[$CONTEXT]}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Sister's wedding",
@@ -175,9 +175,9 @@
         "stage": 2,
         "image": "event-CONTEXT-sisterwedding.png",
         "isOptional": false,
-        "effect": "remove {1}[$CONTEXT]",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {1~[$CONTEXT]}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Evaluation of sources: fail!",
@@ -185,7 +185,7 @@
         "stage": 2,
         "image": "event-CONTEXT-sourcesfail.png",
         "isOptional": false,
-        "effect": "remove {2}[$CONTEXT]",
+        "effect": "remove {2~[$CONTEXT]}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -195,9 +195,9 @@
         "stage": 2,
         "image": "event-CONTEXT-sourceswin.png",
         "isOptional": true,
-        "effect": "-",
-        "elseCondition": "true",
-        "elseEffect": "add {1}[act-CONTEXT-veryrelarticle]"
+        "effect": "add {1~[act-CONTEXT-veryrelarticle]}",
+        "elseCondition": "false",
+        "elseEffect": "-"
     },
     {
         "title": "Tunnel vision",
@@ -205,8 +205,8 @@
         "stage": 2,
         "image": "event-CONTEXT-tunnelvision.png",
         "isOptional": false,
-        "effect": "remove {1}[$CONTEXT]",
-        "elseCondition": "{1}([act-PLAN-supervisor]||[act-CONTEXT-discusexperts]||[act-CONTEXT-refine]||[event-CONTEXT-multiperspective])",
+        "effect": "remove {1~[$CONTEXT]}",
+        "elseCondition": "{1~([act-PLAN-supervisor]||[act-CONTEXT-discusexperts]||[act-CONTEXT-refine]||[event-CONTEXT-multiperspective])}",
         "elseEffect": "-"
     },
     {
@@ -215,8 +215,8 @@
         "stage": 2,
         "image": "event-CONTEXT-writersblock.png",
         "isOptional": false,
-        "effect": "block {2}[$IMPLEMENTATION]&&{2}[$WRITEUP]",
-        "elseCondition": "{1}[act-PLAN-milestones]&&{1}[act-PLAN-supervisor]",
+        "effect": "block {2~[$IMPLEMENTATION]}&&{2~[$WRITEUP]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}&&{1~[act-PLAN-supervisor]}",
         "elseEffect": "-"
     },
     {
@@ -225,8 +225,8 @@
         "stage": 3,
         "image": "event-IMP-bluescreen.png",
         "isOptional": false,
-        "effect": "remove {3}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-RDM]",
+        "effect": "remove {3~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-RDM]}",
         "elseEffect": "-"
     },
     {
@@ -235,7 +235,7 @@
         "stage": 3,
         "image": "event-IMP-brokenfridge.png",
         "isOptional": false,
-        "effect": "remove {3}([$DATA]||[$RESULTS]||[act-IMP-greatresults])",
+        "effect": "remove {3~([$DATA]||[$RESULTS]||[act-IMP-greatresults])}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -245,8 +245,8 @@
         "stage": 3,
         "image": "event-IMP-cantuseit.png",
         "isOptional": false,
-        "effect": "remove {1}[act-IMP-greatresources]&&{1}[$RESOURCE]",
-        "elseCondition": "{1}[act-PLAN-expertise]",
+        "effect": "remove {1~[act-IMP-greatresources]}&&{1~[$RESOURCE]}",
+        "elseCondition": "{1~[act-PLAN-expertise]}",
         "elseEffect": "-"
     },
     {
@@ -255,8 +255,8 @@
         "stage": 3,
         "image": "event-IMP-competition.png",
         "isOptional": false,
-        "effect": "remove {1}([$RESULTS]||[act-IMP-greatresults])",
-        "elseCondition": "{1}[act-IMP-greatresources]",
+        "effect": "remove {1~([$RESULTS]||[act-IMP-greatresults])}",
+        "elseCondition": "{1~[act-IMP-greatresources]}",
         "elseEffect": "-"
     },
     {
@@ -265,9 +265,9 @@
         "stage": 3,
         "image": "event-IMP-distraction.png",
         "isOptional": false,
-        "effect": "remove {2}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-milestones]",
-        "elseEffect": "remove {1}[$IMPLEMENTATION]"
+        "effect": "remove {2~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "remove {1~[$IMPLEMENTATION]}"
     },
     {
         "title": "Tried to do too much?",
@@ -275,8 +275,8 @@
         "stage": 3,
         "image": "event-IMP-dotoomuch.png",
         "isOptional": false,
-        "effect": "remove {2}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-CONTEXT-refine]",
+        "effect": "remove {2~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-CONTEXT-refine]}",
         "elseEffect": "-"
     },
     {
@@ -285,8 +285,8 @@
         "stage": 3,
         "image": "event-IMP-ethics.png",
         "isOptional": false,
-        "effect": "removeall {4}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-ethics]",
+        "effect": "removeall {4~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-ethics]}",
         "elseEffect": "-"
     },
     {
@@ -295,7 +295,7 @@
         "stage": 3,
         "image": "event-IMP-fire.png",
         "isOptional": false,
-        "effect": "remove {3}([$DATA$]||[$RESULTS]||[$ANALYSIS]||[$INTERPRETATION])",
+        "effect": "remove {3~([$DATA$]||[$RESULTS]||[$ANALYSIS]||[$INTERPRETATION])}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -305,7 +305,7 @@
         "stage": 3,
         "image": "event-IMP-flood.png",
         "isOptional": false,
-        "effect": "remove {1}[act-IMP-greatresources]&&{2}([$RESULTS]||[act-IMP-greatresults])",
+        "effect": "remove {1~[act-IMP-greatresources]}&&{2~([$RESULTS]||[act-IMP-greatresults])}",
         "elseCondition": "false",
         "elseEffect": "-"
     },
@@ -315,8 +315,8 @@
         "stage": 3,
         "image": "event-IMP-lostenthus.png",
         "isOptional": false,
-        "effect": "remove {1}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-holiday]",
+        "effect": "remove {1~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-holiday]}",
         "elseEffect": "-"
     },
     {
@@ -325,8 +325,8 @@
         "stage": 3,
         "image": "event-IMP-metadatafail.png",
         "isOptional": false,
-        "effect": "remove {2}[$INTERPRETATION]",
-        "elseCondition": "{1}[act-PLAN-RDM]",
+        "effect": "remove {2~[$INTERPRETATION]}",
+        "elseCondition": "{1~[act-PLAN-RDM]}",
         "elseEffect": "-"
     },
     {
@@ -335,8 +335,8 @@
         "stage": 3,
         "image": "event-IMP-philosophy.png",
         "isOptional": false,
-        "effect": "remove {1}[$RESULTS]&&{1}[$INTERPRETATION]",
-        "elseCondition": "{1}[act-PLAN-expertise]",
+        "effect": "remove {1~[$RESULTS]}&&{1~[$INTERPRETATION]}",
+        "elseCondition": "{1~[act-PLAN-expertise]}",
         "elseEffect": "-"
     },
     {
@@ -345,9 +345,9 @@
         "stage": 3,
         "image": "event-IMP-procrastinate.png",
         "isOptional": false,
-        "effect": "remove {3}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-milestones]",
-        "elseEffect": "flip {1}[act-PLAN-milestones]"
+        "effect": "remove {3~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "flip {1~[act-PLAN-milestones]}"
     },
     {
         "title": "Real world relevance?",
@@ -356,8 +356,8 @@
         "image": "event-IMP-relevance.png",
         "isOptional": true,
         "effect": "-",
-        "elseCondition": "{1}[$RESOURCEPOLICY]",
-        "elseEffect": "add {1}[$INTERPRETATION]"
+        "elseCondition": "{1~[$RESOURCEPOLICY]}",
+        "elseEffect": "add {1~[$INTERPRETATION]}"
     },
     {
         "title": "Resources...",
@@ -365,8 +365,8 @@
         "stage": 3,
         "image": "event-IMP-resources.png",
         "isOptional": false,
-        "effect": "remove {1}[$RESOURCE]",
-        "elseCondition": "{1}[act-CONTEXT-discusexperts]",
+        "effect": "remove {1~[$RESOURCE]}",
+        "elseCondition": "{1~[act-CONTEXT-discusexperts]}",
         "elseEffect": "-"
     },
     {
@@ -375,9 +375,9 @@
         "stage": 3,
         "image": "event-IMP-sick.png",
         "isOptional": false,
-        "effect": "remove {2}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {2~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Sister's wedding",
@@ -385,9 +385,9 @@
         "stage": 3,
         "image": "event-IMP-sisterwedding.png",
         "isOptional": false,
-        "effect": "remove {1}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {1~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Statistics!",
@@ -395,8 +395,8 @@
         "stage": 3,
         "image": "event-IMP-statistics.png",
         "isOptional": false,
-        "effect": "remove {1}[$RESULTS]&&{1}[$ANALYSIS]",
-        "elseCondition": "{1}[act-PLAN-expertise]",
+        "effect": "remove {1~[$RESULTS]}&&{1~[$ANALYSIS]}",
+        "elseCondition": "{1~[act-PLAN-expertise]}",
         "elseEffect": "-"
     },
     {
@@ -405,8 +405,8 @@
         "stage": 3,
         "image": "event-IMP-supervisorsick.png",
         "isOptional": false,
-        "effect": "block {2}[$WRITEUP]",
-        "elseCondition": "{1}[act-PLAN-milestones]",
+        "effect": "block {2~[$WRITEUP]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
         "elseEffect": "-"
     },
     {
@@ -415,8 +415,8 @@
         "stage": 3,
         "image": "event-IMP-theory.png",
         "isOptional": false,
-        "effect": "remove {2}([$INTERPRETATION]||[$ANALYSIS])",
-        "elseCondition": "{3}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
+        "effect": "remove {2~([$INTERPRETATION]||[$ANALYSIS])}",
+        "elseCondition": "{3~([$RELARTICLE]||[act-CONTEXT-veryrelarticle])}",
         "elseEffect": "-"
     },
     {
@@ -425,8 +425,8 @@
         "stage": 3,
         "image": "event-IMP-tunnelvision.png",
         "isOptional": false,
-        "effect": "remove {1}[$IMPLEMENTATION]",
-        "elseCondition": "{1}[act-PLAN-supervisor]||{2}[$INTERPRETATION]||{1}[event-CONTEXT-multiperspective]",
+        "effect": "remove {1~[$IMPLEMENTATION]}",
+        "elseCondition": "{1~[act-PLAN-supervisor]}||{2~[$INTERPRETATION]}||{1~[event-CONTEXT-multiperspective]}",
         "elseEffect": "-"
     },
     {
@@ -435,8 +435,8 @@
         "stage": 4,
         "image": "event-WRITEUP-bibliography.png",
         "isOptional": false,
-        "effect": "remove {1}[$THESIS]",
-        "elseCondition": "{1}[act-CONTEXT-refmanage]",
+        "effect": "remove {1~[$THESIS]}",
+        "elseCondition": "{1~[act-CONTEXT-refmanage]}",
         "elseEffect": "-"
     },
     {
@@ -445,8 +445,8 @@
         "stage": 4,
         "image": "event-WRITEUP-bluescreen.png",
         "isOptional": false,
-        "effect": "remove {3}![$WRITEUP]",
-        "elseCondition": "{1}[act-PLAN-RDM]",
+        "effect": "remove {3~![$WRITEUP]}",
+        "elseCondition": "{1~[act-PLAN-RDM]}",
         "elseEffect": "-"
     },
     {
@@ -455,9 +455,9 @@
         "stage": 4,
         "image": "event-WRITEUP-brotherswedding.png",
         "isOptional": false,
-        "effect": "remove {1}[$THESIS]",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {1~[$THESIS]}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "Disagreement!",
@@ -465,8 +465,8 @@
         "stage": 4,
         "image": "event-WRITEUP-disagreement.png",
         "isOptional": false,
-        "effect": "remove {2}([act-WRITEUP-soundconcl]||[$CONLUSIONS])",
-        "elseCondition": "{1}[act-CONTEXT-veryrelarticle]&&{1}[act-CONTEXT-veryrelmethod]",
+        "effect": "remove {2~([act-WRITEUP-soundconcl]||[$CONLUSIONS])}",
+        "elseCondition": "{1~[act-CONTEXT-veryrelarticle]}&&{1~[act-CONTEXT-veryrelmethod]}",
         "elseEffect": "-"
     },
     {
@@ -475,9 +475,9 @@
         "stage": 4,
         "image": "event-WRITEUP-distraction.png",
         "isOptional": false,
-        "effect": "remove {2}![$THESIS]",
-        "elseCondition": "act-PLAN-milestones",
-        "elseEffect": "remove {1}[$THESIS]"
+        "effect": "remove {2~![$THESIS]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "remove {1~[$THESIS]}"
     },
     {
         "title": "Distraction!",
@@ -485,9 +485,9 @@
         "stage": 4,
         "image": "event-WRITEUP-distraction2.png",
         "isOptional": false,
-        "effect": "remove {2}![$THESIS]",
-        "elseCondition": "act-PLAN-milestones",
-        "elseEffect": "remove {1}[$THESIS]"
+        "effect": "remove {2~![$THESIS]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "remove {1~[$THESIS]}"
     },
     {
         "title": "Does it work?",
@@ -495,8 +495,8 @@
         "stage": 4,
         "image": "event-WRITEUP-doesitwork.png",
         "isOptional": false,
-        "effect": "remove {3}[$WRITEUP]",
-        "elseCondition": "{1}[act-WRITEUP-evaluation]",
+        "effect": "remove {3~[$WRITEUP]}",
+        "elseCondition": "{1~[act-WRITEUP-evaluation]}",
         "elseEffect": "-"
     },
     {
@@ -505,8 +505,8 @@
         "stage": 4,
         "image": "event-WRITEUP-dotoomuch.png",
         "isOptional": false,
-        "effect": "remove {2}![$THESIS]",
-        "elseCondition": "{1}([act-CONTEXT-refine]||[act-WRITEUP-revisit])",
+        "effect": "remove {2~![$THESIS]}",
+        "elseCondition": "{1~([act-CONTEXT-refine]||[act-WRITEUP-revisit])}",
         "elseEffect": "-"
     },
     {
@@ -515,8 +515,8 @@
         "stage": 4,
         "image": "event-WRITEUP-ethics.png",
         "isOptional": false,
-        "effect": "removeall {4}[$WRITEUP]",
-        "elseCondition": "{1}[act-PLAN-ethics]",
+        "effect": "removeall {4~[$WRITEUP]}",
+        "elseCondition": "{1~[act-PLAN-ethics]}",
         "elseEffect": "-"
     },
     {
@@ -525,8 +525,8 @@
         "stage": 4,
         "image": "event-WRITEUP-fitforpurpose.png",
         "isOptional": false,
-        "effect": "remove {2}![$THESIS]",
-        "elseCondition": "{2}([$METHODOLOGY]||[act-CONTEXT-veryrelarticle])",
+        "effect": "remove {2~![$THESIS]}",
+        "elseCondition": "{2~([$METHODOLOGY]||[act-CONTEXT-veryrelarticle])}",
         "elseEffect": "-"
     },
     {
@@ -535,8 +535,8 @@
         "stage": 4,
         "image": "event-WRITEUP-jargon.png",
         "isOptional": false,
-        "effect": "remove {2}![$EXPLANATION]",
-        "elseCondition": "{1}([act-WRITEUP-support]||[event-WRITEUP-proofreader])",
+        "effect": "remove {2~![$EXPLANATION]}",
+        "elseCondition": "{1~([act-WRITEUP-support]||[event-WRITEUP-proofreader])}",
         "elseEffect": "-"
     },
     {
@@ -545,8 +545,8 @@
         "stage": 4,
         "image": "event-WRITEUP-lostenthus.png",
         "isOptional": false,
-        "effect": "remove {2}[$WRITEUP]",
-        "elseCondition": "{1}[act-WRITEUP-support]",
+        "effect": "remove {2~[$WRITEUP]}",
+        "elseCondition": "{1~[act-WRITEUP-support]}",
         "elseEffect": "-"
     },
     {
@@ -555,8 +555,8 @@
         "stage": 4,
         "image": "event-WRITEUP-lostvoice.png",
         "isOptional": false,
-        "effect": "remove {2}!([act-WRITEUP-critical]||[$EXPLANATION])",
-        "elseCondition": "{2}[$INTERPRETATION]",
+        "effect": "remove {2~!([act-WRITEUP-critical]||[$EXPLANATION])}",
+        "elseCondition": "{2~[$INTERPRETATION]}",
         "elseEffect": "-"
     },
     {
@@ -565,9 +565,9 @@
         "stage": 4,
         "image": "event-WRITEUP-procrastinate.png",
         "isOptional": false,
-        "effect": "remove {2}![$THESIS]",
-        "elseCondition": "{1}[act-PLAN-milestones]",
-        "elseEffect": "flip {1}[act-PLAN-milestones]"
+        "effect": "remove {2~![$THESIS]}",
+        "elseCondition": "{1~[act-PLAN-milestones]}",
+        "elseEffect": "flip {1~[act-PLAN-milestones]}"
     },
     {
         "title": "Proofreader",
@@ -577,7 +577,7 @@
         "isOptional": true,
         "effect": "-",
         "elseCondition": "true",
-        "elseEffect": "add {1}[$EXPLANATION] save {1}[event-WRITEUP-proofreader]"
+        "elseEffect": "add {1~[$EXPLANATION]} save {1~[event-WRITEUP-proofreader]}"
     },
     {
         "title": "References?",
@@ -585,8 +585,8 @@
         "stage": 4,
         "image": "event-WRITEUP-references.png",
         "isOptional": false,
-        "effect": "remove {1}[$THESIS]",
-        "elseCondition": "{1}[act-CONTEXT-refmanage]",
+        "effect": "remove {1~[$THESIS]}",
+        "elseCondition": "{1~[act-CONTEXT-refmanage]}",
         "elseEffect": "-"
     },
     {
@@ -595,8 +595,8 @@
         "stage": 4,
         "image": "event-WRITEUP-regurgitation.png",
         "isOptional": false,
-        "effect": "remove {3}![$THESIS]",
-        "elseCondition": "{3}([$ANALYSIS]||[$INTERPRETATION])",
+        "effect": "remove {3~![$THESIS]}",
+        "elseCondition": "{3~([$ANALYSIS]||[$INTERPRETATION])}",
         "elseEffect": "-"
     },
     {
@@ -605,9 +605,9 @@
         "stage": 4,
         "image": "event-WRITEUP-sick.png",
         "isOptional": false,
-        "effect": "remove {2}[$WRITEUP]",
-        "elseCondition": "{1}[act-PLAN-contingency]",
-        "elseEffect": "flip {1}[act-PLAN-contingency]"
+        "effect": "remove {2~[$WRITEUP]}",
+        "elseCondition": "{1~[act-PLAN-contingency]}",
+        "elseEffect": "flip {1~[act-PLAN-contingency]}"
     },
     {
         "title": "So what?",
@@ -615,8 +615,8 @@
         "stage": 4,
         "image": "event-WRITEUP-sowhat.png",
         "isOptional": false,
-        "effect": "remove {2}![$THESIS]",
-        "elseCondition": "{2}[act-CONTEXT-veryrelarticle]",
+        "effect": "remove {2~![$THESIS]}",
+        "elseCondition": "{2~[act-CONTEXT-veryrelarticle]}",
         "elseEffect": "-"
     },
     {
@@ -625,8 +625,8 @@
         "stage": 4,
         "image": "event-WRITEUP-tunnelvision.png",
         "isOptional": false,
-        "effect": "remove {1}[$THESIS]",
-        "elseCondition": "{1}[act-WRITEUP-revisit]||{1}[event-CONTEXT-multiperspective]",
+        "effect": "remove {1~[$THESIS]}",
+        "elseCondition": "{1~[act-WRITEUP-revisit]}||{1~[event-CONTEXT-multiperspective]}",
         "elseEffect": "-"
     },
     {
@@ -635,8 +635,8 @@
         "stage": 4,
         "image": "event-WRITEUP-uncriticalwriting.png",
         "isOptional": false,
-        "effect": "remove {2}![$THESIS]",
-        "elseCondition": "{3}([$RELARTICLE]||[act-CONTEXT-veryrelarticle])",
+        "effect": "remove {2~![$THESIS]}",
+        "elseCondition": "{3~([$RELARTICLE]||[act-CONTEXT-veryrelarticle])}",
         "elseEffect": "-"
     },
     {
@@ -645,7 +645,7 @@
         "stage": 4,
         "image": "event-WRITEUP-waffle.png",
         "isOptional": false,
-        "effect": "remove {1}[act-WRITEUP-critical]",
+        "effect": "remove {1~[act-WRITEUP-critical]}",
         "elseCondition": "false",
         "elseEffect": "-"
     }
