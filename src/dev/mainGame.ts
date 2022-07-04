@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { version } from "./constants";
+import { COLOURS, GAME_HEIGHT, GAME_WIDTH, version } from "./constants";
 import { GameData } from "./GameData";
 import { Credits } from "./scenes/Credits";
 import { MainMenu } from "./scenes/MainMenu";
@@ -9,11 +9,11 @@ const gameData = new GameData();
 
 const config= {
     type: Phaser.AUTO,
-    title: "How To Fail Your Research Degree",
+    title: "How To Fail Your Research Degree - Local Multiplayer",
     version: version,
-    width: 1920,
-    height: 1080,
-    backgroundColor: '#a9e3ff',
+    width: GAME_WIDTH,
+    height: GAME_HEIGHT,
+    backgroundColor: COLOURS.background,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -23,4 +23,4 @@ const config= {
 }
 
 const game = new Phaser.Game(config);
-gameData._gameLoaded();
+gameData.game = game;
