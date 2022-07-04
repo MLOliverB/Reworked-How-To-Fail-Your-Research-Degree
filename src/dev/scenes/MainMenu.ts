@@ -1,9 +1,11 @@
 import { COLOURS, FONTS } from "../constants";
-import { createMainMenuButtons } from "../elements/buttons";
+import { CenterMenuButton, createMainMenuButtons } from "../elements/buttons";
 import { GameData } from "../GameData";
 import { BaseScene } from "./BaseScene";
 
 export class MainMenu extends BaseScene {
+
+    buttonMap!: Map<string, CenterMenuButton>;
 
     constructor(gameData: GameData) {
         super(gameData, {key: "MainMenu"});
@@ -22,10 +24,10 @@ export class MainMenu extends BaseScene {
             "Credits"
         ];
         let buttonOnClick = [
-            () => { console.log("Start Game"); },
+            () => { this.gameData._startGame(this); },
             () => { this.scene.start("Options"); },
             () => { this.scene.start("Credits"); },
         ];
-        createMainMenuButtons(this, buttonLabels, buttonOnClick);
+        this.buttonMap = createMainMenuButtons(this, buttonLabels, buttonOnClick);
     }
 }

@@ -1,15 +1,16 @@
-import { cardSelector, cardStatement, effect, isCardStatement, isInstruction, isLogicOperator, isModifierArray, logicExpression, logicFunction } from "./types";
+import { cardSelector, cardSlug, cardStatement, effect, isCardGroup, isCardSlug, isCardStatement, isInstruction, isLogicOperator, isModifierArray, logicExpression, logicFunction } from "./types";
 import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_QUANTIFIER_ALL, LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_LOGICEXPRESSION_SEPARATOR } from "../constants";
+import { mapGetOrElse } from "../util";
 
 
-export function parseEffect(effectString: string): effect[] {
+export function parseEffect(effectString: string, slugIDMap?: Map<cardSlug, number>): effect[] {
     let output: effect[] = [];
     let stringSplit = effectString.split(" ");
     if (stringSplit.length > 0 && stringSplit.length % 2 == 0) {
         for (let i = 0; i < stringSplit.length; i += 2) {
             let instruction = stringSplit[i]
             if (isInstruction(instruction)) {
-                output.push([instruction, parseLogicFunction(stringSplit[i+1])]);
+                output.push([instruction, parseLogicFunction(stringSplit[i+1], slugIDMap)]);
             } else {
                 throw `Unknown instruction '${instruction}' used in effect '${stringSplit[i]} ${stringSplit[i+1]}'`;
             }
@@ -28,9 +29,9 @@ export function parseEffect(effectString: string): effect[] {
  * @param expression The string representation of the logic function
  * @returns The array-like logicFunction
  */
-export function parseLogicFunction(expression: string): logicFunction {
+export function parseLogicFunction(expression: string, slugIDMap?: Map<cardSlug, number>): logicFunction {
     verifyBracketClosure(expression);
-    return recursiveParseLogicFunction(expression);
+    return recursiveParseLogicFunction(expression, slugIDMap);
 }
 
 
@@ -40,7 +41,7 @@ export function parseLogicFunction(expression: string): logicFunction {
  * @param expression The string representation of the logic function
  * @returns The array-like logicFunction
  */
-function recursiveParseLogicFunction(expression: string): logicFunction {
+function recursiveParseLogicFunction(expression: string, slugIDMap?: Map<cardSlug, number>): logicFunction {
     if (expression == "true") {
         return true;
     } else if (expression == "false") {
@@ -56,21 +57,21 @@ function recursiveParseLogicFunction(expression: string): logicFunction {
             throw `ParseError: Reached EOS after logic operator - operators must be followed by another logic function (${expression})`;
         }
         if (isLogicOperator(logOperator)) {
-            return [recursiveParseLogicFunction(expression.slice(1, closeIndex)), logOperator, recursiveParseLogicFunction(expression.slice(closeIndex+3, expression.length))];
+            return [recursiveParseLogicFunction(expression.slice(1, closeIndex), slugIDMap), logOperator, recursiveParseLogicFunction(expression.slice(closeIndex+3, expression.length), slugIDMap)];
         } else {
             throw `ParseError: Expression uses unknown logic operator '${logOperator}' (${expression})`;
         }
     } else if (expression.charAt(0) == LOGIC_BRACKET_LOGICEXPRESSION_OPEN) {
         let closeIndex = expression.indexOf(LOGIC_BRACKET_LOGICEXPRESSION_CLOSE);
         if (closeIndex == expression.length-1) {
-            return parseLogicExpression(expression);
+            return parseLogicExpression(expression, slugIDMap);
         } else {
             let logOperator = expression.slice(closeIndex+1, closeIndex+3);
             if (closeIndex+3 == expression.length-1) {
                 throw `ParseError: Reached EOS after logic operator - operators must be followed by another logic function (${expression})`;
             }
             if (isLogicOperator(logOperator)) {
-                return [parseLogicExpression(expression.slice(0, closeIndex+1)), logOperator, recursiveParseLogicFunction(expression.slice(closeIndex+3, expression.length))];
+                return [parseLogicExpression(expression.slice(0, closeIndex+1), slugIDMap), logOperator, recursiveParseLogicFunction(expression.slice(closeIndex+3, expression.length), slugIDMap)];
             } else {
                 throw `ParseError: Expression uses unknown logic operator '${logOperator}' (${expression})`;
             }
@@ -81,7 +82,7 @@ function recursiveParseLogicFunction(expression: string): logicFunction {
 }
 
 
-function parseLogicExpression(expression: string): logicExpression {
+function parseLogicExpression(expression: string, slugIDMap?: Map<cardSlug, number>): logicExpression {
     if (expression.charAt(0) == LOGIC_BRACKET_LOGICEXPRESSION_OPEN) {
         expression = expression.slice(1, expression.length-1);
     }
@@ -95,20 +96,24 @@ function parseLogicExpression(expression: string): logicExpression {
     let modifiers = expression.slice(0, modifierSplit).split('');
     expression = expression.slice(modifierSplit, expression.length);
     if (isModifierArray(modifiers)) {
-        return [quantifier, modifiers, recursiveParseCardSelector(expression)];
+        return [quantifier, modifiers, recursiveParseCardSelector(expression, slugIDMap)];
     } else {
         throw `ParseError: Expression uses at least one unknown modifier (${modifiers})`;
     }
 }
 
 
-function recursiveParseCardSelector(expression: string): cardSelector {
+function recursiveParseCardSelector(expression: string, slugIDMap?: Map<cardSlug, number>): cardSelector {
     if (expression.charAt(0) == LOGIC_BRACKET_CARD_OPEN) {
         let closeIndex = expression.indexOf(LOGIC_BRACKET_CARD_CLOSE);
         if (closeIndex == expression.length-1) {
             let cardStatement = expression.slice(1, expression.length-1);
             if (isCardStatement(cardStatement)) {
-                return cardStatement;
+                if (typeof slugIDMap != 'undefined' && typeof cardStatement == 'string' && !isCardGroup(cardStatement)) {
+                    return mapGetOrElse(slugIDMap, cardStatement, -1);
+                } else {
+                    return cardStatement;
+                }
             } else {
                 throw `'${cardStatement}' is not a valid card statement`;
             }
@@ -118,7 +123,7 @@ function recursiveParseCardSelector(expression: string): cardSelector {
                 throw `ParseError: Reached EOS after logic operator - operators must be followed by another logic function (${expression})`;
             }
             if (isLogicOperator(logOperator)) {
-                return [recursiveParseCardSelector(expression.slice(0, closeIndex+1)), logOperator, recursiveParseCardSelector(expression.slice(closeIndex+3, expression.length))]
+                return [recursiveParseCardSelector(expression.slice(0, closeIndex+1), slugIDMap), logOperator, recursiveParseCardSelector(expression.slice(closeIndex+3, expression.length), slugIDMap)]
             } else {
                 throw `ParseError: Expression uses unknown logic operator '${logOperator}' (${expression})`;
             }
@@ -126,14 +131,14 @@ function recursiveParseCardSelector(expression: string): cardSelector {
     } else if (expression.charAt(0) == LOGIC_BRACKET_PRECEDENCE_OPEN) {
         let closeIndex = expression.indexOf(LOGIC_BRACKET_PRECEDENCE_CLOSE);
         if (closeIndex == expression.length-1) {
-            return recursiveParseCardSelector(expression.slice(1, expression.length-1));
+            return recursiveParseCardSelector(expression.slice(1, expression.length-1), slugIDMap);
         } else {
             let logOperator = expression.slice(closeIndex+1, closeIndex+3);
             if (closeIndex+3 == expression.length-1) {
                 throw `ParseError: Reached EOS after logic operator - operators must be followed by another logic function (${expression})`;
             }
             if (isLogicOperator(logOperator)) {
-                return [recursiveParseCardSelector(expression.slice(1, closeIndex)), logOperator, recursiveParseCardSelector(expression.slice(closeIndex+3, expression.length))]
+                return [recursiveParseCardSelector(expression.slice(1, closeIndex), slugIDMap), logOperator, recursiveParseCardSelector(expression.slice(closeIndex+3, expression.length), slugIDMap)]
             } else {
                 throw `ParseError: Expression uses unknown logic operator '${logOperator}' (${expression})`;
             }

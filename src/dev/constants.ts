@@ -1,7 +1,13 @@
 export const version = "0.1.0";
 
+export const GAME_WIDTH = 1920;
+export const GAME_HEIGHT = 1080;
+
+export const QUANT_PLAN_TILES = 8;
+
 export const COLOURS = {
     background: 0x95A3B3,
+    black: 0x000000,
     button: 0x84DCC6,
     buttonEvent: 0x4B4E6D,
     buttonDisabled: 0x45494E,
@@ -22,6 +28,8 @@ export const FONTS = {
     h3: {color: "#000000", fontFamily: "Bahiana", fontSize: "60px"},
     h3Light: {color: "#FFFFFF", fontFamily: "Bahiana", fontSize: "60px"},
 };
+
+export const stageNames = ["", "PLAN", "CONTEXT", "IMPLEMENTATION", "WRITE-UP"];
 
 export const LOGIC_LOGICEXPRESSION_SEPARATOR = '~';
 

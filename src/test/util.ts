@@ -91,12 +91,12 @@ export function countOccurences<Type>(item: Type, arr: Type[]): number {
 }
 
 
-export function recrusiveExpandNestedArray(arr: any) {
+export function recursiveExpandNestedArray(arr: any) {
     if (Array.isArray(arr)) {
         let arrLength = arr.length;
         let str = "[ ";
         arr.forEach(function(currentValue: any, index: number, arr: any[]) {
-            str += `${recrusiveExpandNestedArray(currentValue)}`
+            str += `${recursiveExpandNestedArray(currentValue)}`
             if (index < arrLength-1) {
                 str += ", ";
             }

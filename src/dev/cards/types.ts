@@ -2,10 +2,10 @@ import { countNonAscii, verifyCharacters } from "../../test/util";
 
 // ================================================================================================
 
-interface Card {
+export interface Card {
     title: string,
     slug: cardSlug,
-    stage: 1 | 2 | 3 | 4,
+    stage: stageT,
     image: cardImage,
     frequency?: posInt,
     description?: string,
@@ -16,26 +16,46 @@ interface Card {
     elseEffect?: string,
 }
 
-interface ActivityCard {
+export interface ActivityCard {
     title: string,
     slug: cardSlug,
-    stage: 1 | 2 | 3 | 4,
+    stage: stageT,
     frequency: posInt,
     image: cardImage,
     description: string,
     connectivity: Connectivity
 }
 
-
 export interface EventCard {
     title: string,
     slug: cardSlug,
-    stage: 1 | 2 | 3 | 4,
+    stage: stageT,
     image: cardImage,
     isOptional: boolean,
     effect: string,
     elseCondition: string,
     elseEffect: string,
+}
+
+export interface GameActivityCard {
+    id: number,
+    title: string,
+    stage: stageT,
+    frequency: posInt,
+    image: cardImage,
+    description: string,
+    connectivity: Connectivity
+}
+
+export interface GameEventCard {
+    id: number,
+    title: string,
+    stage: stageT,
+    image: cardImage,
+    isOptional: boolean,
+    effect: effect[],
+    elseCondition: logicFunction,
+    elseEffect: effect[],
 }
 
 
@@ -44,6 +64,11 @@ interface Connectivity {
     right: boolean,
     up: boolean,
     down: boolean,
+}
+
+export interface CardGroupGenerator {
+    activityCardFilter: string,
+    eventCardFilter: string,
 }
 
 // ================================================================================================
@@ -134,10 +159,11 @@ declare class InstructionTag {
 
 // ================================================================================================
 
+export type stageT = 1 | 2 | 3 | 4;
 type logicOperator = string & LogicOperatorTag;
 type posInt = number & PositiveIntegerTag;
-type cardSlug = string & CardSlugTag;
-type cardGroup = string & CardGroupTag;
+export type cardSlug = string & CardSlugTag;
+export type cardGroup = string & CardGroupTag;
 type imageExtension = string & ImageExtensionTag;
 type quantifierOperator = string & QuantifierOperatorTag;
 type modifier = string & ModifierTag;
@@ -210,7 +236,7 @@ export function isInstruction(str: any): str is InstructionTag {
 
 type cardImage = `${cardSlug}.${imageExtension}`;
 type quantifier = quantifierOperator | `${posInt}`;
-export type cardStatement = cardSlug | cardGroup;
+export type cardStatement = cardSlug | cardGroup | number;
 export type cardSelector = cardStatement | [cardSelector, logicOperator, cardSelector]; //type cardSelector = cardStatment | (cardStatment | logicOperator | cardSelector)[];
 export type logicExpression = [quantifier, modifier[], cardSelector] | boolean;
 export type logicFunction = logicExpression | [logicFunction, logicOperator, logicFunction]; //type logicFunction = logicExpression | (logicFunction | logicOperator | logicFunction)[]
@@ -242,8 +268,14 @@ function isQuantifier(str: string): str is quantifier {
 }
 
 
-export function isCardStatement(str: string): str is cardStatement {
-    return isCardSlug(str) || isCardGroup(str);
+export function isCardStatement(str: any): str is cardStatement {
+    if (typeof str == 'number') {
+        return true;
+    } else if (typeof str == 'string') {
+        return isCardSlug(str) || isCardGroup(str);
+    } else {
+        return false;
+    }   
 }
 
 // ================================================================================================
