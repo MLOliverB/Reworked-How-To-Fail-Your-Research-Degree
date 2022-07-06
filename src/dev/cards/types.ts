@@ -257,7 +257,7 @@ function isCardImage(str: string): str is cardImage {
 }
 
 
-function isQuantifier(str: string): str is quantifier {
+export function isQuantifier(str: string): str is quantifier {
     if (str.length >= 3) {
         let flag = isPositiveInteger(parseInt(str));
         flag = flag || has(QuantifierOperator, str);

@@ -1,4 +1,4 @@
-import { cardSelector, cardSlug, cardStatement, effect, isCardGroup, isCardSlug, isCardStatement, isInstruction, isLogicOperator, isModifierArray, logicExpression, logicFunction } from "./types";
+import { cardSelector, cardSlug, cardStatement, effect, isCardGroup, isCardSlug, isCardStatement, isInstruction, isLogicOperator, isModifierArray, isQuantifier, logicExpression, logicFunction } from "./types";
 import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_QUANTIFIER_ALL, LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_LOGICEXPRESSION_SEPARATOR } from "../constants";
 import { mapGetOrElse } from "../util";
 
@@ -95,7 +95,7 @@ function parseLogicExpression(expression: string, slugIDMap?: Map<cardSlug, numb
     }
     let modifiers = expression.slice(0, modifierSplit).split('');
     expression = expression.slice(modifierSplit, expression.length);
-    if (isModifierArray(modifiers)) {
+    if (isModifierArray(modifiers) && isQuantifier(quantifier)) {
         return [quantifier, modifiers, recursiveParseCardSelector(expression, slugIDMap)];
     } else {
         throw `ParseError: Expression uses at least one unknown modifier (${modifiers})`;
