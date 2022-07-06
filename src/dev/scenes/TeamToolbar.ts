@@ -150,15 +150,13 @@ export class TeamToolbar extends BaseScene {
 
                 let previousRow = this.gameData.teams[this.gameData.currentTeam].cards[this.gameData.stage-2];
 
-                for (let i = -1; i >= -previousRow.leftLength()-1; i--) {
+                for (let i = -1; i >= -previousRow.leftLength(); i--) {
                     cardRow.pushLeft(new CardBox(this.gameData.teams[this.gameData.currentTeam].scene, this.gameData, i));
                 }
 
-                for (let i = 0; i < previousRow.rightLength()+1; i++) {
+                for (let i = 0; i < previousRow.rightLength(); i++) {
                     cardRow.pushRight(new CardBox(this.gameData.teams[this.gameData.currentTeam].scene, this.gameData, i));
                 }
-
-
 
                 this.cardStackButton.setInteractive(true);
                 this.continueButton.setInteractive(true);
