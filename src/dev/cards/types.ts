@@ -235,7 +235,7 @@ export function isInstruction(str: any): str is InstructionTag {
 // ================================================================================================
 
 type cardImage = `${cardSlug}.${imageExtension}`;
-type quantifier = quantifierOperator | `${posInt}`;
+export type quantifier = quantifierOperator | `${posInt}`;
 export type cardStatement = cardSlug | cardGroup | number;
 export type cardSelector = cardStatement | [cardSelector, logicOperator, cardSelector]; //type cardSelector = cardStatment | (cardStatment | logicOperator | cardSelector)[];
 export type logicExpression = [quantifier, modifier[], cardSelector] | boolean;
@@ -258,7 +258,7 @@ function isCardImage(str: string): str is cardImage {
 
 
 export function isQuantifier(str: string): str is quantifier {
-    if (str.length >= 3) {
+    if (str.length >= 1) {
         let flag = isPositiveInteger(parseInt(str));
         flag = flag || has(QuantifierOperator, str);
         return flag;

@@ -1,4 +1,4 @@
-import { cardSelector, cardSlug, cardStatement, effect, isCardGroup, isCardSlug, isCardStatement, isInstruction, isLogicOperator, isModifierArray, isQuantifier, logicExpression, logicFunction } from "./types";
+import { cardSelector, cardSlug, cardStatement, effect, isCardGroup, isCardSlug, isCardStatement, isInstruction, isLogicOperator, isModifierArray, isQuantifier, logicExpression, logicFunction, quantifier } from "./types";
 import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_QUANTIFIER_ALL, LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_LOGICEXPRESSION_SEPARATOR } from "../constants";
 import { mapGetOrElse } from "../util";
 
@@ -87,7 +87,12 @@ function parseLogicExpression(expression: string, slugIDMap?: Map<cardSlug, numb
         expression = expression.slice(1, expression.length-1);
     }
     let splitQuant = expression.split(LOGIC_LOGICEXPRESSION_SEPARATOR);
-    let quantifier = splitQuant[0];
+    let quantifier: quantifier;
+    if (isQuantifier(splitQuant[0])) {
+        quantifier = splitQuant[0];
+    } else {
+        throw `ParseError: ${splitQuant[0]} is not a legal quantifier (${expression})`;
+    }
     expression = splitQuant[1];
     let modifierSplit = 0;
     while (!LOGIC_BRACKET_MAP.has(expression.charAt(modifierSplit))) {
@@ -95,7 +100,7 @@ function parseLogicExpression(expression: string, slugIDMap?: Map<cardSlug, numb
     }
     let modifiers = expression.slice(0, modifierSplit).split('');
     expression = expression.slice(modifierSplit, expression.length);
-    if (isModifierArray(modifiers) && isQuantifier(quantifier)) {
+    if (isModifierArray(modifiers)) {
         return [quantifier, modifiers, recursiveParseCardSelector(expression, slugIDMap)];
     } else {
         throw `ParseError: Expression uses at least one unknown modifier (${modifiers})`;
