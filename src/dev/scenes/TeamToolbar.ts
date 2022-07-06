@@ -42,6 +42,10 @@ export class TeamToolbar extends BaseScene {
         // Continue Button
         this.continueButton = new ToolbarButton(this, this.x*1.85, this.y*1.875, this.width*0.14, this.height*0.1, "Continue",
         () => {
+            if (this.timer != null) {
+                this.timer.paused = true;
+                this.timer.destroy();
+            }
             this.continueButton.setInteractive(false);
             this.gameData.allowSwap = null;
             this.instructionText.destroy();
@@ -97,9 +101,13 @@ export class TeamToolbar extends BaseScene {
         if (this.gameData.currentTeam == this.gameData.numberOfTeams-1) {
             this.gameData.currentTeam = 0;
             this.gameData.stage++;
-            this.currentStageText.setText(`Stage: ${this.gameData.stage}`);
-            this.currentTeamText.setText(`Team: ${this.gameData.currentTeam+1}`);
-            this.nextStage();
+            if (this.gameData.stage > 4) {
+                this.gameEnd();
+            } else {
+                this.currentStageText.setText(`Stage: ${this.gameData.stage}`);
+                this.currentTeamText.setText(`Team: ${this.gameData.currentTeam+1}`);
+                this.nextStage();
+            }
         } else {
             this.gameData.currentTeam++;
             this.currentStageText.setText(`Stage: ${this.gameData.stage}`);
@@ -165,6 +173,11 @@ export class TeamToolbar extends BaseScene {
         this.gameData.activityCardStack.clear();
         this.gameData.eventCardStack.clear();
         this.nextTeam();
+    }
+
+
+    private gameEnd() {
+        console.log("Game Ended");
     }
 
 
