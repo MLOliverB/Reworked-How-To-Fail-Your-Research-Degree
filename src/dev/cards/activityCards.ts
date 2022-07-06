@@ -41,7 +41,7 @@ export class CardBox {
 
         if (negBoxBound < negBound || posBoxBound > posBound) {
             let oldZoom = this.gameBoard.cameras.main.zoom
-            this.gameBoard.cameras.main.setZoom(oldZoom*0.8, oldZoom*0.8);
+            this.gameBoard.cameras.main.setZoom(oldZoom*0.85, oldZoom*0.85);
         }
 
         this.box.setInteractive();
