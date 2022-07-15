@@ -19,6 +19,9 @@ const config= {
         autoCenter: Phaser.Scale.CENTER_BOTH,
         zoom: 1,
     },
+    fps: {
+        target: 20,
+    },
     scene: [new MainMenu(gameData), new Credits(gameData), new Options(gameData)],
 }
 
