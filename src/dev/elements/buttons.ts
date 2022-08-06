@@ -1,6 +1,9 @@
-import { CardBoxSwapper } from "../cards/activityCards";
+import { CardBoxSwapper, isDiscardable } from "../cards/activityCards";
 import { COLOURS, FONTS } from "../constants";
+import { GameData } from "../GameData";
 import { BaseScene } from "../scenes/BaseScene";
+import { createPopupDialog, PopupScene } from "../scenes/PopupScene";
+import { TeamToolbar } from "../scenes/TeamToolbar";
 
 type OnClick = () => void;
 type OnClickArr = (() => void)[];
@@ -8,6 +11,8 @@ type OnHover = () => void;
 type OnHoverExit = () => void;
 
 class Button {
+    scene: BaseScene
+
     button: Phaser.GameObjects.Rectangle;
     isInteractive: boolean;
     buttonText: Phaser.GameObjects.Text;
@@ -24,6 +29,9 @@ class Button {
         text: string, textStyle: Phaser.Types.GameObjects.Text.TextStyle,
         buttonColour: number, buttonHoverColour: number, buttonDisabledColour: number,
         onClick: OnClick, onHover?: OnHover, onHoverExit?: OnHoverExit) {
+        
+        this.scene = scene;
+
         this.button = scene.add.rectangle(x, y, width, height, buttonColour);
 
         this.buttonColour = buttonColour;
@@ -46,12 +54,32 @@ class Button {
             this.button.setInteractive();
             this.button.setFillStyle(this.buttonColour);
 
-            this.button.on("pointerover", () => { this.button.setFillStyle(this.buttonHoverColour); });
-            this.button.on("pointerout", () => { this.button.setFillStyle(this.buttonColour); });
+            this.button.on("pointerover", () => { 
+                if (!this.scene.gameData.isElementsInteractive) return;
+                this.button.setFillStyle(this.buttonHoverColour);
+            });
+            this.button.on("pointerout", () => { 
+                if (!this.scene.gameData.isElementsInteractive) return;
+                this.button.setFillStyle(this.buttonColour);
+            });
 
-            this.button.on("pointerup", this.onClick);
-            if (this.onHover != undefined) this.button.on("pointerover", this.onHover);
-            if (this.onHoverExit != undefined) this.button.on("pointerout", this.onHoverExit);
+            this.button.on("pointerup", () => {
+                if (!this.scene.gameData.isElementsInteractive) return;
+                this.onClick()
+            });
+
+            if (this.onHover != undefined) {
+                this.button.on("pointerover", () => {
+                    if (!this.scene.gameData.isElementsInteractive) return;
+                    if (this.onHover != undefined) this.onHover()
+                });
+            }
+            if (this.onHoverExit != undefined) {
+                this.button.on("pointerout", () => {
+                    if (!this.scene.gameData.isElementsInteractive) return;
+                    if (this.onHoverExit != undefined) this.onHoverExit()
+                });
+            }
         } else {
             this.isInteractive = false;
             this.button.removeAllListeners();
@@ -122,10 +150,10 @@ export class ToolbarButton extends Button {
 
 
 export class CardStackButton extends Button {
-    scene: BaseScene;
+    scene: TeamToolbar;
     image!: Phaser.GameObjects.Image;
 
-    constructor(scene: BaseScene, x: number, y: number, text: string, onClick: OnClick) {
+    constructor(scene: TeamToolbar, x: number, y: number, text: string, onClick: OnClick) {
         super(scene, x, y, scene.width*0.162, scene.height*0.204, false, text, FONTS.button, COLOURS.cardStack, COLOURS.cardStackHover, COLOURS.buttonDisabled, onClick);
         this.scene = scene;
     }
@@ -144,11 +172,36 @@ export class CardStackButton extends Button {
     }
 
     cardUsed() {
+        if (this.scene.discardButton) this.scene.discardButton.setInteractive(false);
         if (this.scene.gameData.stage == 1 && this.scene.gameData.activityCardStack.popCounter >= this.scene.gameData.planCards) {
             this.scene.gameData.teamToolbar.cardStackButton.setInteractive(false);
             this.scene.gameData.teamToolbar.instructionText.setText("Swap Cards or Press Continue");
             this.scene.gameData.allowSwap = new CardBoxSwapper(this.scene.gameData);
             this.scene.gameData.teamToolbar.continueButton.setInteractive(true);
         }
+    }
+}
+
+
+
+export class DiscardButton extends Button {
+
+    constructor(scene: TeamToolbar, team: number, x: number, y: number, width: number, height: number) {
+        super(scene, x, y, width, height, false, "Discard", FONTS.button, COLOURS.button, COLOURS.buttonHover, COLOURS.buttonDisabled, 
+        () => {
+            // onClick
+            this.setInteractive(false);
+            let isCardDiscardable = isDiscardable(scene.gameData, scene.gameData.currentTeam);
+            console.log("Is Card Discardable: " + isCardDiscardable);
+            if (isCardDiscardable) {
+                scene.gameData.teams[scene.gameData.currentTeam].currentCard = 0;
+                scene.cardStackButton.removeImage();
+            } else {
+                // TODO: Test if Discard Stack is buggy - alert triggers even though card can't be placed
+                createPopupDialog(scene.gameData, "This card can be played and therefore must not be discarded");
+            }
+
+            this.setInteractive(true);
+        });
     }
 }

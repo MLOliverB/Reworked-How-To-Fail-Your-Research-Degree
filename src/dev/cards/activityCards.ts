@@ -1,7 +1,7 @@
 import { COLOURS, FONTS, GAME_WIDTH } from "../constants";
 import { GameData } from "../GameData";
 import { TeamGameBoard } from "../scenes/TeamGameBoard";
-import { GameActivityCard, stageT } from "./types";
+import { Connectivity, GameActivityCard, stageT } from "./types";
 
 export class CardBox {
     box: Phaser.GameObjects.Rectangle;
@@ -15,6 +15,7 @@ export class CardBox {
     index: number;
 
     cardID: number;
+    hasWorkLate: boolean; // TODO: WorkLate tile logic
 
     image!: Phaser.GameObjects.Image;
 
@@ -27,6 +28,7 @@ export class CardBox {
         this.index = index;
 
         this.cardID = 0;
+        this.hasWorkLate = false;
 
         let xPos = gameBoard.x*(1.1125+0.225*index);
         let yPos = gameBoard.y*(1.64-(0.31*this.stage));
@@ -46,14 +48,17 @@ export class CardBox {
 
         this.box.setInteractive();
         this.box.on("pointerover", () => {
+            if (!gameData.isElementsInteractive) return;
             this.box.setFillStyle(COLOURS.cardHover);
             // if (this.scene.gameData.teamToolbar.blockedOut && this.testBlock) { this.box.setFillStyle(0x898989); }
         });
 		this.box.on("pointerout", () => {
+            if (!gameData.isElementsInteractive) return;
             this.box.setFillStyle(COLOURS.card);
             // if (this.scene.gameData.teamToolbar.blockedOut && this.testBlock) { this.box.setFillStyle(0xafafaf); }
         });
 		this.box.on("pointerup", () => {
+            if (!gameData.isElementsInteractive) return;
             if (this.gameData.allowSwap == null) {
                 // Just act normally by either putting back on cardStack or not
                 if (gameData.teams[this.team].currentCard != 0 && this.cardID == 0) {
@@ -79,6 +84,7 @@ export class CardBox {
                     gameData.teams[this.team].currentCard = this.cardID;
                     this.cardID = 0;
                     gameData.teamToolbar.cardStackButton.setImage(`card_${gameData.teams[this.team].currentCard}`);
+                    if (this.gameData.teamToolbar.discardButton) this.gameData.teamToolbar.discardButton.setInteractive(true);
                 }
             } else {
                 // Select or deselect for swapping
@@ -179,4 +185,83 @@ export class CardBoxSwapper {
             this.candidate2 = null;
         }
     }
+}
+
+
+
+export function isDiscardable(gameData: GameData, team: number): boolean {
+    // All cards in PLAN stage are always playable - so not discardable
+    // If no card is currently held, can't discard by default
+    if (gameData.stage == 1 || gameData.teams[team].currentCard == 0) {
+        return false;
+    }
+
+    let currentRow = gameData.teams[team].cards[gameData.stage-1];
+    let previousRow = gameData.teams[team].cards[gameData.stage-2];
+
+    // Put all indexes of empty card boxes into an array freePositions
+    let freePositions: number[] = [];
+    currentRow.getIndexes().forEach((val) => {
+        if (currentRow.get(val).cardID == 0) {
+            freePositions.push(val);
+        }
+    });
+
+    let currentCardID = gameData.teams[team].currentCard;
+    let currentCard: GameActivityCard = gameData.activityCardMap.get(currentCardID);
+    let currentCardConnectivity = currentCard.connectivity;
+
+    let defaultConnectivity: Connectivity = {left: true, right: true, up: true, down: true};
+
+    while (freePositions.length > 0) {
+        let ix = freePositions.pop();
+        if (ix == undefined) {
+            ix = 0;
+        }
+        
+        let leftCardID = (currentRow.leftIndex() <= ix-1) ? currentRow.get(ix-1).cardID : 0;
+        let rightCardID = (currentRow.rightIndex() >= ix+1) ? currentRow.get(ix+1).cardID : 0;
+        let bottomCardID = (previousRow.leftIndex() <= ix && previousRow.rightIndex() >= ix) ? previousRow.get(ix).cardID : 0;
+
+        let leftCard: GameActivityCard | null = gameData.activityCardMap.has(leftCardID) ? gameData.activityCardMap.get(leftCardID) : null;
+        let rightCard: GameActivityCard | null = gameData.activityCardMap.has(rightCardID) ? gameData.activityCardMap.get(rightCardID) : null;
+        let bottomCard: GameActivityCard | null = gameData.activityCardMap.has(bottomCardID) ? gameData.activityCardMap.get(bottomCardID) : null;
+
+        let leftCardConnectivity = (leftCard == null) ? defaultConnectivity : leftCard.connectivity;
+        let rightCardConnectivity = (rightCard == null) ? defaultConnectivity : rightCard.connectivity;
+        let bottomCardConnectivity = (bottomCard == null) ? defaultConnectivity : bottomCard.connectivity;
+
+        // Check if an work-late tile is overlaid - if so then the card is automatically connected to all sides
+        leftCardConnectivity = (leftCard != null && currentRow.get(ix-1).hasWorkLate) ? defaultConnectivity : leftCardConnectivity;
+        rightCardConnectivity = (rightCard != null && currentRow.get(ix+1).hasWorkLate) ? defaultConnectivity : rightCardConnectivity;
+        bottomCardConnectivity = (bottomCard != null && previousRow.get(ix).hasWorkLate) ? defaultConnectivity : bottomCardConnectivity;
+
+
+        // For each direction (left, right, bottom), check if the connections of the cards line up
+        let leftAligned = (leftCard == null) ? true : (leftCardConnectivity.right == currentCardConnectivity.left);
+        let rightAligned = (rightCard == null) ? true : (rightCardConnectivity.left == currentCardConnectivity.right);
+        let bottomAligned = (bottomCard == null) ? true : (bottomCardConnectivity.up == currentCardConnectivity.down);
+
+        // For each direction (left, right, bottom), check if the card is actually connected in that direction
+        let leftConnected = (leftCard == null) ? false : (leftCardConnectivity.right && currentCardConnectivity.left);
+        let rightConnected = (rightCard == null) ? false : (rightCardConnectivity.left && currentCardConnectivity.right);
+        let bottomConnected = (bottomCard == null) ? false : (bottomCardConnectivity.up && currentCardConnectivity.down);
+
+        console.group(`Position (${gameData.stage}, ${ix})`);
+        console.log(`| ${(leftCardConnectivity.up ? '^' : 'x')}   ${(currentCardConnectivity.up ? '^' : 'x')}   ${(rightCardConnectivity.up ? '^' : 'x')} |${(leftCard != null && currentRow.get(ix-1).hasWorkLate) ? ' Left Card Work Late' : (leftCard != null) ? ' Left Card Normal' : ' No Left Card'}\n|${(leftCardConnectivity.left ? '<' : 'x')}L${(leftCardConnectivity.right ? '>' : 'x')} ${(currentCardConnectivity.left ? '<' : 'x')}C${(currentCardConnectivity.right ? '>' : 'x')} ${(rightCardConnectivity.left ? '<' : 'x')}R${(rightCardConnectivity.right ? '>' : 'x')}|${(rightCard != null && currentRow.get(ix+1).hasWorkLate) ? ' Right Card Work Late' : (rightCard != null) ? ' Right Card Normal' : ' No Right Card'}\n| ${(leftCardConnectivity.down ? 'v' : 'x')}   ${(currentCardConnectivity.down ? 'v' : 'x')}   ${(rightCardConnectivity.down ? 'v' : 'x')} |${(bottomCard != null && previousRow.get(ix).hasWorkLate) ? ' Bottom Card Work Late' : (bottomCard != null) ? ' Bottom Card Normal' : ' No Bottom Card'}\n|     ${(bottomCardConnectivity.up ? '^' : 'x')}     |\n|    ${(bottomCardConnectivity.left ? '<' : 'x')}B${(bottomCardConnectivity.right ? '>' : 'x')}    |\n|     ${(bottomCardConnectivity.down ? 'v' : 'x')}     |`);
+        console.log(`Alignment - Left ${leftAligned}, Right ${rightAligned}, Bottom ${bottomAligned}`);
+        console.log(`Connectivity - Left ${leftConnected}, Right ${rightConnected}, Bottom ${bottomConnected}`);
+        console.groupEnd();
+
+
+        // If the card is placable in the current position, the user is not allowed to discard it
+        // Else we check the next placement
+        if (leftAligned && rightAligned && bottomAligned && (leftConnected || rightConnected || bottomConnected)) {
+            console.log(`Card can be placed at ${gameData.stage} ${ix}`)
+            return false;
+        }
+    }
+
+    console.log("Card can't be placed")
+    return true;
 }

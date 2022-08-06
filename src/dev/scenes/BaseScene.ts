@@ -27,7 +27,7 @@ export class BaseScene extends Phaser.Scene {
     }
 
     shutdown() {
-        // Clear keyboard events, otherwise they'll stack up when MainMenu is re-run
+        // Clear keyboard events, otherwise they'll stack up when re-run
         this.input.keyboard.shutdown();
     }
 }

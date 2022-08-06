@@ -7,7 +7,7 @@ import { QUANT_PLAN_TILES } from "./constants";
 import { MainMenu } from "./scenes/MainMenu";
 import { TeamGameBoard } from "./scenes/TeamGameBoard";
 import { TeamToolbar } from "./scenes/TeamToolbar";
-import { BidirectionalArray, mapGetOrElse, SelfReplenishingStack, shuffleArray } from "./util";
+import { BidirectionalArray, mapGetOrElse, SelfReplenishingStack, shuffleArray, UncheckedMap } from "./util";
 
 interface TeamData {
     currentCard: number;
@@ -37,10 +37,10 @@ export class GameData {
 
     numberOfTeams: number;
 
-    activityCardMap: Map<number, GameActivityCard>;
-    eventCardMap: Map<number, GameEventCard>;
+    activityCardMap: UncheckedMap<number, GameActivityCard>;
+    eventCardMap: UncheckedMap<number, GameEventCard>;
     eventcardOffset: number;
-    cardGroupMap: Map<cardGroup, Set<number>>;
+    cardGroupMap: UncheckedMap<cardGroup, Set<number>>;
 
     stage: stageT;
     currentTeam: number;
@@ -52,6 +52,8 @@ export class GameData {
     allowSwap: CardBoxSwapper | null;
 
     teamToolbar!: TeamToolbar;
+
+    isElementsInteractive: boolean = true;
 
     constructor() {
         this._roundLengthValues = [15, 30, 60, 120, Infinity];
@@ -69,10 +71,10 @@ export class GameData {
 
         this.numberOfTeams = -1;
 
-        this.activityCardMap = new Map();
-        this.eventCardMap = new Map();
+        this.activityCardMap = new UncheckedMap();
+        this.eventCardMap = new UncheckedMap();
         this.eventcardOffset = -1;
-        this.cardGroupMap = new Map();
+        this.cardGroupMap = new UncheckedMap();
 
         this.stage = 1;
         this.currentTeam = 0;

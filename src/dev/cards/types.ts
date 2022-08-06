@@ -59,7 +59,7 @@ export interface GameEventCard {
 }
 
 
-interface Connectivity {
+export interface Connectivity {
     left: boolean,
     right: boolean,
     up: boolean,

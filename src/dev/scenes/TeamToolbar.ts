@@ -1,6 +1,6 @@
 import { CardBox, CardBoxSwapper } from "../cards/activityCards";
 import { COLOURS, FONTS, stageNames } from "../constants";
-import { CardStackButton, ToolbarButton } from "../elements/buttons";
+import { CardStackButton, DiscardButton, ToolbarButton } from "../elements/buttons";
 import { GameData } from "../GameData";
 import { BidirectionalArray } from "../util";
 import { BaseScene } from "./BaseScene";
@@ -10,6 +10,7 @@ export class TeamToolbar extends BaseScene {
     cardStackButton!: CardStackButton;
     continueButton!: ToolbarButton;
     startRoundButton!: ToolbarButton;
+    discardButton !: DiscardButton;
     
     currentStageText!: Phaser.GameObjects.Text;
     currentTeamText!: Phaser.GameObjects.Text;
@@ -36,6 +37,7 @@ export class TeamToolbar extends BaseScene {
                 let cardID = this.gameData.activityCardStack.pop();
                 this.gameData.teams[this.gameData.currentTeam].currentCard = cardID;
                 this.cardStackButton.setImage(`card_${cardID}`);
+                if (this.discardButton) this.discardButton.setInteractive(true);
             }
         }); 
 
@@ -56,18 +58,12 @@ export class TeamToolbar extends BaseScene {
         // Work Late Tile Button
         //
 
-        // Discard Button
-        //
-
         // Stage Indicator
         this.currentStageText = this.add.text(this.x*0.05, this.y*0.04, `Stage: ${this.gameData.stage}`, FONTS.button).setFontSize(70);
 		
 
         // Team Indicator
         this.currentTeamText = this.add.text(this.x*0.05, this.y*0.18, `Team: ${this.gameData.currentTeam+1}`, FONTS.button).setFontSize(70);
-
-        // Timer
-        //        
 
         // Facilitator Mode Button
         //
@@ -160,6 +156,7 @@ export class TeamToolbar extends BaseScene {
 
                 this.cardStackButton.setInteractive(true);
                 this.continueButton.setInteractive(true);
+                this.discardButton = new DiscardButton(this, this.gameData.currentTeam, this.x*1.33, this.y*1.875, this.width*0.15, this.height*0.1)
                 this.startTimer();
             });
             this.startRoundButton.setInteractive(true);
@@ -198,5 +195,6 @@ export class TeamToolbar extends BaseScene {
 
     private static timerStop(scene: TeamToolbar) {
         scene.cardStackButton.setInteractive(false);
+        scene.discardButton.destroy();
     }
 }

@@ -118,6 +118,14 @@ export class BidirectionalArray<T> {
         return this.negSize;
     }
 
+    leftIndex(): number {
+        return -this.negSize;
+    }
+
+    rightIndex(): number {
+        return this.posSize-1;
+    }
+
     set(index: number, element: T) {
         if (index >= 0) {
             this.posArr[index] = element;
@@ -185,5 +193,26 @@ export class BidirectionalArray<T> {
             
         });
         return str + " ]";
+    }
+}
+
+
+
+export class UncheckedMap<K, V> extends Map<K, V> {
+    constructor() {
+        super();
+    }
+
+    get(key: K, fallback?: V): V {
+        let value = super.get(key);
+        if (value == undefined) {
+            if (fallback == undefined) {
+                throw `KeyError: "${key}" does not map to a value`;
+            } else {
+                return fallback;
+            }
+        } else {
+            return value;
+        }
     }
 }
