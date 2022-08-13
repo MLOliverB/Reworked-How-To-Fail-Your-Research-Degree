@@ -1,9 +1,10 @@
-const express = require('express');
-const app = express();
+import express, { Request, Response } from "express";
+
+const app = express()
 
 app.use(express.static(__dirname + '/'));
 
-app.get('/', function (req: any, res: any) { // TODO: Fix these types, they're giving me a headache
+app.get('/', function(req: Request, res: Response) {
   res.sendFile(__dirname + '/index.html');
 });
 
