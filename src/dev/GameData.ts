@@ -11,6 +11,7 @@ import { BidirectionalArray, mapGetOrElse, SelfReplenishingStack, shuffleArray, 
 
 interface TeamData {
     currentCard: number;
+    lastPlacedCard: CardBox | null;
     cards: BidirectionalArray<CardBox>[],
     workLateTiles: number,
     eventCardsStored: GameEventCard[],
@@ -129,11 +130,12 @@ export class GameData {
         for (let i = 0; i < this.numberOfTeams; i++) {
             this.teams.push({
                 currentCard: 0,
+                lastPlacedCard: null,
                 cards: [],
                 workLateTiles: this.totalWorkLateTiles,
                 eventCardsStored: [],
                 activityCardsQueue: [],
-                scene: new TeamGameBoard(this, `Board${i}`),
+                scene: new TeamGameBoard(this, `Board${i}`, i),
                 keyName: `Board${i}`
             });
             this.game.scene.add(`Board${i}`, this.teams[i].scene, false)

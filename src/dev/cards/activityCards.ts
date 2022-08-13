@@ -23,7 +23,7 @@ export class CardBox {
         this.gameData = gameData;
         this.gameBoard = gameBoard;
 
-        this.team = gameData.currentTeam;
+        this.team = gameBoard.teamNumber;
         this.stage = gameData.stage;
         this.index = index;
 
@@ -65,22 +65,23 @@ export class CardBox {
                     gameData.teamToolbar.cardStackButton.removeImage();
                     this.cardID = gameData.teams[this.team].currentCard;
                     gameData.teams[this.team].currentCard = 0;
+                    gameData.teams[this.team].lastPlacedCard = this;
                     this.setImage(`card_${this.cardID}`);
                     gameData.teamToolbar.cardStackButton.cardUsed();
 
                     if (this.gameData.stage != 1) {
                         let newCardBox = null;
-                        if (this.index == -this.gameData.teams[this.gameData.currentTeam].cards[this.gameData.stage-1].leftLength()) {
+                        if (this.index == -this.gameData.teams[this.team].cards[this.gameData.stage-1].leftLength()) {
                             newCardBox = new CardBox(this.gameBoard, this.gameData, this.index-1);
-                            this.gameData.teams[this.gameData.currentTeam].cards[this.gameData.stage-1].pushLeft(newCardBox);
-                        } else if (this.index == this.gameData.teams[this.gameData.currentTeam].cards[this.gameData.stage-1].rightLength()-1) {
+                            this.gameData.teams[this.team].cards[this.gameData.stage-1].pushLeft(newCardBox);
+                        } else if (this.index == this.gameData.teams[this.team].cards[this.gameData.stage-1].rightLength()-1) {
                             newCardBox = new CardBox(this.gameBoard, this.gameData, this.index+1);
-                            this.gameData.teams[this.gameData.currentTeam].cards[this.gameData.stage-1].pushRight(newCardBox);
+                            this.gameData.teams[this.team].cards[this.gameData.stage-1].pushRight(newCardBox);
                         }
                     }
-                } else if (gameData.teams[this.team].currentCard == 0 && this.cardID != 0) {
-                    // TODO ensure that only the last placed down card can be picked up again
+                } else if (gameData.teams[this.team].currentCard == 0 && this.cardID != 0 && gameData.teams[this.team].lastPlacedCard != null && gameData.teams[this.team].lastPlacedCard == this) {
                     this.removeImage();
+                    gameData.teams[this.team].lastPlacedCard = null;
                     gameData.teams[this.team].currentCard = this.cardID;
                     this.cardID = 0;
                     gameData.teamToolbar.cardStackButton.setImage(`card_${gameData.teams[this.team].currentCard}`);
@@ -177,6 +178,14 @@ export class CardBoxSwapper {
 
             this.candidate1.setImage(`card_${this.candidate1.cardID}`);
             this.candidate2.setImage(`card_${this.candidate2.cardID}`);
+
+            let team = this.candidate1.team
+
+            if (this.candidate1 == this.gameData.teams[team].lastPlacedCard) {
+                this.gameData.teams[team].lastPlacedCard = this.candidate2;
+            } else if (this.candidate2 == this.gameData.teams[team].lastPlacedCard) {
+                this.gameData.teams[team].lastPlacedCard = this.candidate1;
+            }
 
             this.deSelect(this.candidate1);
             this.deSelect(this.candidate2);

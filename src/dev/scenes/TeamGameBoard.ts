@@ -2,8 +2,12 @@ import { GameData } from "../GameData";
 import { BaseScene } from "./BaseScene";
 
 export class TeamGameBoard extends BaseScene {
-    constructor(gameData: GameData, key: string) {
+
+    teamNumber: number;
+
+    constructor(gameData: GameData, key: string, teamNumber: number) {
         super(gameData, {key: key});
+        this.teamNumber = teamNumber;
     }
 
     create() {

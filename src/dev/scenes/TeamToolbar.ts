@@ -31,8 +31,7 @@ export class TeamToolbar extends BaseScene {
         // CardStack Button
         this.cardStackButton = new CardStackButton(this, this.x, this.y*1.76, "+",
         () => {
-            // TODO onClick separate cases for PLAN round and all other rounds
-
+            // If there is no current card visible, draw a new card from the activity card stack
             if (this.gameData.teams[this.gameData.currentTeam].currentCard == 0) {
                 let cardID = this.gameData.activityCardStack.pop();
                 this.gameData.teams[this.gameData.currentTeam].currentCard = cardID;
@@ -52,7 +51,6 @@ export class TeamToolbar extends BaseScene {
             this.gameData.allowSwap = null;
             this.instructionText.destroy();
             this.next();
-            // TODO onClick
         });
 
         // Work Late Tile Button
@@ -173,6 +171,7 @@ export class TeamToolbar extends BaseScene {
 
     private gameEnd() {
         console.log("Game Ended");
+        // TODO Implement behaviour after game has ended
     }
 
 
@@ -185,7 +184,6 @@ export class TeamToolbar extends BaseScene {
         let timeRemaining = scene.timer.getOverallRemainingSeconds();
         if (timeRemaining == 0) {
             scene.instructionText.setText(`Place down ${stageNames[scene.gameData.stage]} tiles =( 0 s )=`);
-            // TODO implement what happens after timer stops
             TeamToolbar.timerStop(scene);
         } else {
             scene.instructionText.setText(`Place down ${stageNames[scene.gameData.stage]} tiles -( ${timeRemaining} s )-`)
