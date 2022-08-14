@@ -1,4 +1,5 @@
-import { CardBoxSwapper, isDiscardable } from "../cards/activityCards";
+import { CardBoxSwapper } from "../cards/activityCards/CardBox";
+import { isDiscardable } from "../cards/activityCards/util";
 import { COLOURS, FONTS } from "../constants";
 import { GameData } from "../GameData";
 import { BaseScene } from "../scenes/BaseScene";
@@ -54,31 +55,26 @@ class Button {
             this.button.setInteractive();
             this.button.setFillStyle(this.buttonColour);
 
-            this.button.on("pointerover", () => { 
-                if (!this.scene.gameData.isElementsInteractive) return;
+            this.button.on("pointerover", () => { this.scene.gameData.isInteractiveFunction(() => {
                 this.button.setFillStyle(this.buttonHoverColour);
-            });
-            this.button.on("pointerout", () => { 
-                if (!this.scene.gameData.isElementsInteractive) return;
+            })});
+            this.button.on("pointerout", () => { this.scene.gameData.isInteractiveFunction(() => {
                 this.button.setFillStyle(this.buttonColour);
-            });
+            })});
 
-            this.button.on("pointerup", () => {
-                if (!this.scene.gameData.isElementsInteractive) return;
+            this.button.on("pointerup", () => { this.scene.gameData.isInteractiveFunction(() => {
                 this.onClick()
-            });
+            })});
 
             if (this.onHover != undefined) {
-                this.button.on("pointerover", () => {
-                    if (!this.scene.gameData.isElementsInteractive) return;
+                this.button.on("pointerover", () => { this.scene.gameData.isInteractiveFunction(() => {
                     if (this.onHover != undefined) this.onHover()
-                });
+                })});
             }
             if (this.onHoverExit != undefined) {
-                this.button.on("pointerout", () => {
-                    if (!this.scene.gameData.isElementsInteractive) return;
+                this.button.on("pointerout", () => { this.scene.gameData.isInteractiveFunction(() => {
                     if (this.onHoverExit != undefined) this.onHoverExit()
-                });
+                })});
             }
         } else {
             this.isInteractive = false;
