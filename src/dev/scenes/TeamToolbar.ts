@@ -1,10 +1,9 @@
-import { CardBox, CardBoxSwapper } from "../cards/activityCards";
+import { CardBox } from "../cards/activityCards/CardBox";
 import { COLOURS, FONTS, stageNames } from "../constants";
 import { CardStackButton, DiscardButton, ToolbarButton } from "../elements/buttons";
 import { GameData } from "../GameData";
 import { BidirectionalArray } from "../util";
 import { BaseScene } from "./BaseScene";
-import { TeamGameBoard } from "./TeamGameBoard";
 
 export class TeamToolbar extends BaseScene {
     cardStackButton!: CardStackButton;

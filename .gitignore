@@ -1,10 +1,9 @@
-*.DS_Store
-*.env
-~$*
-temp.js
+# Transpiled javascript files
 bin
-public
-server.js
+
+# Generated Documentation
+doc
+
 
 # Logs
 logs

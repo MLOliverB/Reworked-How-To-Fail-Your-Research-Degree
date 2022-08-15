@@ -1,13 +1,11 @@
-import { start } from "repl";
-import { recursiveExpandNestedArray } from "../test/util";
-import { CardBox, CardBoxSwapper } from "./cards/activityCards";
+import { CardBox, CardBoxSwapper } from "./cards/activityCards/CardBox";
 import { parseEffect, parseLogicFunction } from "./cards/eventCards";
 import { ActivityCard, Card, cardGroup, CardGroupGenerator, cardSlug, EventCard, GameActivityCard, GameEventCard, isCardGroup, isCardSlug, stageT } from "./cards/types";
 import { QUANT_PLAN_TILES } from "./constants";
 import { MainMenu } from "./scenes/MainMenu";
 import { TeamGameBoard } from "./scenes/TeamGameBoard";
 import { TeamToolbar } from "./scenes/TeamToolbar";
-import { BidirectionalArray, mapGetOrElse, SelfReplenishingStack, shuffleArray, UncheckedMap } from "./util";
+import { BidirectionalArray, mapGetOrElse, SelfReplenishingStack, UncheckedMap } from "./util";
 
 interface TeamData {
     currentCard: number;
@@ -336,5 +334,12 @@ export class GameData {
 
             mainMenuScene.load.start()
         });
+    }
+
+
+    public isInteractiveFunction(fn: () => void) {
+        if (this.isElementsInteractive) {
+            fn();
+        }
     }
 }
