@@ -8,7 +8,6 @@ import { stageT } from "../types";
  *
  * @author Oliver Billich
  */
-
 export class CardBox {
 
     readonly gameData: GameData; // Global Gamedata instance
@@ -31,7 +30,7 @@ export class CardBox {
 
 
     /**
-     * Create a new CardBox.
+     * Creates a new CardBox.
      * @param gameBoard The game board on which the CardBox will be placed.
      * @param gameData The global gameData instance.
      * @param index The index at which this CardBox will be placed down at the current stage.
