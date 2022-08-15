@@ -111,6 +111,12 @@ export class CardBox {
         
     }
 
+    /**
+     * Updates the card being held by this card box.
+     * This encompasses updated the card ID and the image shown on the card box.
+     * @param cardID 
+     * @returns True if the card could be set correctly, False if the image corresponding to the given card ID could not be loaded.
+     */
     public setCard(cardID: number): boolean {
         this.cardID = cardID;
         this.text.setText(`${cardID}`);
@@ -130,6 +136,10 @@ export class CardBox {
         }
     }
 
+    /**
+     * Removes the card currently held by the card box along with the card image.
+     * @returns The ID of the previously held card.
+     */
     public removeCard(): number {
         let cardID = this.cardID;
         this.cardID = 0;
@@ -142,32 +152,55 @@ export class CardBox {
         return cardID;
     }
 
+    /**
+     * @returns The ID of the card currently held by this card box. 0 means that no card is currently held.
+     */
     public getCardID(): number {
         return this.cardID;
     }
 
-    public addWorkLate() {
-
+    /**
+     * Overlays a Work-Late on top of the card held by this card box.
+     * @returns False if there already is a Work-Late tile or no card is currently held by the card box, True otherwise.
+     */
+    public addWorkLate(): boolean {
+        return false;
     }
 
-    public removeWorkLate() {
-
+    /**
+     * Attempts to remove the Work-Late tile held by the card box.
+     * @returns True if the Work-Late tile was removed, False if there was no Work-Late tile to remove.
+     */
+    public removeWorkLate(): boolean {
+        return false;
     }
 
+    /**
+     * @returns True if the card box holds a Work-Late tile, False otherwise.
+     */
     public hasWorkLate(): boolean {
         return this.workLate;
     }
 
-    public select() {
-        this.box.setStrokeStyle(5, COLOURS.black, 1);
+    /**
+     * 'Selects' the card box visually by drawing a border around the edge.
+     * This is only changing how the card box is displayed and does not provide any further functionality.
+     * @param bool True to select, False to de-select
+     */
+    public select(bool: boolean) {
+        if (bool) {
+            this.box.setStrokeStyle(5, COLOURS.black, 1);
+        } else {
+            this.box.setStrokeStyle();
+        }
     }
 
-    public deSelect() {
-        this.box.setStrokeStyle();
-    }
-
+    /**
+     * A convenience function meant for debugging purposes that converts the instance with its attributes into a string.
+     * @returns A compact string version of the card box instance conveying the most important information.
+     */
     public toString(): string {
-        return `CardBox{id:${this.cardID} ix:${this.index} team:${this.gameBoard.teamNumber} stage:${this.stage}}`;
+        return `CardBox{id:${this.cardID} workLate:${this.hasWorkLate()} ix:${this.index} team:${this.gameBoard.teamNumber} stage:${this.stage}}`;
     }
 }
 
@@ -189,16 +222,16 @@ export class CardBoxSwapper {
     toggle(cardBox: CardBox) {
         if (this.candidate1 == cardBox) {
             this.candidate1 = null;
-            cardBox.deSelect();
+            cardBox.select(false);
         } else if (this.candidate2 == cardBox) {
             this.candidate2 = null;
-            cardBox.deSelect();
+            cardBox.select(false);
         } else if (this.candidate1 == null) {
             this.candidate1 = cardBox;
-            cardBox.select();
+            cardBox.select(true);
         } else {
             this.candidate2 = cardBox;
-            cardBox.select();
+            cardBox.select(true);
         }
 
         if (this.candidate1 != null && this.candidate2 != null) {
@@ -221,8 +254,8 @@ export class CardBoxSwapper {
                 this.gameData.teams[team].lastPlacedCard = this.candidate1;
             }
 
-            this.candidate1.deSelect();
-            this.candidate2.deSelect();
+            this.candidate1.select(false);
+            this.candidate2.select(false);
 
             this.candidate1 = null;
             this.candidate2 = null;
