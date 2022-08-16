@@ -83,13 +83,17 @@ export class CardBox {
             if (this.gameData.allowSwap == null) {
                 // If there is a card on the Card Stack and this CardBox is empty
                 if (gameData.teams[this.gameBoard.teamNumber].currentCard != 0 && this.cardID == 0) {
+                    // Remove card image from the activity card stack button
+                    // Add the card to this CardBox
                     gameData.teamToolbar.cardStackButton.removeImage();
                     this.setCard(gameData.teams[this.gameBoard.teamNumber].currentCard);
                     gameData.teams[this.gameBoard.teamNumber].currentCard = 0;
                     gameData.teams[this.gameBoard.teamNumber].lastPlacedCard = this;
                     gameData.teamToolbar.cardStackButton.cardUsed();
 
-                    if (this.gameData.stage != 1) {
+                    if (this.gameData.stage != 1) { // If this is NOT the first stage
+                        // If we are putting the card on one of the CardBoxes at the edge of the row,
+                        // Add another empty card box at its side
                         let newCardBox = null;
                         if (this.index == -this.gameData.teams[this.gameBoard.teamNumber].cards[this.gameData.stage - 1].leftLength()) {
                             newCardBox = new CardBox(this.gameBoard, this.gameData, this.index - 1);
@@ -101,6 +105,8 @@ export class CardBox {
                     }
                 // Else If Activity Card stack button is empty and the last card was placed in this box
                 } else if (gameData.teams[this.gameBoard.teamNumber].currentCard == 0 && this.cardID != 0 && gameData.teams[this.gameBoard.teamNumber].lastPlacedCard != null && gameData.teams[this.gameBoard.teamNumber].lastPlacedCard == this) {
+                    // Put the card back on the activity card discard stack
+                    // (This feature exists mainly for mobile where you might tap the wrong position with your finger)
                     gameData.teams[this.gameBoard.teamNumber].lastPlacedCard = null;
                     gameData.teams[this.gameBoard.teamNumber].currentCard = this.removeCard();
                     gameData.teamToolbar.cardStackButton.setImage(`card_${gameData.teams[this.gameBoard.teamNumber].currentCard}`);
@@ -210,13 +216,22 @@ export class CardBox {
 }
 
 
-
+/**
+ * A class designed for providing visual feedback while selecting and swapping two CardBoxes.
+ * 
+ * @author Oliver Billich
+ */
 export class CardBoxSwapper {
+
     gameData: GameData
 
     candidate1: CardBox | null;
     candidate2: CardBox | null;
 
+    /**
+     * Creates a new CardBoxSwapper instance.
+     * @param gameData The global Game Data instance.
+     */
     constructor(gameData: GameData) {
         this.gameData = gameData;
 
@@ -224,7 +239,13 @@ export class CardBoxSwapper {
         this.candidate2 = null;
     }
 
-    toggle(cardBox: CardBox) {
+    /**
+     * Visually selects or deselects the given CardBox instance.
+     * If only one CardBox is currently selected and it is toggled again, it is de-selected.
+     * If a second CardBox is selected, both these CardBox instances are swapped immediatedly and then de-selected.
+     * @param cardBox The given CardBox instance.
+     */
+    public toggle(cardBox: CardBox) {
         if (this.candidate1 == cardBox) {
             this.candidate1 = null;
             cardBox.select(false);
@@ -244,7 +265,10 @@ export class CardBoxSwapper {
         }
     }
 
-    private _swap() {
+    /**
+     * Swaps the data stored within the two selected CardBox instances.
+     */
+    private _swap() { // TODO: This should be a static method within the CardBox class that swaps the indexes and positions these CardBox instances are referenced in the row array
         if (this.candidate1 != null && this.candidate2 != null) {
 
             let tempCardID = this.candidate1.removeCard();
