@@ -1,8 +1,19 @@
-import { cardSelector, cardSlug, cardStatement, effect, isCardGroup, isCardSlug, isCardStatement, isInstruction, isLogicOperator, isModifierArray, isQuantifier, logicExpression, logicFunction, quantifier } from "./types";
-import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_QUANTIFIER_ALL, LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_LOGICEXPRESSION_SEPARATOR } from "../constants";
+import { cardSelector, cardSlug, effect, isCardGroup, isCardStatement, isInstruction, isLogicOperator, isModifierArray, isQuantifier, logicExpression, logicFunction, quantifier } from "./types";
+import { LOGIC_BRACKET_MAP, LOGIC_BRACKET_CARD_CLOSE, LOGIC_BRACKET_CARD_OPEN, LOGIC_BRACKET_PRECEDENCE_OPEN, LOGIC_BRACKET_LOGICEXPRESSION_CLOSE, LOGIC_BRACKET_LOGICEXPRESSION_OPEN, LOGIC_REVERSE_BRACKET_MAP, LOGIC_BRACKET_PRECEDENCE_CLOSE, LOGIC_LOGICEXPRESSION_SEPARATOR } from "../constants";
 import { mapGetOrElse } from "../util";
 
 
+/**
+ * Parses the effect or effects from the given string and converts card slugs into ID's using the given mapping.
+ * 
+ * @throws Unknown instruction.
+ * @throws Could not recognize effect.
+ * @see {@link parseLogicFunction}
+ * 
+ * @param effectString The string from which the effect(s) will be parsed.
+ * @param slugIDMap A map mapping card slugs to card ID's.
+ * @returns An array of the effect(s) that could be parsed.
+ */
 export function parseEffect(effectString: string, slugIDMap?: Map<cardSlug, number>): effect[] {
     let output: effect[] = [];
     let stringSplit = effectString.split(" ");
@@ -26,8 +37,11 @@ export function parseEffect(effectString: string, slugIDMap?: Map<cardSlug, numb
 
 /**
  * Verifies bracket closure and then calls a recursive parse of the given logic function.
- * @param expression The string representation of the logic function
- * @returns The array-like logicFunction
+ * 
+ * @see {@link verifyBracketClosure}
+ * 
+ * @param expression The string representation of the logic function.
+ * @returns The array-like logicFunction.
  */
 export function parseLogicFunction(expression: string, slugIDMap?: Map<cardSlug, number>): logicFunction {
     verifyBracketClosure(expression);
@@ -38,8 +52,15 @@ export function parseLogicFunction(expression: string, slugIDMap?: Map<cardSlug,
 /**
  * Recursively parses a logic function from it's string representation.
  * This function also verifies the correct structure of the expression and throws an error if this structure is violated.
- * @param expression The string representation of the logic function
- * @returns The array-like logicFunction
+ * 
+ * @throws ParseError: Reached EOS after logic operator.
+ * @throws ParseError: Expression uses unknown logic operator.
+ * @throws Illegal character.
+ * @see {@link parseLogicExpression}
+ * 
+ * @param expression The string representation of the logic function.
+ * @param slugIDMap A map mapping card slugs to card ID's.
+ * @returns The array-like logicFunction.
  */
 function recursiveParseLogicFunction(expression: string, slugIDMap?: Map<cardSlug, number>): logicFunction {
     if (expression == "true") {
@@ -82,6 +103,16 @@ function recursiveParseLogicFunction(expression: string, slugIDMap?: Map<cardSlu
 }
 
 
+/**
+ * Parses the given expression to extract a logic expression.
+ * 
+ * @throws ParseError.
+ * @see {@link recursiveParseCardSelector}
+ * 
+ * @param expression The expression string to be parsed.
+ * @param slugIDMap A map mapping card slugs to card ID's.
+ * @returns The parsed logic expression.
+ */
 function parseLogicExpression(expression: string, slugIDMap?: Map<cardSlug, number>): logicExpression {
     if (expression.charAt(0) == LOGIC_BRACKET_LOGICEXPRESSION_OPEN) {
         expression = expression.slice(1, expression.length-1);
@@ -108,6 +139,17 @@ function parseLogicExpression(expression: string, slugIDMap?: Map<cardSlug, numb
 }
 
 
+/**
+ * Parses the given expression string for a card selector statement.
+ * 
+ * @throws ParseError: Reached EOS after logic operator.
+ * @throws ParseError: Expression uses unknown logic operator.
+ * @throws Illegal Character.
+ * 
+ * @param expression The expression string to be parsed.
+ * @param slugIDMap A map mapping card slugs to card ID's.
+ * @returns The parsed card selector statement.
+ */
 function recursiveParseCardSelector(expression: string, slugIDMap?: Map<cardSlug, number>): cardSelector {
     if (expression.charAt(0) == LOGIC_BRACKET_CARD_OPEN) {
         let closeIndex = expression.indexOf(LOGIC_BRACKET_CARD_CLOSE);
@@ -157,8 +199,12 @@ function recursiveParseCardSelector(expression: string, slugIDMap?: Map<cardSlug
 /**
  * Verifies that all brackets within an expression come in matching pairs with correct nesting.
  * If brackets don't match, an error is thrown.
- * @param expression The expression to be tested for bracket closure
- * @returns True if and only if bracket closure has been verified
+ * 
+ * @throws Bracket Mismatch.
+ * 
+ * @param expression The expression to be tested for bracket closure.
+ * @param failSilent Optional parameter to stop this function from throwing errors if true.
+ * @returns True if and only if bracket closure has been verified.
  */
  export function verifyBracketClosure(expression: string, failSilent?: boolean): boolean {
     if (typeof failSilent == 'undefined') failSilent = false;

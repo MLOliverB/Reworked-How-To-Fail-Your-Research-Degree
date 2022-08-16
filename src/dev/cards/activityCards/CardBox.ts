@@ -261,14 +261,14 @@ export class CardBoxSwapper {
         }
 
         if (this.candidate1 != null && this.candidate2 != null) {
-            this._swap();
+            this.#swap();
         }
     }
 
     /**
      * Swaps the data stored within the two selected CardBox instances.
      */
-    private _swap() { // TODO: This should be a static method within the CardBox class that swaps the indexes and positions these CardBox instances are referenced in the row array
+    #swap() { // TODO: This should be a static method within the CardBox class that swaps the indexes and positions these CardBox instances are referenced in the row array
         if (this.candidate1 != null && this.candidate2 != null) {
 
             let tempCardID = this.candidate1.removeCard();
