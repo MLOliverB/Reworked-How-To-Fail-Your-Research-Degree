@@ -49,6 +49,7 @@ export class CardBox {
         
         this.workLate = false;
 
+        // Draw the box and text
         this.box = gameBoard.add.rectangle(this.xPos, this.yPos, gameBoard.width * 0.108, gameBoard.height * 0.136, COLOURS.card);
         this.text = gameBoard.add.text(this.xPos, this.yPos, "Place Card", FONTS.button).setOrigin(0.5);
 
@@ -67,17 +68,20 @@ export class CardBox {
 
         this.box.setInteractive();
 
+        // Mouse Hover event listener
         this.box.on("pointerover", () => { gameData.isInteractiveFunction(() => {
             this.box.setFillStyle(COLOURS.cardHover);
         })});
 
+        // Mouse Exit event listener
         this.box.on("pointerout", () => { gameData.isInteractiveFunction(() => {
             this.box.setFillStyle(COLOURS.card);
         })});
 
+        // Mouse click event listener
         this.box.on("pointerup", () => { gameData.isInteractiveFunction(() => {
             if (this.gameData.allowSwap == null) {
-                // Just act normally by either putting back on cardStack or not
+                // If there is a card on the Card Stack and this CardBox is empty
                 if (gameData.teams[this.gameBoard.teamNumber].currentCard != 0 && this.cardID == 0) {
                     gameData.teamToolbar.cardStackButton.removeImage();
                     this.setCard(gameData.teams[this.gameBoard.teamNumber].currentCard);
@@ -95,6 +99,7 @@ export class CardBox {
                             this.gameData.teams[this.gameBoard.teamNumber].cards[this.gameData.stage - 1].pushRight(newCardBox);
                         }
                     }
+                // Else If Activity Card stack button is empty and the last card was placed in this box
                 } else if (gameData.teams[this.gameBoard.teamNumber].currentCard == 0 && this.cardID != 0 && gameData.teams[this.gameBoard.teamNumber].lastPlacedCard != null && gameData.teams[this.gameBoard.teamNumber].lastPlacedCard == this) {
                     gameData.teams[this.gameBoard.teamNumber].lastPlacedCard = null;
                     gameData.teams[this.gameBoard.teamNumber].currentCard = this.removeCard();
