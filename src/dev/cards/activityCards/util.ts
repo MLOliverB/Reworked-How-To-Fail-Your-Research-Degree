@@ -2,6 +2,14 @@ import { GameData } from "../../GameData";
 import { GameActivityCard, Connectivity } from "../types";
 
 
+/**
+ * Checks if the card currently held on the Activity Card Stack can be placed down on the board of the given team legally.
+ * This is done by collecting all free positions where a card could be placed and then checking the adjacent cards for each position if the current card fits.
+ * This is repeated until a matching position is found or until all free positions have been exhausted.
+ * @param gameData The global Game Data instance.
+ * @param team The number of the team whose gameboard will be checked.
+ * @returns True if the current card cannot be played and therefore can be discarded, False otherwise.
+ */
 export function isDiscardable(gameData: GameData, team: number): boolean {
     // All cards in PLAN stage are always playable - so not discardable
     // If no card is currently held, can't discard by default
