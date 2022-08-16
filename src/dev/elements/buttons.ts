@@ -1,9 +1,8 @@
 import { CardBoxSwapper } from "../cards/activityCards/CardBox";
 import { isDiscardable } from "../cards/activityCards/util";
 import { COLOURS, FONTS } from "../constants";
-import { GameData } from "../GameData";
 import { BaseScene } from "../scenes/BaseScene";
-import { createPopupDialog, PopupScene } from "../scenes/PopupScene";
+import { createPopupDialog } from "../scenes/PopupScene";
 import { TeamToolbar } from "../scenes/TeamToolbar";
 
 type OnClick = () => void;
@@ -11,21 +10,45 @@ type OnClickArr = (() => void)[];
 type OnHover = () => void;
 type OnHoverExit = () => void;
 
+
+/**
+ * A basic button class.
+ * This is a convencience class to reduce the boilerplate code of drawing a button rectangle, making it interactive, and adding mouse listeners along with the appropriate colour pallettes.
+ * 
+ * @author Oliver Billich
+ */
 class Button {
-    scene: BaseScene
+    readonly scene: BaseScene
 
-    button: Phaser.GameObjects.Rectangle;
-    isInteractive: boolean;
-    buttonText: Phaser.GameObjects.Text;
+    private button: Phaser.GameObjects.Rectangle;
+    private isInteractive: boolean;
+    readonly buttonText: Phaser.GameObjects.Text;
 
-    buttonColour: number;
-    buttonHoverColour: number;
-    buttonDisabledColour: number;
+    private buttonColour: number;
+    private buttonHoverColour: number;
+    private buttonDisabledColour: number;
 
-    onClick: OnClick;
-    onHover: OnHover | undefined;
-    onHoverExit: OnHoverExit | undefined;
+    private onClick: OnClick;
+    private onHover: OnHover | undefined;
+    private onHoverExit: OnHoverExit | undefined;
 
+    /**
+     * Creates and draws a new button within the given scene.
+     * @param scene The scene in which the button will be created.
+     * @param x The x-coordinate at which the button is placed.
+     * @param y The y-coordinate at which the button is placed.
+     * @param width The width of the button.
+     * @param height The height of the button.
+     * @param setInteractive True if the button is to be interactive upon creation.
+     * @param text The button text.
+     * @param textStyle The button text style.
+     * @param buttonColour The normal colour of the button.
+     * @param buttonHoverColour The colour of the button when hovered over with a mouse.
+     * @param buttonDisabledColour The colour of the button when disabled.
+     * @param onClick Function that is called whenever the button is clicked.
+     * @param onHover Optional function that is called whenever the mouse is hovered over the button.
+     * @param onHoverExit Optional function that is called whenever the mouse leaves the button.
+     */
     constructor(scene: BaseScene, x: number, y: number, width: number, height: number, setInteractive: boolean,
         text: string, textStyle: Phaser.Types.GameObjects.Text.TextStyle,
         buttonColour: number, buttonHoverColour: number, buttonDisabledColour: number,
@@ -49,7 +72,11 @@ class Button {
         this.isInteractive = setInteractive;
     }
 
-    setInteractive(bool: boolean) {
+    /**
+     * Sets the button to be clickable or not.
+     * @param bool True if button should be interactive, False otherwise.
+     */
+    public setInteractive(bool: boolean) {
         if (bool) {
             this.isInteractive = true;
             this.button.setInteractive();
@@ -84,7 +111,10 @@ class Button {
         }
     }
 
-    toggleInteractive() {
+    /**
+     * @see {@link setInteractive}
+     */
+    public toggleInteractive() {
         if (this.isInteractive) {
             this.setInteractive(false);
         } else {
@@ -92,11 +122,18 @@ class Button {
         }
     }
 
+    /**
+     * Show or hide the button.
+     * @param bool True to show the button, False to hide it.
+     */
     setVisible(bool: boolean) {
         this.button.setVisible(bool);
         this.buttonText.setVisible(bool);
     }
 
+    /**
+     * @see {@link setVisible}
+     */
     toggleVisible() {
         if (this.button.visible) {
             this.setVisible(false);
@@ -105,6 +142,10 @@ class Button {
         }
     }
 
+    /**
+     * Frees the button and buttonText from the Phaser resources.
+     * This must be called whenever a button instance is dereferenced in order to prevent memory leaks.
+     */
     destroy() {
         this.button.destroy();
         this.buttonText.destroy();
@@ -116,12 +157,39 @@ class Button {
 // ================================================================================================
 
 
+/**
+ * Standardized button that is centered horizontally in the scene and has a fixed size.
+ * Commonly used for menu options before the start of the game.
+ * @extends Button
+ * @author Oliver Billich
+ */
 export class CenterMenuButton extends Button {
+
+    /**
+     * Creates and draws a new Center Menu Button
+     * 
+     * @param scene The scene in which the button will be created.
+     * @param y The y-coordinate at which the button is placed.
+     * @param text The button text.
+     * @param textStyle The button text style.
+     * @param onClick Function that is called whenever the button is clicked.
+     */
     constructor(scene: BaseScene, y: number, text: string, textStyle: Phaser.Types.GameObjects.Text.TextStyle, onClick: OnClick) {
         super(scene, scene.x, scene.y*y, scene.width*0.2, scene.height*0.09, true, text, textStyle, COLOURS.buttonEvent, COLOURS.buttonEventHover, COLOURS.buttonDisabled, onClick);
     }
 }
 
+/**
+ * Creates the specified buttons and places them equally spaced vertically in the scene.
+ * This function is meant to draw the buttons for the Main menu screen before the game starts.
+ * 
+ * @see {@link Button}
+ * 
+ * @param scene The given scene on which the buttons will be placed.
+ * @param buttonNames An array of names which the buttons will have.
+ * @param onClick An array of functions determining the mouse listeners for each button in order.
+ * @returns A map with the button names as keys and the buttons as corresponding values.
+ */
 export function createMainMenuButtons(scene: BaseScene, buttonNames: string[], onClick: OnClickArr): Map<string, CenterMenuButton> {
     let count: number = buttonNames.length;
     let yIntervals: number = 2 / (count + 1);
@@ -138,23 +206,65 @@ export function createMainMenuButtons(scene: BaseScene, buttonNames: string[], o
 // ================================================================================================
 // ================================================================================================
 
+/**
+ * A button that is styled to be used on either the Team Toolbar or the Facilitator Toolbar.
+ * @extends Button
+ * @author Oliver Billich
+ */
 export class ToolbarButton extends Button {
+
+    /**
+     * Creates and draws a new Toolbar Button.
+     * 
+     * @param scene The scene in which the button will be created.
+     * @param x The x-coordinate at which the button is placed.
+     * @param y The y-coordinate at which the button is placed.
+     * @param width The width of the button.
+     * @param height The height of the button.
+     * @param text The button text.
+     * @param onClick Function that is called whenever the button is clicked.
+     * @param onHover Optional function that is called whenever the mouse is hovered over the button.
+     */
     constructor(scene: BaseScene, x: number, y: number, width: number, height: number, text: string, onClick: OnClick, onHover?: OnHover) {
         super(scene, x, y, width, height, false, text, FONTS.button, COLOURS.button, COLOURS.buttonHover, COLOURS.buttonDisabled, onClick, onHover);
     }
 }
 
 
+/**
+ * A button used for the Activity Card Stack.
+ * @extends Button
+ * @author Oliver Billich
+ */
 export class CardStackButton extends Button {
-    scene: TeamToolbar;
-    image!: Phaser.GameObjects.Image;
 
+    /**
+     * @override
+     */
+    public scene: TeamToolbar;
+
+    private image!: Phaser.GameObjects.Image;
+
+    /**
+     * Creates and draws a new Activity Card Stack Button.
+     * 
+     * @param scene The scene in which the button will be created.
+     * @param x The x-coordinate at which the button is placed.
+     * @param y The y-coordinate at which the button is placed.
+     * @param text The button text.
+     * @param onClick Function that is called whenever the button is clicked.
+     */
     constructor(scene: TeamToolbar, x: number, y: number, text: string, onClick: OnClick) {
         super(scene, x, y, scene.width*0.162, scene.height*0.204, false, text, FONTS.button, COLOURS.cardStack, COLOURS.cardStackHover, COLOURS.buttonDisabled, onClick);
         this.scene = scene;
     }
 
-    setImage(key: string) {
+    /**
+     * Updates the image overlaid on top of the button.
+     * This image must be an activity card.
+     * @param key The Phaser resource key of the new image.
+     */
+    public setImage(key: string) {
         if (this.image != undefined) this.image.destroy();
         this.buttonText.setText("");
         if (this.scene.textures.exists(key)) {
@@ -162,12 +272,18 @@ export class CardStackButton extends Button {
         }
     }
 
-    removeImage() {
+    /**
+     * Removes the current image displayed on the button.
+     */
+    public removeImage() {
         if (this.image != undefined) this.image.destroy();
         this.buttonText.setText("+");
     }
 
-    cardUsed() {
+    /**
+     * Callback function that should be called whenever a card has been taken from the Activity Card Stack.
+     */
+    public cardUsed() {
         if (this.scene.discardButton) this.scene.discardButton.setInteractive(false);
         if (this.scene.gameData.stage == 1 && this.scene.gameData.activityCardStack.popCounter >= this.scene.gameData.planCards) {
             this.scene.gameData.teamToolbar.cardStackButton.setInteractive(false);
@@ -179,9 +295,22 @@ export class CardStackButton extends Button {
 }
 
 
-
+/**
+ * A button used for the Activity Card Discard Stack.
+ * @extends Button
+ * @author Oliver Billich
+ */
 export class DiscardButton extends Button {
 
+    /**
+     * Creates and draws a new Discard Stack Button.
+     * 
+     * @param scene The scene in which the button will be created.
+     * @param x The x-coordinate at which the button is placed.
+     * @param y The y-coordinate at which the button is placed.
+     * @param width The width of the button.
+     * @param height The height of the button.
+     */
     constructor(scene: TeamToolbar, team: number, x: number, y: number, width: number, height: number) {
         super(scene, x, y, width, height, false, "Discard", FONTS.button, COLOURS.button, COLOURS.buttonHover, COLOURS.buttonDisabled, 
         () => {
