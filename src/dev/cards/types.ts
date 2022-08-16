@@ -2,6 +2,10 @@ import { countNonAscii, verifyCharacters } from "../../test/util";
 
 // ================================================================================================
 
+/**
+ * Interface for any Generic Card.
+ * This interface is not used within the game logic.
+ */
 export interface Card {
     title: string,
     slug: cardSlug,
@@ -16,6 +20,10 @@ export interface Card {
     elseEffect?: string,
 }
 
+/**
+ * Interface for a Activity Card.
+ * This interface is not used within the game logic.
+ */
 export interface ActivityCard {
     title: string,
     slug: cardSlug,
@@ -26,6 +34,10 @@ export interface ActivityCard {
     connectivity: Connectivity
 }
 
+/**
+ * Interface for a Event Card.
+ * This interface is not used within the game logic.
+ */
 export interface EventCard {
     title: string,
     slug: cardSlug,
@@ -37,6 +49,9 @@ export interface EventCard {
     elseEffect: string,
 }
 
+/**
+ * Interface for a Activity Card as used within the game logic.
+ */
 export interface GameActivityCard {
     id: number,
     title: string,
@@ -47,6 +62,9 @@ export interface GameActivityCard {
     connectivity: Connectivity
 }
 
+/**
+ * Interface for a Event Card as used within the game logic.
+ */
 export interface GameEventCard {
     id: number,
     title: string,
@@ -58,7 +76,9 @@ export interface GameEventCard {
     elseEffect: effect[],
 }
 
-
+/**
+ * Interface for Activity Card Connectivity.
+ */
 export interface Connectivity {
     left: boolean,
     right: boolean,
@@ -66,6 +86,10 @@ export interface Connectivity {
     down: boolean,
 }
 
+/**
+ * Interface for Generator Expressions to select groups of cards based on common criteria.
+ * e.g. a common stage.
+ */
 export interface CardGroupGenerator {
     activityCardFilter: string,
     eventCardFilter: string,
@@ -73,12 +97,21 @@ export interface CardGroupGenerator {
 
 // ================================================================================================
 
+/**
+ * A convenience function to determine whether an Enumerated data type contains a specific value.
+ * @param enumerated The given Enum.
+ * @param value The given value.
+ * @returns True if the given Enum contains the given value, False otherwise.
+ */
 function has(enumerated: Object, value: Object) {
     return Object.values(enumerated).includes(value);
 }
 
 // ================================================================================================
 
+/**
+ * Allowed Image Extensions.
+ */
 const ImageExtension = {
     JPG : 'jpg',
     JPEG : 'jpeg',
@@ -87,25 +120,40 @@ const ImageExtension = {
     WEBP : 'webp',
 }
 
+/**
+ * Logic Operators used in card logic functions and card selector statements.
+ */
 const LogicOperator = {
     AND : '&&',
     OR : '||',
 }
 
+/**
+ * Quantifier Operators.
+ */
 const QuantifierOperator = {
     ALL : '*',
 }
 
+/**
+ * Modifiers used in logic expressions.
+ */
 const Modifier = {
     NON_ADJACENT : '!',
     UNIQUE_SELECT : '^',
 }
 
+/**
+ * Types of cards used in the game.
+ */
 const CardType = {
     ACTIVITY : 'act',
     EVENT : 'event',
 }
 
+/**
+ * The different stages appearing in the game.
+ */
 const CardStage = {
     PLAN : 'PLAN',
     CONTEXT : 'CONTEXT',
@@ -113,6 +161,9 @@ const CardStage = {
     WRITEUP : 'WRITEUP',
 }
 
+/**
+ * Effect instructions.
+ */
 const Instruction = {
     ADD : 'add',
     REMOVE : 'remove',
